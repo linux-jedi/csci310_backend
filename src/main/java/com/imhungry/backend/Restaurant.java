@@ -1,7 +1,10 @@
 package com.imhungry.backend;
 
+import com.google.maps.model.PriceLevel;
 import lombok.Data;
 import lombok.NonNull;
+
+import java.net.URL;
 
 /**
  * Created by calebthomas on 2/22/19.
@@ -19,5 +22,11 @@ public class Restaurant {
 
     private final String phoneNumber;
 
-    private final String websiteUrl;
+    private final URL websiteUrl;
+
+    private final float rating;
+
+    private final PriceLevel priceRating;
+
+    private final String distance;
 }

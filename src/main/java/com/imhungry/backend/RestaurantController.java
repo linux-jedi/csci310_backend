@@ -3,39 +3,40 @@ package com.imhungry.backend;
 /**
  * Created by calebthomas on 2/22/19.
  */
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.maps.*;
-import com.google.maps.model.LatLng;
-import com.google.maps.model.PlacesSearchResponse;
-import com.google.maps.model.PlacesSearchResult;
-import com.google.maps.model.RankBy;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+
+import com.google.maps.DistanceMatrixApiRequest;
+import com.google.maps.GeoApiContext;
+import com.google.maps.NearbySearchRequest;
+import com.google.maps.PlaceDetailsRequest;
+import com.google.maps.model.*;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/restaurant")
 public class RestaurantController {
 
-    @RequestMapping("/restaurant")
+    @GetMapping
     public List<Restaurant> restaurantSearch(@RequestParam(value="name", defaultValue="Chinese") String keyword,
                                              @RequestParam(value="amount", defaultValue="5") String amount,
                                              HttpSession session) {
-        System.out.println(session.getId());
-
         // List of restaurants to return
         List<Restaurant> restaurants = new ArrayList<>();
+
+        // Limit number of results requested
         int maxRestaurants = Integer.valueOf(amount);
+        if(maxRestaurants > 100) {
+            maxRestaurants = 100;
+        }
 
         // Get all restaurants from google API
         // TODO: create better method for storing API key
         LatLng tommy = new LatLng(34.020633, -118.285468);
         GeoApiContext geoApiContext = new GeoApiContext.Builder()
-                .apiKey("API KEY HERE")
+                .apiKey("API_KEY_HERE")
                 .build();
 
         NearbySearchRequest req = new NearbySearchRequest(geoApiContext);
@@ -46,19 +47,80 @@ public class RestaurantController {
 
         PlacesSearchResponse response = req.awaitIgnoreError();
 
-        // TODO: implement paging for maxAmount over 20
-        PlacesSearchResult[] results = response.results;
+        PlacesSearchResult[] placesSearchResults = response.results;
+        int resultsIndex = 0;
+        int i = 0;
+        while(i < maxRestaurants && resultsIndex < placesSearchResults.length) {
 
-        for(int i = 0; i < results.length && i <maxRestaurants; i++ ) {
+            // Get distance from tommy trojan to the restaurant
+            DistanceMatrixApiRequest distanceRequest = new DistanceMatrixApiRequest(geoApiContext);
+            distanceRequest.origins(tommy).destinations(placesSearchResults[resultsIndex].vicinity);
+            DistanceMatrix distanceResponse = null;
+            try {
+                distanceResponse = distanceRequest.await();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Get detailed information about the location
+            PlaceDetailsRequest placeDetailsRequest = new PlaceDetailsRequest(geoApiContext);
+            placeDetailsRequest.placeId(placesSearchResults[resultsIndex].placeId);
+            PlaceDetails placeDetails = null;
+
+            try {
+                placeDetails = placeDetailsRequest.await();
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+
             restaurants.add(new Restaurant(
-                    results[i].placeId,
-                    results[i].name,
-                    results[i].formattedAddress,
-                    "Phone number",
-                    results[i].vicinity
+                    placesSearchResults[resultsIndex].placeId,
+                    placesSearchResults[resultsIndex].name,
+                    placesSearchResults[resultsIndex].vicinity,
+                    placeDetails.formattedPhoneNumber,
+                    placeDetails.website,
+                    placesSearchResults[resultsIndex].rating,
+                    placeDetails.priceLevel,
+                    distanceResponse.rows[0].elements[0].duration.humanReadable
             ));
+
+            // iterate
+            i++;
+            resultsIndex++;
+
+            // Get next page
+            if(resultsIndex == placesSearchResults.length) {
+
+                req = new NearbySearchRequest(geoApiContext);
+                req.pageToken(response.nextPageToken);
+                placesSearchResults = req.awaitIgnoreError().results;
+                resultsIndex = 0;
+            }
         }
 
         return restaurants;
+    }
+
+    @GetMapping(value = "/{placeId}")
+    public Restaurant getRestaurant(@PathVariable String placeId) {
+        GeoApiContext geoApiContext = new GeoApiContext.Builder()
+                .apiKey("API_KEY_HERE")
+                .build();
+
+        PlaceDetailsRequest req = new PlaceDetailsRequest(geoApiContext);
+        req.placeId(placeId);
+
+        PlaceDetails place = req.awaitIgnoreError();
+
+        return new Restaurant(
+                placeId,
+                place.name,
+                place.formattedAddress,
+                place.formattedPhoneNumber,
+                place.website,
+                place.rating,
+                place.priceLevel,
+                "Placeholder distance"
+        );
     }
 }
