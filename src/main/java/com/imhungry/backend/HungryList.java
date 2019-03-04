@@ -3,6 +3,7 @@ package com.imhungry.backend;
 import lombok.Data;
 import lombok.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -13,6 +14,12 @@ import java.util.function.Predicate;
 @Data
 public class HungryList {
 
+    public enum ListType {
+        FAVORITE,
+        EXPLORE,
+        BLOCK
+    }
+
     @NonNull
     private final String name;
 
@@ -22,6 +29,11 @@ public class HungryList {
     @NonNull
     private final List<Recipe> recipes;
 
+    public HungryList(String name) {
+        this.name = name;
+        restaurants = new ArrayList<>();
+        recipes = new ArrayList<>();
+    }
 
     public void addRestaurant(Restaurant restaurant) {
         restaurants.add(restaurant);

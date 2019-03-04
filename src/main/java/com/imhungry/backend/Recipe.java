@@ -25,5 +25,5 @@ public class Recipe {
 
     private final List<String> ingredients;
 
-    private final List<String> instructions;
+    private final String instructions;
 }

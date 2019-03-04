@@ -1,5 +1,6 @@
 package com.imhungry.backend.spoonacular;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
  * Created by calebthomas on 2/23/19.
  */
 @Data
+@JsonIgnoreProperties(ignoreUnknown =  true)
 public class DetailedRecipe {
 
     private Boolean vegetarian;
@@ -55,6 +57,10 @@ public class DetailedRecipe {
     private String title;
 
     private Integer readyInMinutes;
+
+    private Integer preperationMinutes;
+
+    private Integer cookingMinutes;
 
     private String image;
 

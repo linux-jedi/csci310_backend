@@ -1,8 +1,6 @@
 package com.imhungry.backend;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +10,21 @@ import java.util.List;
  */
 
 @RestController
+@RequestMapping("/recipe")
 public class RecipeController {
 
-    @RequestMapping("/recipe")
+    @GetMapping
     List<Recipe> recipeSearch(@RequestParam(value = "name", defaultValue = "Chinese") String keyword,
                               @RequestParam(value = "amount", defaultValue = "5") String amount) {
         List<Recipe> recipes = new ArrayList<>();
         int maxRecipes = Integer.valueOf(amount);
 
 
-        return recipes;
+        return RecipeSourcer.getRecipes(keyword, maxRecipes);
+    }
+
+    @GetMapping(value = "/{recipeId}")
+    Recipe getRecipe(@PathVariable String recipeId) {
+        return RecipeSourcer.getRecipe(recipeId);
     }
 }

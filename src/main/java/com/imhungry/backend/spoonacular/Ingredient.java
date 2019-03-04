@@ -1,11 +1,13 @@
 package com.imhungry.backend.spoonacular;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 /**
  * Created by calebthomas on 2/23/19.
  */
 @Data
+@JsonIgnoreProperties(ignoreUnknown =  true)
 public class Ingredient {
 //    "id":1022009
 //            "aisle":"Ethnic Foods"

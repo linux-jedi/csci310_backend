@@ -1,5 +1,6 @@
 package com.imhungry.backend.spoonacular;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.util.List;
@@ -9,9 +10,10 @@ import java.util.List;
  */
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown =  true)
 public class SearchRecipesResult {
 
-    private List<BasicRecipe> recipes;
+    private List<BasicRecipe> results;
 
     private String baseUri;
 
@@ -23,7 +25,7 @@ public class SearchRecipesResult {
 
     private Integer processingTimeMs;
 
-    private Integer expires;
+    private Long expires;
 
     private Boolean isStale;
 
