@@ -9,6 +9,7 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ import java.util.List;
  */
 
 public class RecipeSourcer {
+
+    @Value("${RECIPE_API_KEY}")
+    private static String API_KEY;
 
     public static List<Recipe> getRecipes(String keyword, int maxRecipes) {
         List<Recipe> recipes = new ArrayList<>();
@@ -35,7 +39,7 @@ public class RecipeSourcer {
                 .build();
 
         Request req = new Request.Builder()
-                .addHeader("x-rapidapi-key", "API KEY")
+                .addHeader("x-rapidapi-key", API_KEY)
                 .url(url)
                 .get()
                 .build();
@@ -78,7 +82,7 @@ public class RecipeSourcer {
                 .build();
 
         Request req = new Request.Builder()
-                .addHeader("x-rapidapi-key", "API KEY")
+                .addHeader("x-rapidapi-key", API_KEY)
                 .url(url)
                 .get()
                 .build();

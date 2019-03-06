@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 @Data
 public class HungryList {
 
-    public enum ListType {
+    public static enum ListType {
         FAVORITE,
         EXPLORE,
         BLOCK
@@ -39,7 +39,7 @@ public class HungryList {
         restaurants.add(restaurant);
     }
 
-    public void removeRestaurant(int restaurantId) {
+    public void removeRestaurant(String restaurantId) {
         Predicate<Restaurant> isMatch = restaurant -> restaurant.getId().equals(restaurantId);
 
         restaurants.removeIf(isMatch);
@@ -49,7 +49,7 @@ public class HungryList {
         recipes.add(recipe);
     }
 
-    public void removeRecipe(int recipeId) {
+    public void removeRecipe(String recipeId) {
         Predicate<Recipe> isMatch = recipe -> recipe.getId().equals(recipeId);
 
         recipes.removeIf(isMatch);
