@@ -27,10 +27,10 @@ public class CollageBuilder {
     public final int MAX_ROTATION = 45;
     public final int MIN_ROTATION = -45;
 
-    @Value("${ENGINE_ID}")
+    @Value("${engine.id}")
     private String ENGINE_ID;
 
-    @Value("${SEARCH_API_KEY}")
+    @Value("${search.api.key}")
     private String SEARCH_API_KEY;
 
     public BufferedImage buildCollage(List<URL> imageUrls, boolean rotate, int height, int width) throws IOException {

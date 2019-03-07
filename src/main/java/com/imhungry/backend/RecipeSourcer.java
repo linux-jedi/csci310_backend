@@ -21,10 +21,10 @@ import java.util.List;
 
 public class RecipeSourcer {
 
-    @Value("${RECIPE_API_KEY}")
+    @Value("${recipe.api.key}")
     private static String API_KEY;
 
-    public static List<Recipe> getRecipes(String keyword, int maxRecipes) {
+    public List<Recipe> getRecipes(String keyword, int maxRecipes) {
         List<Recipe> recipes = new ArrayList<>();
 
         // Build request
@@ -71,7 +71,7 @@ public class RecipeSourcer {
         return recipes;
     }
 
-    public static Recipe getRecipe(String recipeId) {
+    public Recipe getRecipe(String recipeId) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("https")

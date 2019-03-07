@@ -4,6 +4,7 @@ package com.imhungry.backend;
  * Created by calebthomas on 2/22/19.
  */
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/restaurant")
 public class RestaurantController {
+
+    @Autowired
+    private RestaurantSourcer restaurantSourcer;
 
     @GetMapping
     public List<Restaurant> restaurantSearch(@RequestParam(value="name", defaultValue="Chinese") String keyword,
@@ -27,11 +31,11 @@ public class RestaurantController {
             maxRestaurants = 100;
         }
 
-        return RestaurantSourcer.searchRestaurants(keyword, maxRestaurants);
+        return restaurantSourcer.searchRestaurants(keyword, maxRestaurants);
     }
 
     @GetMapping(value = "/{placeId}")
     public Restaurant getRestaurant(@PathVariable String placeId) {
-        return RestaurantSourcer.getRestaurantDetails(placeId);
+        return restaurantSourcer.getRestaurantDetails(placeId);
     }
 }
