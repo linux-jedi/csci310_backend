@@ -19,9 +19,9 @@ public class Recipe {
 
     private final String photoUrl;
 
-    private final String prepTime;
+    private final Integer prepTime;
 
-    private final String cookTime;
+    private final Integer cookTime;
 
     private final List<String> ingredients;
 

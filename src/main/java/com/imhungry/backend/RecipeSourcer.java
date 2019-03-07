@@ -22,7 +22,7 @@ import java.util.List;
 public class RecipeSourcer {
 
     @Value("${recipe.api.key}")
-    private static String API_KEY;
+    private String API_KEY;
 
     public List<Recipe> getRecipes(String keyword, int maxRecipes) {
         List<Recipe> recipes = new ArrayList<>();
@@ -61,8 +61,8 @@ public class RecipeSourcer {
                     r.getId().toString(),
                     r.getTitle(),
                     "PHOTO_URL_PLACEHOLDER",
-                    r.getReadyInMinutes().toString(),
-                    "COOK_TIME_PLACEHOLDER",
+                    r.getReadyInMinutes(),
+                    10,
                     new ArrayList<String>(),
                     "INSTRUCTION_PLACEHOLDER"
             ));
@@ -87,7 +87,6 @@ public class RecipeSourcer {
                 .get()
                 .build();
 
-
         Response res = null;
         DetailedRecipe recipe = null;
 
@@ -111,8 +110,8 @@ public class RecipeSourcer {
                 recipe.getId().toString(),
                 recipe.getTitle(),
                 recipe.getImage(),
-                recipe.getPreperationMinutes().toString(),
-                recipe.getCookingMinutes().toString(),
+                recipe.getPreperationMinutes(),
+                recipe.getCookingMinutes(),
                 ingredients,
                 recipe.getInstructions()
         );
