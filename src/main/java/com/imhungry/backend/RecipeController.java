@@ -1,5 +1,6 @@
 package com.imhungry.backend;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ import java.util.List;
 @RequestMapping("/recipe")
 public class RecipeController {
 
+    @Autowired
+    private RecipeSourcer recipeSourcer;
+
     @GetMapping
     List<Recipe> recipeSearch(@RequestParam(value = "name", defaultValue = "Chinese") String keyword,
                               @RequestParam(value = "amount", defaultValue = "5") String amount) {
@@ -20,11 +24,11 @@ public class RecipeController {
         int maxRecipes = Integer.valueOf(amount);
 
 
-        return RecipeSourcer.getRecipes(keyword, maxRecipes);
+        return recipeSourcer.getRecipes(keyword, maxRecipes);
     }
 
     @GetMapping(value = "/{recipeId}")
     Recipe getRecipe(@PathVariable String recipeId) {
-        return RecipeSourcer.getRecipe(recipeId);
+        return recipeSourcer.getRecipe(recipeId);
     }
 }

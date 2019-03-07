@@ -6,6 +6,8 @@ import com.google.maps.NearbySearchRequest;
 import com.google.maps.PlaceDetailsRequest;
 import com.google.maps.model.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,17 +15,16 @@ import java.util.List;
 /**
  * Created by calebthomas on 2/28/19.
  */
+
 public class RestaurantSourcer {
 
-    @Value("${GPLACES_API_KEY}")
-    private static String API_KEY;
+    @Value("${gplaces.api.key}")
+    private String API_KEY;
 
-    public static List<Restaurant> searchRestaurants(String keyword, int maxRestaurants) {
+    public List<Restaurant> searchRestaurants(String keyword, int maxRestaurants) {
         List<Restaurant> restaurants = new ArrayList<>();
 
-
         // Get all restaurants from google API
-        // TODO: create better method for storing API key
         LatLng tommy = new LatLng(34.020633, -118.285468);
         GeoApiContext geoApiContext = new GeoApiContext.Builder()
                 .apiKey(API_KEY)
@@ -91,7 +92,7 @@ public class RestaurantSourcer {
         return restaurants;
     }
 
-    public static Restaurant getRestaurantDetails(String placeId) {
+    public Restaurant getRestaurantDetails(String placeId) {
         GeoApiContext geoApiContext = new GeoApiContext.Builder()
                 .apiKey(API_KEY)
                 .build();
