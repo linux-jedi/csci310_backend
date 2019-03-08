@@ -10,7 +10,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -41,5 +40,6 @@ public class CollageControllerTest {
         byte[] collageImage = entity.getBody();
 
         assertTrue(collageImage.length > 1000);
+        assertTrue(entity.getStatusCodeValue() == 200);
     }
 }

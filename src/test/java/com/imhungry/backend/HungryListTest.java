@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-
 /**
  * Created by calebthomas on 3/7/19.
  */
