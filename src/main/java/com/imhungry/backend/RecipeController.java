@@ -9,9 +9,10 @@ import java.util.List;
 /**
  * Created by calebthomas on 2/22/19.
  */
-
 @RestController
+@CrossOrigin
 @RequestMapping("/recipe")
+
 public class RecipeController {
 
     @Autowired

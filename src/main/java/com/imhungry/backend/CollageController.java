@@ -15,6 +15,7 @@ import java.util.List;
  * Created by calebthomas on 3/5/19.
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/collage")
 public class CollageController {
 

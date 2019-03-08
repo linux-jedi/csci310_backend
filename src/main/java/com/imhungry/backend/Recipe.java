@@ -13,10 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Recipe {
 
-    @NonNull
     private final String id;
 
-    @NonNull
     private final String title;
 
     private final String photoUrl;

@@ -14,10 +14,8 @@ import java.net.URL;
 @AllArgsConstructor
 public class Restaurant {
 
-    @NonNull
     private final String id;
 
-    @NonNull
     private final String name;
 
     private final String address;
