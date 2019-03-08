@@ -1,5 +1,6 @@
 package com.imhungry.backend;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * Created by calebthomas on 2/22/19.
  */
 @Data
+@AllArgsConstructor
 public class Recipe {
 
     @NonNull

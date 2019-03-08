@@ -65,7 +65,7 @@ public class CollageBuilder {
         for (Integer i : indices){
             BufferedImage currentImage = images.get(i);
             // Lay out images in numRows rows and numRows columns
-            currentImage = resizeToArea(currentImage, area/(images.size()-1));
+            currentImage = resizeToArea(currentImage, area/(images.size()));
             if(rotate) {
                 currentImage = randomRotate(currentImage, MIN_ROTATION, MAX_ROTATION);
             }

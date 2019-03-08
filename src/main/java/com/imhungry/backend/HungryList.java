@@ -1,5 +1,7 @@
 package com.imhungry.backend;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -12,6 +14,8 @@ import java.util.function.Predicate;
  */
 
 @Data
+@AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HungryList {
 
     public static enum ListType {
