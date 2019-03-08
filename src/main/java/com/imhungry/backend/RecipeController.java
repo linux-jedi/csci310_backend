@@ -20,7 +20,7 @@ public class RecipeController {
 
     @GetMapping
     List<Recipe> recipeSearch(@RequestParam(value = "name", defaultValue = "Chinese") String keyword,
-                              @RequestParam(value = "amount", defaultValue = "5") String amount) {
+                              @RequestParam(value = "amount", defaultValue = "5") String amount) throws Exception {
         List<Recipe> recipes = new ArrayList<>();
         int maxRecipes = Integer.valueOf(amount);
 
@@ -29,7 +29,7 @@ public class RecipeController {
     }
 
     @GetMapping(value = "/{recipeId}")
-    Recipe getRecipe(@PathVariable String recipeId) {
+    Recipe getRecipe(@PathVariable String recipeId) throws Exception {
         return recipeSourcer.getRecipe(recipeId);
     }
 }

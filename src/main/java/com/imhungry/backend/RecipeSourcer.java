@@ -24,7 +24,7 @@ public class RecipeSourcer {
     @Value("${recipe.api.key}")
     private String API_KEY;
 
-    public List<Recipe> getRecipes(String keyword, int maxRecipes) {
+    public List<Recipe> getRecipes(String keyword, int maxRecipes) throws Exception {
         List<Recipe> recipes = new ArrayList<>();
 
         // Build request
@@ -47,14 +47,10 @@ public class RecipeSourcer {
         // Make Request to spoonacular API
         Response res = null;
         SearchRecipesResult results = null;
-        try {
-            res = client.newCall(req).execute();
+        res = client.newCall(req).execute();
 
-            ObjectMapper mapper = new ObjectMapper();
-            results = mapper.readValue(res.body().byteStream(), SearchRecipesResult.class);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        ObjectMapper mapper = new ObjectMapper();
+        results = mapper.readValue(res.body().byteStream(), SearchRecipesResult.class);
 
         for(BasicRecipe r : results.getResults()) {
             recipes.add(new Recipe(
@@ -71,7 +67,7 @@ public class RecipeSourcer {
         return recipes;
     }
 
-    public Recipe getRecipe(String recipeId) {
+    public Recipe getRecipe(String recipeId) throws Exception {
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("https")
@@ -90,15 +86,10 @@ public class RecipeSourcer {
         Response res = null;
         DetailedRecipe recipe = null;
 
-        try{
-            res = client.newCall(req).execute();
+        res = client.newCall(req).execute();
 
-            ObjectMapper mapper = new ObjectMapper();
-            recipe = mapper.readValue(res.body().byteStream(), DetailedRecipe.class);
-
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        ObjectMapper mapper = new ObjectMapper();
+        recipe = mapper.readValue(res.body().byteStream(), DetailedRecipe.class);
 
         // Build ingredients from DetailedRecipe class
         List<String> ingredients = new ArrayList<>();

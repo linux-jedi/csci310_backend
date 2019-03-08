@@ -1,5 +1,6 @@
 package com.imhungry.backend;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.maps.model.PriceLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.net.URL;
  */
 @Data
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Restaurant {
 
     private final String id;
