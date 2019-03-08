@@ -24,7 +24,7 @@ public class CollageController {
 
     @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getCollage(@RequestParam(value = "searchTerm") String searchTerm) throws IOException {
-        List<URL> imageUrls = collageBuilder.getUrls(searchTerm, 10);
+        List<URL> imageUrls = collageBuilder.getUrls(searchTerm + " food", 10);
 
         BufferedImage collageImage = collageBuilder.buildCollage(imageUrls, true, 400, 600);
         ByteArrayOutputStream imageStream = new ByteArrayOutputStream();

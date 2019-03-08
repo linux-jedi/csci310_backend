@@ -44,8 +44,8 @@ public class CollageBuilder {
         // calculate area remaining in generated collage
         int area = height * width / 20 * images.size();
         int numRows = (int) Math.sqrt(images.size());
-        int rowSpacing = height / (numRows);
-        int columnSpacing = width / (numRows);
+        int rowSpacing = height / (numRows +1);
+        int columnSpacing = width / (numRows +1);
 
         // Build collage canvas
         BufferedImage collageBuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

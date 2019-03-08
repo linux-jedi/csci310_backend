@@ -44,7 +44,7 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void testGetRestaurantDetails() {
+    public void testGetRecipeDetails() {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host("localhost")
