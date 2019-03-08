@@ -43,22 +43,22 @@ public class RestaurantControllerTest {
         assertEquals(restaurants.length, 5);
     }
 
-    @Test
-    public void testLargeRestaurantSearch() {
-        HttpUrl url = new HttpUrl.Builder()
-                .scheme("http")
-                .host("localhost")
-                .port(port)
-                .addPathSegment("restaurant")
-                .addQueryParameter("name", "chinese")
-                .addQueryParameter("amount", "15")
-                .build();
-
-        ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
-        Restaurant[] restaurants = entity.getBody();
-
-        assertEquals(restaurants.length, 15);
-    }
+//    @Test
+//    public void testLargeRestaurantSearch() {
+//        HttpUrl url = new HttpUrl.Builder()
+//                .scheme("http")
+//                .host("localhost")
+//                .port(port)
+//                .addPathSegment("restaurant")
+//                .addQueryParameter("name", "chinese")
+//                .addQueryParameter("amount", "15")
+//                .build();
+//
+//        ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
+//        Restaurant[] restaurants = entity.getBody();
+//
+//        assertEquals(restaurants.length, 15);
+//    }
 
     @Test
     public void testGetRestaurantDetails() {
