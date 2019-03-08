@@ -48,24 +48,15 @@ public class RestaurantSourcer {
             DistanceMatrixApiRequest distanceRequest = new DistanceMatrixApiRequest(geoApiContext);
             distanceRequest.origins(tommy).destinations(placesSearchResults[resultsIndex].vicinity);
             DistanceMatrix distanceResponse = null;
-            try {
-                distanceResponse = distanceRequest.await();
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw e;
-            }
+            distanceResponse = distanceRequest.await();
+
 
             // Get detailed information about the location
             PlaceDetailsRequest placeDetailsRequest = new PlaceDetailsRequest(geoApiContext);
             placeDetailsRequest.placeId(placesSearchResults[resultsIndex].placeId);
             PlaceDetails placeDetails = null;
 
-            try {
-                placeDetails = placeDetailsRequest.await();
-            } catch(Exception e) {
-                e.printStackTrace();
-                throw e;
-            }
+            placeDetails = placeDetailsRequest.await();
 
             restaurants.add(new Restaurant(
                     placesSearchResults[resultsIndex].placeId,
