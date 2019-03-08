@@ -16,7 +16,8 @@ public class ListController {
     @Autowired
     private ListManager listManager;
 
-    @GetMapping List<HungryList> getLists() {
+    @GetMapping
+    List<HungryList> getLists() {
         return listManager.getHungryLists();
     }
 

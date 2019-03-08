@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class RestaurantSourcer {
     @Value("${gplaces.api.key}")
     private String API_KEY;
 
-    public List<Restaurant> searchRestaurants(String keyword, int maxRestaurants) {
+    public List<Restaurant> searchRestaurants(String keyword, int maxRestaurants) throws Exception {
         List<Restaurant> restaurants = new ArrayList<>();
 
         // Get all restaurants from google API
@@ -51,6 +52,7 @@ public class RestaurantSourcer {
                 distanceResponse = distanceRequest.await();
             } catch (Exception e) {
                 e.printStackTrace();
+                throw e;
             }
 
             // Get detailed information about the location
@@ -62,6 +64,7 @@ public class RestaurantSourcer {
                 placeDetails = placeDetailsRequest.await();
             } catch(Exception e) {
                 e.printStackTrace();
+                throw e;
             }
 
             restaurants.add(new Restaurant(

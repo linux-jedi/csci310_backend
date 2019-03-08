@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class RestaurantController {
     @GetMapping
     public List<Restaurant> restaurantSearch(@RequestParam(value="name", defaultValue="Chinese") String keyword,
                                              @RequestParam(value="amount", defaultValue="5") String amount,
-                                             HttpSession session) {
+                                             HttpSession session) throws Exception {
         // List of restaurants to return
         List<Restaurant> restaurants = new ArrayList<>();
 
