@@ -223,3 +223,6 @@ local.properties
 
 # End of https://www.gitignore.io/api/java,maven,macos,intellij+all
 
+# Ignore API keys on commit
+setup.sh
+
