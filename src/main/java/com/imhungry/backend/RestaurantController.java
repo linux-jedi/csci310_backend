@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,12 +18,13 @@ public class RestaurantController {
     @Autowired
     private RestaurantSourcer restaurantSourcer;
 
+    @Autowired
+    private ListManager listManager;
+
     @GetMapping
     public List<Restaurant> restaurantSearch(@RequestParam(value="name", defaultValue="Chinese") String keyword,
                                              @RequestParam(value="amount", defaultValue="5") String amount,
                                              HttpSession session) throws Exception {
-        // List of restaurants to return
-        List<Restaurant> restaurants = new ArrayList<>();
 
         // Limit number of results requested
         int maxRestaurants = Integer.valueOf(amount);
@@ -33,7 +32,9 @@ public class RestaurantController {
             maxRestaurants = 100;
         }
 
-        return restaurantSourcer.searchRestaurants(keyword, maxRestaurants);
+        List<Restaurant> unsortedRestaurants = restaurantSourcer.searchRestaurants(keyword, maxRestaurants);
+
+        return listManager.filterSortRestaurantList(unsortedRestaurants);
     }
 
     @GetMapping(value = "/{placeId}")

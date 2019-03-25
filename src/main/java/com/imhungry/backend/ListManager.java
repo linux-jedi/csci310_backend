@@ -25,5 +25,34 @@ public class ListManager {
         hungryLists.add(new HungryList(HungryList.ListType.BLOCK.toString()));
     }
 
+    public List<Restaurant> filterSortRestaurantList(List<Restaurant> originalList) {
+        List<Restaurant> restaurants = new ArrayList<>();
+        List<Restaurant> favoritesRestaurants = hungryLists.get(0).getRestaurants();
+        List<Restaurant> blockRestaurants = hungryLists.get(2).getRestaurants();
+
+        for (Restaurant searchRestaurant : originalList) {
+            boolean added = false;
+
+            for (Restaurant favoritesRestaurant : favoritesRestaurants) {
+                if (favoritesRestaurant.getId().equals(searchRestaurant.getId())) {
+                    restaurants.add(0, searchRestaurant);
+                    added = true;
+                }
+            }
+
+            for (Restaurant blockRestaurant: blockRestaurants) {
+                if (blockRestaurant.getId().equals(searchRestaurant.getId())) {
+                    added = true;
+                }
+            }
+
+            if (!added) {
+                restaurants.add(searchRestaurant);
+            }
+        }
+
+        return restaurants;
+    }
+
 
 }
