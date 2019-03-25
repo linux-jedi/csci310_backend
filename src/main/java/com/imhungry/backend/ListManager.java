@@ -55,4 +55,32 @@ public class ListManager {
     }
 
 
+    public List<Recipe> filterSortRecipeList(List<Recipe> originalList) {
+        List<Recipe> recipes = new ArrayList<>();
+        List<Recipe> favoritesRecipes = hungryLists.get(0).getRecipes();
+        List<Recipe> blockRecipes = hungryLists.get(2).getRecipes();
+
+        for (Recipe searchRecipe : originalList) {
+            boolean added = false;
+
+            for (Recipe favoritesRecipe : favoritesRecipes) {
+                if (favoritesRecipe.getId().equals(searchRecipe.getId())) {
+                    recipes.add(0, searchRecipe);
+                    added = true;
+                }
+            }
+
+            for (Recipe blockRecipe: blockRecipes) {
+                if (blockRecipe.getId().equals(searchRecipe.getId())) {
+                    added = true;
+                }
+            }
+
+            if (!added) {
+                recipes.add(searchRecipe);
+            }
+        }
+
+        return recipes;
+    }
 }

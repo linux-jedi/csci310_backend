@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Created by calebthomas on 3/7/19.
@@ -46,6 +47,26 @@ public class ListFiltrationTests {
 			List<Restaurant> restaurants = listManager.filterSortRestaurantList(rests);
 
 			assertEquals(third_restaurant.getId(), restaurants.get(0).getId());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testBlockFiltering() throws Exception {
+
+		Gson gson = new Gson();
+		try {
+			String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_chinese_5.json");
+			List<Recipe> recs = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
+			Recipe third_recipe = recs.get(2);
+
+			ListManager listManager = new ListManager();
+			listManager.getHungryLists().get(2).addRecipe(third_recipe);
+			List<Recipe> recipes = listManager.filterSortRecipeList(recs);
+
+			assertFalse(recipes.stream().anyMatch(e -> (third_recipe.getId().equals(e.getId()))));
 
 		} catch (IOException e) {
 			e.printStackTrace();
