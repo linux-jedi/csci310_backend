@@ -3,7 +3,6 @@ package com.imhungry.backend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,14 +17,17 @@ public class RecipeController {
     @Autowired
     private RecipeSourcer recipeSourcer;
 
+    @Autowired
+    private ListManager listManager;
+
     @GetMapping
     List<Recipe> recipeSearch(@RequestParam(value = "name", defaultValue = "Chinese") String keyword,
                               @RequestParam(value = "amount", defaultValue = "5") String amount) throws Exception {
-        List<Recipe> recipes = new ArrayList<>();
+
         int maxRecipes = Integer.valueOf(amount);
 
-
-        return recipeSourcer.getRecipes(keyword, maxRecipes);
+        List<Recipe> unsortedRecipes = recipeSourcer.getRecipes(keyword, maxRecipes);
+        return listManager.filterSortRecipeList(unsortedRecipes);
     }
 
     @GetMapping(value = "/{recipeId}")

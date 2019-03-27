@@ -24,6 +24,7 @@ public class RestaurantController {
     @GetMapping
     public List<Restaurant> restaurantSearch(@RequestParam(value="name", defaultValue="Chinese") String keyword,
                                              @RequestParam(value="amount", defaultValue="5") String amount,
+                                             @RequestParam(value="radius", defaultValue="5000000") String radius,
                                              HttpSession session) throws Exception {
 
         // Limit number of results requested
@@ -32,8 +33,9 @@ public class RestaurantController {
             maxRestaurants = 100;
         }
 
-        List<Restaurant> unsortedRestaurants = restaurantSourcer.searchRestaurants(keyword, maxRestaurants);
+        int rad = Integer.valueOf(radius);
 
+        List<Restaurant> unsortedRestaurants = restaurantSourcer.searchRestaurants(keyword, maxRestaurants, rad);
         return listManager.filterSortRestaurantList(unsortedRestaurants);
     }
 

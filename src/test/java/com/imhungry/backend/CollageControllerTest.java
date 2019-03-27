@@ -10,6 +10,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.net.URL;
+
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -33,13 +35,12 @@ public class CollageControllerTest {
                 .host("localhost")
                 .port(port)
                 .addPathSegment("collage")
-                .addQueryParameter("searchTerm", "fried rice")
+                .addQueryParameter("searchTerm", "chinese")
                 .build();
 
-        ResponseEntity<byte[]> entity = restTemplate.getForEntity(url.toString(), byte[].class);
-        byte[] collageImage = entity.getBody();
+        ResponseEntity<URL[]> entity = restTemplate.getForEntity(url.toString(), URL[].class);
+        URL[] collageImages = entity.getBody();
 
-        assertTrue(collageImage.length > 1000);
-        assertTrue(entity.getStatusCodeValue() == 200);
+        assertTrue(collageImages.length > 1);
     }
 }

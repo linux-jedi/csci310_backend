@@ -6,10 +6,7 @@ import com.google.maps.NearbySearchRequest;
 import com.google.maps.PlaceDetailsRequest;
 import com.google.maps.model.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +19,7 @@ public class RestaurantSourcer {
     @Value("${gplaces.api.key}")
     private String API_KEY;
 
-    public List<Restaurant> searchRestaurants(String keyword, int maxRestaurants) throws Exception {
+    public List<Restaurant> searchRestaurants(String keyword, int maxRestaurants, int radius) throws Exception {
         List<Restaurant> restaurants = new ArrayList<>();
 
         // Get all restaurants from google API
@@ -35,8 +32,7 @@ public class RestaurantSourcer {
         req.location(tommy)
                 .keyword(keyword)
                 .rankby(RankBy.DISTANCE)
-                .custom("type", "restaurant");
-
+                .type(PlaceType.RESTAURANT);
         PlacesSearchResponse response = req.awaitIgnoreError();
 
         PlacesSearchResult[] placesSearchResults = response.results;
@@ -57,6 +53,9 @@ public class RestaurantSourcer {
             PlaceDetails placeDetails = null;
 
             placeDetails = placeDetailsRequest.await();
+
+            // If the restaurant is outside the defined radius, do not include it
+            if (distanceResponse.rows[0].elements[0].distance.inMeters > radius) break;
 
             restaurants.add(new Restaurant(
                     placesSearchResults[resultsIndex].placeId,
