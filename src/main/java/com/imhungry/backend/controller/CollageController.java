@@ -1,5 +1,6 @@
-package com.imhungry.backend;
+package com.imhungry.backend.controller;
 
+import com.imhungry.backend.CollageBuilder;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

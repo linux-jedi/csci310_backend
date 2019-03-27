@@ -6,10 +6,7 @@ import com.google.maps.NearbySearchRequest;
 import com.google.maps.PlaceDetailsRequest;
 import com.google.maps.model.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

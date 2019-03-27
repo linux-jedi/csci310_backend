@@ -1,7 +1,11 @@
-package com.imhungry.backend;
+package com.imhungry.backend.controller;
 
 import java.util.List;
 
+import com.imhungry.backend.HungryList;
+import com.imhungry.backend.ListManager;
+import com.imhungry.backend.Recipe;
+import com.imhungry.backend.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
