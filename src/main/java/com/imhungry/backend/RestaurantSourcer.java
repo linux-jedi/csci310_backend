@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Collections.sort;
+
 /**
  * Created by calebthomas on 2/28/19.
  */
@@ -29,9 +31,10 @@ public class RestaurantSourcer {
                 .build();
 
         NearbySearchRequest req = new NearbySearchRequest(geoApiContext);
+
         req.location(tommy)
                 .keyword(keyword)
-                .rankby(RankBy.DISTANCE)
+                .radius(50000)
                 .type(PlaceType.RESTAURANT);
         PlacesSearchResponse response = req.awaitIgnoreError();
 
@@ -54,9 +57,6 @@ public class RestaurantSourcer {
 
             placeDetails = placeDetailsRequest.await();
 
-            // If the restaurant is outside the defined radius, do not include it
-            if (distanceResponse.rows[0].elements[0].distance.inMeters > radius) break;
-
             restaurants.add(new Restaurant(
                     placesSearchResults[resultsIndex].placeId,
                     placesSearchResults[resultsIndex].name,
@@ -65,7 +65,8 @@ public class RestaurantSourcer {
                     placeDetails.website,
                     placesSearchResults[resultsIndex].rating,
                     placeDetails.priceLevel,
-                    distanceResponse.rows[0].elements[0].duration.humanReadable
+                    distanceResponse.rows[0].elements[0].duration.humanReadable,
+                    (int) distanceResponse.rows[0].elements[0].duration.inSeconds
             ));
 
             // iterate
@@ -82,6 +83,7 @@ public class RestaurantSourcer {
             }
         }
 
+        sort(restaurants);
         return restaurants;
     }
 
@@ -103,7 +105,8 @@ public class RestaurantSourcer {
                 place.website,
                 place.rating,
                 place.priceLevel,
-                "Placeholder distance"
+                "Placeholder distance",
+                0
         );
     }
 }

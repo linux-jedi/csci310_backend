@@ -26,7 +26,8 @@ public class HungryListTest {
                 new URL("http://www.pandaexpress.com"),
                 5,
                 PriceLevel.MODERATE,
-                "9 minutes"
+                "9 minutes",
+                9 * 360
         );
 
         list.addRestaurant(r);

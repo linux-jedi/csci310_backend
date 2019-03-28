@@ -33,7 +33,7 @@ public class RestaurantController {
             maxRestaurants = 100;
         }
 
-        int rad = Integer.valueOf(radius);
+        int rad = Integer.parseInt(radius);
 
         List<Restaurant> unsortedRestaurants = restaurantSourcer.searchRestaurants(keyword, maxRestaurants, rad);
         return listManager.filterSortRestaurantList(unsortedRestaurants);

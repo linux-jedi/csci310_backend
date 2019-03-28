@@ -2,7 +2,6 @@ package com.imhungry.backend;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
-public class Recipe {
+public class Recipe implements Comparable {
 
     private final String id;
 
@@ -26,4 +25,10 @@ public class Recipe {
     private final List<String> ingredients;
 
     private final String instructions;
+
+    @Override
+    public int compareTo(Object o) {
+        Recipe r = (Recipe) o;
+        return this.getPrepTime() - r.getPrepTime();
+    }
 }

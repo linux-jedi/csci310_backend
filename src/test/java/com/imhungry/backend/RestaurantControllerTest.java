@@ -41,13 +41,18 @@ public class RestaurantControllerTest {
                 .addPathSegment("restaurant")
                 .addQueryParameter("name", "chinese")
                 .addQueryParameter("amount", "5")
-                .addQueryParameter("radius", "10000")
+                .addQueryParameter("radius", "1000")
                 .build();
 
         ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
         Restaurant[] restaurants = entity.getBody();
 
         assertEquals(restaurants.length, 5);
+        int prev = 0;
+        for (Restaurant restaurant: restaurants) {
+            assert (restaurant.getTime() >= prev);
+            prev = restaurant.getTime();
+        }
     }
 
     @Test
