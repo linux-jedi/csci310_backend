@@ -13,12 +13,12 @@ import java.util.List;
  */
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class ListManager {
+public class UserListsJsonWrapper {
 
     @Getter
     private List<HungryList> hungryLists;
 
-    public ListManager() {
+    public UserListsJsonWrapper() {
         hungryLists = new ArrayList<>();
         hungryLists.add(new HungryList(HungryList.ListType.FAVORITE.toString()));
         hungryLists.add(new HungryList(HungryList.ListType.EXPLORE.toString()));

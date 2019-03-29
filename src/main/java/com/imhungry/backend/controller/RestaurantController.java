@@ -4,7 +4,7 @@ package com.imhungry.backend.controller;
  * Created by calebthomas on 2/22/19.
  */
 
-import com.imhungry.backend.ListManager;
+import com.imhungry.backend.UserListsJsonWrapper;
 import com.imhungry.backend.Restaurant;
 import com.imhungry.backend.RestaurantSourcer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class RestaurantController {
     private RestaurantSourcer restaurantSourcer;
 
     @Autowired
-    private ListManager listManager;
+    private UserListsJsonWrapper userListsJsonWrapper;
 
     @GetMapping
     public List<Restaurant> restaurantSearch(@RequestParam(value="name", defaultValue="Chinese") String keyword,
@@ -37,7 +37,7 @@ public class RestaurantController {
 
         List<Restaurant> unsortedRestaurants = restaurantSourcer.searchRestaurants(keyword, maxRestaurants);
 
-        return listManager.filterSortRestaurantList(unsortedRestaurants);
+        return userListsJsonWrapper.filterSortRestaurantList(unsortedRestaurants);
     }
 
     @GetMapping(value = "/{placeId}")

@@ -91,6 +91,13 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+		<!--Postgres JSONB Hibernate support-->
+		<dependency>
+			<groupId>com.vladmihalcea</groupId>
+			<artifactId>hibernate-types-52</artifactId>
+			<version>2.4.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

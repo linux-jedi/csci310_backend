@@ -42,9 +42,9 @@ public class ListFiltrationTests {
 			List<Restaurant> rests = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
 			Restaurant third_restaurant = rests.get(2);
 
-			ListManager listManager = new ListManager();
-			listManager.getHungryLists().get(0).addRestaurant(third_restaurant);
-			List<Restaurant> restaurants = listManager.filterSortRestaurantList(rests);
+			UserListsJsonWrapper userListsJsonWrapper = new UserListsJsonWrapper();
+			userListsJsonWrapper.getHungryLists().get(0).addRestaurant(third_restaurant);
+			List<Restaurant> restaurants = userListsJsonWrapper.filterSortRestaurantList(rests);
 
 			assertEquals(third_restaurant.getId(), restaurants.get(0).getId());
 
@@ -62,9 +62,9 @@ public class ListFiltrationTests {
 			List<Recipe> recs = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
 			Recipe third_recipe = recs.get(2);
 
-			ListManager listManager = new ListManager();
-			listManager.getHungryLists().get(2).addRecipe(third_recipe);
-			List<Recipe> recipes = listManager.filterSortRecipeList(recs);
+			UserListsJsonWrapper userListsJsonWrapper = new UserListsJsonWrapper();
+			userListsJsonWrapper.getHungryLists().get(2).addRecipe(third_recipe);
+			List<Recipe> recipes = userListsJsonWrapper.filterSortRecipeList(recs);
 
 			assertFalse(recipes.stream().anyMatch(e -> (third_recipe.getId().equals(e.getId()))));
 

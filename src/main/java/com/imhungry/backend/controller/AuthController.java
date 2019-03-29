@@ -1,8 +1,11 @@
 package com.imhungry.backend.controller;
 
+import com.imhungry.backend.UserListsJsonWrapper;
 import com.imhungry.backend.exception.UserAlreadyExistsException;
 import com.imhungry.backend.exception.UserNotFoundException;
 import com.imhungry.backend.model.User;
+import com.imhungry.backend.model.UserLists;
+import com.imhungry.backend.repository.UserListsRepository;
 import com.imhungry.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +21,9 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    UserListsRepository userListsRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -61,8 +67,14 @@ public class AuthController {
         user.setUsername(username);
         user.setPassword(hashedPassword);
         user.setEmail(email);
+        user = userRepository.saveAndFlush(user);
 
-        return userRepository.saveAndFlush(user);
+        UserLists lists = new UserLists();
+        lists.setUserId(user.getId());
+        lists.setUserListsJsonWrapper(new UserListsJsonWrapper());
+        userListsRepository.save(lists);
+
+        return user;
     }
 
     /**
