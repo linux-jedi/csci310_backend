@@ -9,6 +9,7 @@ import com.imhungry.backend.repository.UserListsRepository;
 import com.imhungry.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by calebthomas on 3/26/19.
  */
 @RestController
-@Cross
+@CrossOrigin
 public class AuthController {
 
     @Autowired
