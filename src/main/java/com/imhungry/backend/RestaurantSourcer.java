@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Collections.sort;
+
 /**
  * Created by calebthomas on 2/28/19.
  */
@@ -19,7 +21,7 @@ public class RestaurantSourcer {
     @Value("${gplaces.api.key}")
     private String API_KEY;
 
-    public List<Restaurant> searchRestaurants(String keyword, int maxRestaurants) throws Exception {
+    public List<Restaurant> searchRestaurants(String keyword, int maxRestaurants, int radius) throws Exception {
         List<Restaurant> restaurants = new ArrayList<>();
 
         // Get all restaurants from google API
@@ -29,11 +31,11 @@ public class RestaurantSourcer {
                 .build();
 
         NearbySearchRequest req = new NearbySearchRequest(geoApiContext);
+
         req.location(tommy)
                 .keyword(keyword)
-                .rankby(RankBy.DISTANCE)
-                .custom("type", "restaurant");
-
+                .radius(50000)
+                .type(PlaceType.RESTAURANT);
         PlacesSearchResponse response = req.awaitIgnoreError();
 
         PlacesSearchResult[] placesSearchResults = response.results;
@@ -63,7 +65,8 @@ public class RestaurantSourcer {
                     placeDetails.website,
                     placesSearchResults[resultsIndex].rating,
                     placeDetails.priceLevel,
-                    distanceResponse.rows[0].elements[0].duration.humanReadable
+                    distanceResponse.rows[0].elements[0].duration.humanReadable,
+                    (int) distanceResponse.rows[0].elements[0].duration.inSeconds
             ));
 
             // iterate
@@ -80,6 +83,7 @@ public class RestaurantSourcer {
             }
         }
 
+        sort(restaurants);
         return restaurants;
     }
 
@@ -101,7 +105,8 @@ public class RestaurantSourcer {
                 place.website,
                 place.rating,
                 place.priceLevel,
-                "Placeholder distance"
+                "Placeholder distance",
+                0
         );
     }
 }

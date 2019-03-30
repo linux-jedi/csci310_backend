@@ -71,6 +71,7 @@
 			<version>3.13.1</version>
 		</dependency>
 
+		<!--  Gson: Java to Json conversion -->
 		<dependency>
   			<groupId>org.postgresql</groupId>
   			<artifactId>postgresql</artifactId>
@@ -96,6 +97,12 @@
 			<groupId>com.vladmihalcea</groupId>
 			<artifactId>hibernate-types-52</artifactId>
 			<version>2.4.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.21.0</version>
 		</dependency>
 
 	</dependencies>

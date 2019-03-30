@@ -126,7 +126,8 @@ public class ListControllerTest {
                 new URL("http://www.pandaexpress.com"),
                 5,
                 PriceLevel.MODERATE,
-                "9 minutes"
+                "9 minutes",
+                9 * 60
         );
 
         HttpUrl postUrl = new HttpUrl.Builder()
@@ -182,7 +183,8 @@ public class ListControllerTest {
                 new URL("http://www.pandaexpress.com"),
                 5,
                 PriceLevel.MODERATE,
-                "9 minutes"
+                "9 minutes",
+                9 * 360
         );
 
         HttpUrl postUrl = new HttpUrl.Builder()

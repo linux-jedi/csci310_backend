@@ -10,7 +10,9 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by calebthomas on 3/7/19.
@@ -26,8 +28,12 @@ public class RestaurantControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private RestaurantSourcer restaurantSourcer;
+
     @Test
-    public void testRestaurantSearch() {
+    public void testRestaurantSearch() throws Exception {
+
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host("localhost")
@@ -35,16 +41,22 @@ public class RestaurantControllerTest {
                 .addPathSegment("restaurant")
                 .addQueryParameter("name", "chinese")
                 .addQueryParameter("amount", "5")
+                .addQueryParameter("radius", "1000")
                 .build();
 
         ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
         Restaurant[] restaurants = entity.getBody();
 
         assertEquals(restaurants.length, 5);
+        int prev = 0;
+        for (Restaurant restaurant: restaurants) {
+            assert (restaurant.getTime() >= prev);
+            prev = restaurant.getTime();
+        }
     }
 
     @Test
-    public void testGetRestaurantDetails() {
+    public void testGetRestaurantDetails() throws IOException {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host("localhost")

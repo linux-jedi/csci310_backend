@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Collections.sort;
+
 /**
  * Created by calebthomas on 2/28/19.
  */
@@ -63,6 +65,7 @@ public class RecipeSourcer {
             ));
         }
 
+        sort(recipes);
         return recipes;
     }
 
