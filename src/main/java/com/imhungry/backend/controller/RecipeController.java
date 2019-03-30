@@ -2,6 +2,7 @@ package com.imhungry.backend.controller;
 
 import com.imhungry.backend.Recipe;
 import com.imhungry.backend.RecipeSourcer;
+import com.imhungry.backend.UserListsJsonWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class RecipeController {
     private RecipeSourcer recipeSourcer;
 
     @Autowired
-    private ListManager listManager;
+    private UserListsJsonWrapper userListsJsonWrapper;
 
     @GetMapping
     List<Recipe> recipeSearch(@RequestParam(value = "name", defaultValue = "Chinese") String keyword,
@@ -29,7 +30,7 @@ public class RecipeController {
         int maxRecipes = Integer.valueOf(amount);
 
         List<Recipe> unsortedRecipes = recipeSourcer.getRecipes(keyword, maxRecipes);
-        return listManager.filterSortRecipeList(unsortedRecipes);
+        return userListsJsonWrapper.filterSortRecipeList(unsortedRecipes);
     }
 
     @GetMapping(value = "/{recipeId}")
