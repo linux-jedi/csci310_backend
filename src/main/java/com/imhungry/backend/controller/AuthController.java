@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by calebthomas on 3/26/19.
  */
 @RestController
+@Cross
 public class AuthController {
 
     @Autowired
