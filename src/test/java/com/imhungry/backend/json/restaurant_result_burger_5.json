@@ -1,0 +1,57 @@
+[
+  {
+    "id": "ChIJRaPCphDHwoARRKD4kcOtCA0",
+    "name": "The Habit Burger Grill",
+    "address": "2134 Sunset Blvd a, Los Angeles",
+    "phoneNumber": "(213) 413-0076",
+    "websiteUrl": "http://www.habitburger.com/",
+    "rating": 4.7,
+    "priceRating": "INEXPENSIVE",
+    "distance": "20 mins",
+    "time": 1219
+  },
+  {
+    "id": "ChIJj8k3FDnGwoARYPPFbgkxVqQ",
+    "name": "Umami Burger Arts District",
+    "address": "738 E 3rd St, Los Angeles",
+    "phoneNumber": "(323) 263-8626",
+    "websiteUrl": "https://www.umamiburger.com/locations/arts-district/?utm_source=Google%20My%20Business&utm_medium=Website%20Button&utm_campaign=Los%20Angeles",
+    "rating": 4.3,
+    "priceRating": "MODERATE",
+    "distance": "21 mins",
+    "time": 1231
+  },
+  {
+    "id": "ChIJdzrHbse4woARwbth0qmfStw",
+    "name": "Burger Lounge",
+    "address": "217 N Larchmont Blvd, Los Angeles",
+    "phoneNumber": "(323) 462-2310",
+    "websiteUrl": "http://www.burgerlounge.com/locations/location-larchmont",
+    "rating": 4.5,
+    "priceRating": "MODERATE",
+    "distance": "25 mins",
+    "time": 1475
+  },
+  {
+    "id": "ChIJH44C7C-5woARTqDnfcetcBE",
+    "name": "Umami Burger",
+    "address": "189 The Grove Dr Suite C-10, Los Angeles",
+    "phoneNumber": "(323) 954-8626",
+    "websiteUrl": "https://www.umamiburger.com/locations/grove/?utm_source=Google%20My%20Business&utm_medium=Website%20Button&utm_campaign=Los%20Angeles",
+    "rating": 4.2,
+    "priceRating": "MODERATE",
+    "distance": "28 mins",
+    "time": 1705
+  },
+  {
+    "id": "ChIJve0ky4fg3IARQ-qbXE8QzEw",
+    "name": "Hopdoddy Burger Bar",
+    "address": "401 Newport Center Dr #311, Newport Beach",
+    "phoneNumber": "(949) 640-2337",
+    "websiteUrl": "http://www.hopdoddy.com/",
+    "rating": 4.5,
+    "priceRating": "MODERATE",
+    "distance": "56 mins",
+    "time": 3353
+  }
+]

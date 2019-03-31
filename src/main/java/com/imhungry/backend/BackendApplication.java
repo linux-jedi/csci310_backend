@@ -36,6 +36,8 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getSingleRestaurant());
 		when(restaurantSourcer.searchRestaurants("chinese", 5, 10000))
 				.thenReturn(MockupUtilityMethods.getFiveChineseRestaurants());
+		when(restaurantSourcer.searchRestaurants("burger", 5, 10000))
+				.thenReturn(MockupUtilityMethods.getFiveBurgerRestaurants());
 		return restaurantSourcer;
 	}
 
@@ -48,6 +50,8 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getSingleRecipe());
 		when(recipeSourcer.getRecipes("chinese", 5))
 				.thenReturn(MockupUtilityMethods.getFiveChineseRecipes());
+		when(recipeSourcer.getRecipes("burger", 5))
+				.thenReturn(MockupUtilityMethods.getFiveBurgerRecipes());
 		return recipeSourcer;
 	}
 
@@ -58,6 +62,8 @@ public class BackendApplication {
 		CollageBuilder collageBuilder = Mockito.mock(CollageBuilder.class);
 		when(collageBuilder.getUrls("chinese" + " food", 10))
 				.thenReturn(MockupUtilityMethods.getImageURLsChineseFood());
+		when(collageBuilder.getUrls("burger" + " food", 10))
+				.thenReturn(MockupUtilityMethods.getImageURLsBurgerFood());
 
 		return collageBuilder;
 	}

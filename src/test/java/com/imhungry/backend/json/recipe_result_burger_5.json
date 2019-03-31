@@ -1,0 +1,47 @@
+[
+  {
+    "id": "219871",
+    "title": "Halloumi aubergine burgers with harissa relish",
+    "photoUrl": "PHOTO_URL_PLACEHOLDER",
+    "prepTime": 20,
+    "cookTime": 10,
+    "ingredients": [],
+    "instructions": "INSTRUCTION_PLACEHOLDER"
+  },
+  {
+    "id": "669071",
+    "title": "Grilled Monterey Jack Turkey Burger with Peaches and Blueberries",
+    "photoUrl": "PHOTO_URL_PLACEHOLDER",
+    "prepTime": 21,
+    "cookTime": 10,
+    "ingredients": [],
+    "instructions": "INSTRUCTION_PLACEHOLDER"
+  },
+  {
+    "id": "449835",
+    "title": "Kickin' Turkey Burger with Caramelized Onions and Spicy Sweet Mayo",
+    "photoUrl": "PHOTO_URL_PLACEHOLDER",
+    "prepTime": 35,
+    "cookTime": 10,
+    "ingredients": [],
+    "instructions": "INSTRUCTION_PLACEHOLDER"
+  },
+  {
+    "id": "864633",
+    "title": "Banh Mi Burgers with Spicy Sriracha Mayo",
+    "photoUrl": "PHOTO_URL_PLACEHOLDER",
+    "prepTime": 35,
+    "cookTime": 10,
+    "ingredients": [],
+    "instructions": "INSTRUCTION_PLACEHOLDER"
+  },
+  {
+    "id": "219957",
+    "title": "Carrot & sesame burgers",
+    "photoUrl": "PHOTO_URL_PLACEHOLDER",
+    "prepTime": 50,
+    "cookTime": 10,
+    "ingredients": [],
+    "instructions": "INSTRUCTION_PLACEHOLDER"
+  }
+]
