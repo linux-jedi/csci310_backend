@@ -33,7 +33,7 @@ public class CollageBuilder {
     @Value("${search.api.key}")
     private String SEARCH_API_KEY;
 
-    public BufferedImage buildCollage(List<URL> imageUrls, boolean rotate, int height, int width) throws IOException {
+    public BufferedImage buildCollage(List<URL> imageUrls, int height, int width) throws IOException {
         // load images from URLs
         List<BufferedImage> images = new ArrayList<>();
         for(URL url: imageUrls) {
@@ -66,9 +66,8 @@ public class CollageBuilder {
             BufferedImage currentImage = images.get(i);
             // Lay out images in numRows rows and numRows columns
             currentImage = resizeToArea(currentImage, area/(images.size()));
-            if(rotate) {
-                currentImage = randomRotate(currentImage, MIN_ROTATION, MAX_ROTATION);
-            }
+
+            currentImage = randomRotate(currentImage, MIN_ROTATION, MAX_ROTATION);
             int row = i / numRows;
             int col = i % numRows;
             // add image to canvas

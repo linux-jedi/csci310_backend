@@ -38,6 +38,8 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getHabitBurger());
 		when(restaurantSourcer.searchRestaurants("chinese", 5, 10000))
 				.thenReturn(MockupUtilityMethods.getFiveChineseRestaurants());
+		when(restaurantSourcer.searchRestaurants("chinese", 100, 10000))
+				.thenReturn(MockupUtilityMethods.getFiveChineseRestaurants());
 		when(restaurantSourcer.searchRestaurants("burger", 5, 10000))
 				.thenReturn(MockupUtilityMethods.getFiveBurgerRestaurants());
 		return restaurantSourcer;

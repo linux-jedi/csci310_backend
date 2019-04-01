@@ -58,6 +58,29 @@ public class RestaurantControllerTest {
     }
 
     @Test
+    public void testLargeRestaurantSearch() throws Exception {
+
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("restaurant")
+                .addQueryParameter("name", "burger")
+                .addQueryParameter("amount", "101")
+                .addQueryParameter("radius", "10000")
+                .build();
+
+        ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
+        Restaurant[] restaurants = entity.getBody();
+        
+        int prev = 0;
+        for (Restaurant restaurant: restaurants) {
+            assert (restaurant.getTime() >= prev);
+            prev = restaurant.getTime();
+        }
+    }
+
+    @Test
     public void testGetRestaurantDetails() throws IOException {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")

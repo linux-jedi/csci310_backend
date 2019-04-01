@@ -27,7 +27,7 @@ public class CollageController {
     public @ResponseBody byte[] getCollage(@RequestParam(value = "searchTerm", defaultValue = "chinese") String searchTerm) throws IOException {
         List<URL> imageUrls = collageBuilder.getUrls(searchTerm + " food", 10);
 
-        BufferedImage collageImage = collageBuilder.buildCollage(imageUrls, true, 400, 600);
+        BufferedImage collageImage = collageBuilder.buildCollage(imageUrls, 400, 600);
         ByteArrayOutputStream imageStream = new ByteArrayOutputStream();
         ImageIO.write(collageImage, "jpg", imageStream);
 

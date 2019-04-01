@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
@@ -67,6 +68,22 @@ public class ListControllerTest {
 		lists.setUserListsJsonWrapper(new UserListsJsonWrapper());
 		userListsRepository.save(lists);
 
+	}
+
+	@Test
+	public void invalidUserTest() {
+		HttpUrl url = new HttpUrl.Builder()
+				.scheme("http")
+				.host("localhost")
+				.port(port)
+				.addPathSegment("list")
+				.addQueryParameter("userId", "10000")
+				.build();
+
+		ResponseEntity<String> responseEntity = restTemplate.getForEntity(url.toString(), String.class);
+		HttpStatus statusCode  = responseEntity.getStatusCode();
+
+		assertEquals(404, statusCode.value());
 	}
 
 	@Test
