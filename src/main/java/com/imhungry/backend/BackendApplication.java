@@ -49,7 +49,9 @@ public class BackendApplication {
 	public RecipeSourcer getMockRecipeSourcer() throws Exception {
 		RecipeSourcer recipeSourcer = Mockito.mock(RecipeSourcer.class);
 		when(recipeSourcer.getRecipe("573147"))
-				.thenReturn(MockupUtilityMethods.getSingleRecipe());
+				.thenReturn(MockupUtilityMethods.getFriedRice());
+		when(recipeSourcer.getRecipe("573147"))
+				.thenReturn(MockupUtilityMethods.getAubgergineBurger());
 		when(recipeSourcer.getRecipes("chinese", 5))
 				.thenReturn(MockupUtilityMethods.getFiveChineseRecipes());
 		when(recipeSourcer.getRecipes("burger", 5))

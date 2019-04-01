@@ -18,53 +18,6 @@ public class MockupUtilityMethods {
 
 	private static Gson gson = new Gson();
 
-	public static Restaurant getNorthernCafe() throws IOException {
-		String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_chinese_5.json");
-		List<Restaurant> restaurants = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
-		return restaurants.get(0);
-	}
-
-	public static Restaurant getHabitBurger() throws IOException {
-		String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_burger_5.json");
-		List<Restaurant> restaurants = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
-		return restaurants.get(0);
-	}
-
-	public static List<Restaurant> getFiveChineseRestaurants() throws IOException {
-		String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_chinese_5.json");
-		return gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
-	}
-
-	public static Recipe getSingleRecipe() throws IOException{
-		String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_chinese_5.json");
-		List<Recipe> recipes = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
-		return recipes.get(1);
-	}
-
-	public static List<Recipe> getFiveChineseRecipes() throws IOException {
-		String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_chinese_5.json");
-		return gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
-	}
-
-	public static List<URL> getImageURLsChineseFood() throws IOException {
-		return getUrls("src/test/java/com/imhungry/backend/json/image_result_chinese_5.json");
-	}
-
-
-	public static List<Restaurant> getFiveBurgerRestaurants() throws IOException {
-		String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_burger_5.json");
-		return gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
-	}
-
-	public static List<Recipe> getFiveBurgerRecipes() throws IOException {
-		String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_burger_5.json");
-		return gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
-	}
-
-	public static List<URL> getImageURLsBurgerFood() throws IOException {
-		return getUrls("src/test/java/com/imhungry/backend/json/image_result_burger_5.json");
-	}
-
 	private static List<URL> getUrls(String s2) throws IOException {
 		String jsonString = readFile(s2);
 		List<String> stringies = gson.fromJson(jsonString, new TypeToken<List<String>>() {}.getType());
@@ -82,6 +35,56 @@ public class MockupUtilityMethods {
 		return new String(encoded);
 	}
 
+	public static List<Restaurant> getFiveChineseRestaurants() throws IOException {
+		String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_chinese_5.json");
+		return gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
+	}
+
+	public static List<Recipe> getFiveChineseRecipes() throws IOException {
+		String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_chinese_5.json");
+		return gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
+	}
+
+	public static List<Restaurant> getFiveBurgerRestaurants() throws IOException {
+		String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_burger_5.json");
+		return gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
+	}
+
+	public static List<Recipe> getFiveBurgerRecipes() throws IOException {
+		String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_burger_5.json");
+		return gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
+	}
+
+	public static List<URL> getImageURLsBurgerFood() throws IOException {
+		return getUrls("src/test/java/com/imhungry/backend/json/image_result_burger_5.json");
+	}
+
+	public static List<URL> getImageURLsChineseFood() throws IOException {
+		return getUrls("src/test/java/com/imhungry/backend/json/image_result_chinese_5.json");
+	}
 
 
+	public static Restaurant getNorthernCafe() throws IOException {
+		String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_chinese_5.json");
+		List<Restaurant> restaurants = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
+		return restaurants.get(0);
+	}
+
+	public static Restaurant getHabitBurger() throws IOException {
+		String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_burger_5.json");
+		List<Restaurant> restaurants = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
+		return restaurants.get(0);
+	}
+
+	public static Recipe getFriedRice() throws IOException{
+		String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_chinese_5.json");
+		List<Recipe> recipes = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
+		return recipes.get(1);
+	}
+
+	public static Recipe getAubgergineBurger() throws IOException {
+		String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_burger_5.json");
+		List<Recipe> recipes = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
+		return recipes.get(0);
+	}
 }
