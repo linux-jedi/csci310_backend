@@ -25,7 +25,7 @@ public class RestaurantController {
     private UserListsJsonWrapper userListsJsonWrapper;
 
     @GetMapping
-    public List<Restaurant> restaurantSearch(@RequestParam(value="name", defaultValue="Chinese") String keyword,
+    public List<Restaurant> restaurantSearch(@RequestParam(value="name", defaultValue="chinese") String keyword,
                                              @RequestParam(value="amount", defaultValue="5") String amount,
 											 @RequestParam(value="radius", defaultValue="10000") String radius,
                                              HttpSession session) throws Exception {

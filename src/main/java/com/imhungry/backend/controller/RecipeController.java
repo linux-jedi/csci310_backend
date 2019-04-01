@@ -24,7 +24,7 @@ public class RecipeController {
     private UserListsJsonWrapper userListsJsonWrapper;
 
     @GetMapping
-    List<Recipe> recipeSearch(@RequestParam(value = "name", defaultValue = "Chinese") String keyword,
+    List<Recipe> recipeSearch(@RequestParam(value = "name", defaultValue = "chinese") String keyword,
                               @RequestParam(value = "amount", defaultValue = "5") String amount) throws Exception {
 
         int maxRecipes = Integer.valueOf(amount);
