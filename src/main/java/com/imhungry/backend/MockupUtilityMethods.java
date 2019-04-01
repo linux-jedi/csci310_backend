@@ -63,7 +63,6 @@ public class MockupUtilityMethods {
 		return getUrls("src/test/java/com/imhungry/backend/json/image_result_chinese_5.json");
 	}
 
-
 	public static Restaurant getNorthernCafe() throws IOException {
 		String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_chinese_5.json");
 		List<Restaurant> restaurants = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());

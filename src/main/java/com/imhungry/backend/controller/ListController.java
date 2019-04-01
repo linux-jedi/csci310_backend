@@ -1,16 +1,16 @@
 package com.imhungry.backend.controller;
 
-import java.util.List;
-
 import com.imhungry.backend.HungryList;
-import com.imhungry.backend.UserListsJsonWrapper;
 import com.imhungry.backend.Recipe;
 import com.imhungry.backend.Restaurant;
+import com.imhungry.backend.UserListsJsonWrapper;
 import com.imhungry.backend.exception.UserListsNotFoundException;
 import com.imhungry.backend.model.UserLists;
 import com.imhungry.backend.repository.UserListsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by calebthomas on 2/28/19.
@@ -28,7 +28,7 @@ public class ListController {
     private UserListsRepository userListsRepository;
 
     @GetMapping
-    List<HungryList> getLists(@RequestParam("userId") String userId) {
+    public List<HungryList> getLists(@RequestParam("userId") String userId) {
         // Get List object from database
         UserLists userLists = getUserLists(userId);
 
