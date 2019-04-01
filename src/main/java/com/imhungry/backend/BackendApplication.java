@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
@@ -73,6 +74,8 @@ public class BackendApplication {
 		when(collageBuilder.getUrls("burger" + " food", 10))
 				.thenReturn(MockupUtilityMethods.getImageURLsBurgerFood());
 		when(collageBuilder.buildCollage(any(), anyInt(), anyInt())).thenCallRealMethod();
+		when(collageBuilder.resizeToArea(any(), anyDouble())).thenCallRealMethod();
+		when(collageBuilder.randomRotate(any(), anyInt(), anyInt())).thenCallRealMethod();
 
 		return collageBuilder;
 	}

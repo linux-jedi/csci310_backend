@@ -75,7 +75,7 @@ public class MockupUtilityMethods {
 		return restaurants.get(0);
 	}
 
-	public static Recipe getFriedRice() throws IOException{
+	public static Recipe getFriedRice() throws IOException {
 		String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_chinese_5.json");
 		List<Recipe> recipes = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
 		return recipes.get(1);

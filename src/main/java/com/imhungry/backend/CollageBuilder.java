@@ -81,7 +81,7 @@ public class CollageBuilder {
         return collageBuffer;
     }
 
-    private BufferedImage resizeToArea(BufferedImage image, double area) {
+    BufferedImage resizeToArea(BufferedImage image, double area) {
         // Calculate scaling factor
         int width = image.getWidth();
         int height = image.getHeight();
@@ -103,7 +103,7 @@ public class CollageBuilder {
         return scaledImage;
     }
 
-    private BufferedImage randomRotate(BufferedImage image, int minRotation, int maxRotation) {
+    BufferedImage randomRotate(BufferedImage image, int minRotation, int maxRotation) {
         // Choose random angle
         double angleDegrees = Math.random() * Math.abs(maxRotation - minRotation) + minRotation;
         double angleRadians = angleDegrees * (Math.PI / 180.0);
