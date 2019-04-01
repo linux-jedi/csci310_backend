@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
@@ -23,12 +24,12 @@ import static org.junit.Assert.assertFalse;
  */
 
 @RunWith(SpringRunner.class)
+@ActiveProfiles(profiles = "dev")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ListFiltrationTests {
 
 	@LocalServerPort
 	private int port;
-//	private int port = 8080;
 
 	@Autowired
 	private TestRestTemplate restTemplate;

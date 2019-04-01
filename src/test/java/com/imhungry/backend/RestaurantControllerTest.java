@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 @RunWith(SpringRunner.class)
+@ActiveProfiles(profiles = "dev")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RestaurantControllerTest {
 
@@ -39,9 +41,9 @@ public class RestaurantControllerTest {
                 .host("localhost")
                 .port(port)
                 .addPathSegment("restaurant")
-                .addQueryParameter("name", "chinese")
+                .addQueryParameter("name", "burger")
                 .addQueryParameter("amount", "5")
-                .addQueryParameter("radius", "1000")
+                .addQueryParameter("radius", "10000")
                 .build();
 
         ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);

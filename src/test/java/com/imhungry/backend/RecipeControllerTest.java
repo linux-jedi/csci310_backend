@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
@@ -17,6 +18,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 @RunWith(SpringRunner.class)
+@ActiveProfiles(profiles = "dev")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RecipeControllerTest {
 
@@ -33,7 +35,7 @@ public class RecipeControllerTest {
                 .host("localhost")
                 .port(port)
                 .addPathSegment("recipe")
-                .addQueryParameter("name", "chinese")
+                .addQueryParameter("name", "burger")
                 .addQueryParameter("amount", "5")
                 .build();
 
@@ -43,7 +45,7 @@ public class RecipeControllerTest {
         assertEquals(recipes.length, 5);
         int prev = 0;
         for (Recipe recipe: recipes) {
-            assert (recipe.getPrepTime() >= prev);
+            assert(recipe.getPrepTime() >= prev);
             prev = recipe.getPrepTime();
         }
     }

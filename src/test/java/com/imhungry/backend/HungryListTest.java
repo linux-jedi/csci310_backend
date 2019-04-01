@@ -2,6 +2,7 @@ package com.imhungry.backend;
 
 import com.google.maps.model.PriceLevel;
 import org.junit.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -12,6 +13,7 @@ import static org.junit.Assert.*;
 /**
  * Created by calebthomas on 3/7/19.
  */
+@ActiveProfiles(profiles = "dev")
 public class HungryListTest {
 
     @Test
