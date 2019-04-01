@@ -18,8 +18,14 @@ public class MockupUtilityMethods {
 
 	private static Gson gson = new Gson();
 
-	public static Restaurant getSingleRestaurant() throws IOException {
+	public static Restaurant getNorthernCafe() throws IOException {
 		String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_chinese_5.json");
+		List<Restaurant> restaurants = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
+		return restaurants.get(0);
+	}
+
+	public static Restaurant getHabitBurger() throws IOException {
+		String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_burger_5.json");
 		List<Restaurant> restaurants = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
 		return restaurants.get(0);
 	}
@@ -75,6 +81,7 @@ public class MockupUtilityMethods {
 		byte[] encoded = Files.readAllBytes(Paths.get(path));
 		return new String(encoded);
 	}
+
 
 
 }

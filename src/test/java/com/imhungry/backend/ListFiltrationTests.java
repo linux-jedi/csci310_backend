@@ -34,10 +34,11 @@ public class ListFiltrationTests {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	Gson gson = new Gson();
+
 	@Test
 	public void testFavoritesSorting() throws Exception {
 
-		Gson gson = new Gson();
 		try {
 			String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_chinese_5.json");
 			List<Restaurant> rests = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
@@ -52,12 +53,26 @@ public class ListFiltrationTests {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		try {
+			String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_chinese_5.json");
+			List<Recipe> recs = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
+			Recipe third_recipe = recs.get(2);
+
+			UserListsJsonWrapper userListsJsonWrapper = new UserListsJsonWrapper();
+			userListsJsonWrapper.getHungryLists().get(0).addRecipe(third_recipe);
+			List<Recipe> recipes = userListsJsonWrapper.filterSortRecipeList(recs);
+
+			assertEquals(third_recipe.getId(), recipes.get(0).getId());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testBlockFiltering() throws Exception {
 
-		Gson gson = new Gson();
 		try {
 			String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_chinese_5.json");
 			List<Recipe> recs = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
@@ -68,6 +83,21 @@ public class ListFiltrationTests {
 			List<Recipe> recipes = userListsJsonWrapper.filterSortRecipeList(recs);
 
 			assertFalse(recipes.stream().anyMatch(e -> (third_recipe.getId().equals(e.getId()))));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_chinese_5.json");
+			List<Restaurant> recs = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
+			Restaurant third_restaurant = recs.get(2);
+
+			UserListsJsonWrapper userListsJsonWrapper = new UserListsJsonWrapper();
+			userListsJsonWrapper.getHungryLists().get(2).addRestaurant(third_restaurant);
+			List<Restaurant> restaurants = userListsJsonWrapper.filterSortRestaurantList(recs);
+
+			assertFalse(restaurants.stream().anyMatch(e -> (third_restaurant.getId().equals(e.getId()))));
 
 		} catch (IOException e) {
 			e.printStackTrace();

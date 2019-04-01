@@ -33,7 +33,9 @@ public class BackendApplication {
 	public RestaurantSourcer getMockRestaurantSourcer() throws Exception {
 		RestaurantSourcer restaurantSourcer = Mockito.mock(RestaurantSourcer.class);
 		when(restaurantSourcer.getRestaurantDetails("ChIJW-yJPuPHwoARGh0NU_IeYpI"))
-				.thenReturn(MockupUtilityMethods.getSingleRestaurant());
+				.thenReturn(MockupUtilityMethods.getNorthernCafe());
+		when(restaurantSourcer.getRestaurantDetails("ChIJRaPCphDHwoARRKD4kcOtCA0"))
+				.thenReturn(MockupUtilityMethods.getHabitBurger());
 		when(restaurantSourcer.searchRestaurants("chinese", 5, 10000))
 				.thenReturn(MockupUtilityMethods.getFiveChineseRestaurants());
 		when(restaurantSourcer.searchRestaurants("burger", 5, 10000))
