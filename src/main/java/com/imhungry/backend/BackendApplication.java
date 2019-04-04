@@ -45,6 +45,9 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getFiveChineseRestaurants());
 		when(restaurantSourcer.searchRestaurants("burger", 5, 10000))
 				.thenReturn(MockupUtilityMethods.getFiveBurgerRestaurants());
+		when(restaurantSourcer.searchRestaurants("burger", 30, 10000))
+				.thenReturn(MockupUtilityMethods.getThirtyBurgerRestaurants());
+
 		return restaurantSourcer;
 	}
 
@@ -61,6 +64,8 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getFiveChineseRecipes());
 		when(recipeSourcer.getRecipes("burger", 5))
 				.thenReturn(MockupUtilityMethods.getFiveBurgerRecipes());
+		when(recipeSourcer.getRecipes("burger", 30))
+				.thenReturn(MockupUtilityMethods.getThirtyBurgerRecipes());
 		return recipeSourcer;
 	}
 

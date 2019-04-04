@@ -48,6 +48,20 @@ public class RecipeControllerTest {
             assert(recipe.getPrepTime() >= prev);
             prev = recipe.getPrepTime();
         }
+
+        url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("recipe")
+                .addQueryParameter("name", "burger")
+                .addQueryParameter("amount", "30")
+                .build();
+
+        entity = restTemplate.getForEntity(url.toString(), Recipe[].class);
+        recipes = entity.getBody();
+
+        assertEquals(recipes.length, 30);
     }
 
     @Test

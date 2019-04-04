@@ -36,6 +36,11 @@ public class Restaurant implements Comparable {
     @Override
     public int compareTo(Object o) {
         Restaurant r = (Restaurant) o;
-        return this.getTime() - r.getTime();
+        Integer this_t = this.getTime();
+        Integer r_t = r.getTime();
+
+        if (r_t == null) return 1;
+        if (this_t == null) return -1;
+        return this_t - r_t;
     }
 }

@@ -55,6 +55,21 @@ public class RestaurantControllerTest {
             assert (restaurant.getTime() >= prev);
             prev = restaurant.getTime();
         }
+
+        url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("restaurant")
+                .addQueryParameter("name", "burger")
+                .addQueryParameter("amount", "30")
+                .addQueryParameter("radius", "10000")
+                .build();
+
+        entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
+        restaurants = entity.getBody();
+
+        assertEquals(restaurants.length, 30);
     }
 
     @Test
@@ -72,7 +87,7 @@ public class RestaurantControllerTest {
 
         ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
         Restaurant[] restaurants = entity.getBody();
-        
+
         int prev = 0;
         for (Restaurant restaurant: restaurants) {
             assert (restaurant.getTime() >= prev);
