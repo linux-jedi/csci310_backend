@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = "prod")
+@ActiveProfiles(profiles = "dev")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RecipeControllerTest {
 
@@ -44,24 +44,10 @@ public class RecipeControllerTest {
 
         assertEquals(recipes.length, 5);
         int prev = 0;
-        for (Recipe recipe: recipes) {
-            assert(recipe.getPrepTime() >= prev);
+        for (Recipe recipe : recipes) {
+            assert (recipe.getPrepTime() >= prev);
             prev = recipe.getPrepTime();
         }
-
-        url = new HttpUrl.Builder()
-                .scheme("http")
-                .host("localhost")
-                .port(port)
-                .addPathSegment("recipe")
-                .addQueryParameter("name", "burger")
-                .addQueryParameter("amount", "30")
-                .build();
-
-        entity = restTemplate.getForEntity(url.toString(), Recipe[].class);
-        recipes = entity.getBody();
-
-        assertEquals(recipes.length, 30);
     }
 
     @Test

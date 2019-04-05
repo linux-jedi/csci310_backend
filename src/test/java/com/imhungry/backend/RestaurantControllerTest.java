@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
  */
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = "prod")
+@ActiveProfiles(profiles = "dev")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RestaurantControllerTest {
 
@@ -50,45 +50,6 @@ public class RestaurantControllerTest {
 
         assertNotNull(restaurants);
         assertEquals(restaurants.length, 5);
-        int prev = 0;
-        for (Restaurant restaurant: restaurants) {
-            assert (restaurant.getTime() >= prev);
-            prev = restaurant.getTime();
-        }
-
-        url = new HttpUrl.Builder()
-                .scheme("http")
-                .host("localhost")
-                .port(port)
-                .addPathSegment("restaurant")
-                .addQueryParameter("name", "burger")
-                .addQueryParameter("amount", "30")
-                .addQueryParameter("radius", "10000")
-                .build();
-
-        entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
-        restaurants = entity.getBody();
-
-        assertNotNull(restaurants);
-        assertEquals(restaurants.length, 30);
-    }
-
-    @Test
-    public void testLargeRestaurantSearch() {
-
-        HttpUrl url = new HttpUrl.Builder()
-                .scheme("http")
-                .host("localhost")
-                .port(port)
-                .addPathSegment("restaurant")
-                .addQueryParameter("name", "burger")
-                .addQueryParameter("amount", "101")
-                .addQueryParameter("radius", "10000")
-                .build();
-
-        ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
-        Restaurant[] restaurants = entity.getBody();
-
         int prev = 0;
         for (Restaurant restaurant: restaurants) {
             assert (restaurant.getTime() >= prev);
