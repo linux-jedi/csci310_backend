@@ -11,16 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by calebthomas on 3/7/19.
  */
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = "dev")
+@ActiveProfiles(profiles = "prod")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RestaurantControllerTest {
 
@@ -34,7 +33,7 @@ public class RestaurantControllerTest {
     private RestaurantSourcer restaurantSourcer;
 
     @Test
-    public void testRestaurantSearch() throws Exception {
+    public void testRestaurantSearch() {
 
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
@@ -49,16 +48,33 @@ public class RestaurantControllerTest {
         ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
         Restaurant[] restaurants = entity.getBody();
 
+        assertNotNull(restaurants);
         assertEquals(restaurants.length, 5);
         int prev = 0;
         for (Restaurant restaurant: restaurants) {
             assert (restaurant.getTime() >= prev);
             prev = restaurant.getTime();
         }
+
+        url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("restaurant")
+                .addQueryParameter("name", "burger")
+                .addQueryParameter("amount", "30")
+                .addQueryParameter("radius", "10000")
+                .build();
+
+        entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
+        restaurants = entity.getBody();
+
+        assertNotNull(restaurants);
+        assertEquals(restaurants.length, 30);
     }
 
     @Test
-    public void testLargeRestaurantSearch() throws Exception {
+    public void testLargeRestaurantSearch() {
 
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
@@ -72,7 +88,7 @@ public class RestaurantControllerTest {
 
         ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
         Restaurant[] restaurants = entity.getBody();
-        
+
         int prev = 0;
         for (Restaurant restaurant: restaurants) {
             assert (restaurant.getTime() >= prev);
@@ -81,7 +97,7 @@ public class RestaurantControllerTest {
     }
 
     @Test
-    public void testGetRestaurantDetails() throws IOException {
+    public void testGetRestaurantDetails() {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host("localhost")
