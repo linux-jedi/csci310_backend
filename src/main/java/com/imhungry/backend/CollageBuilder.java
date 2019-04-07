@@ -24,9 +24,6 @@ import java.util.List;
  */
 public class CollageBuilder {
 
-    public final int MAX_ROTATION = 45;
-    public final int MIN_ROTATION = -45;
-
     @Value("${engine.id}")
     private String ENGINE_ID;
 
@@ -67,6 +64,8 @@ public class CollageBuilder {
             // Lay out images in numRows rows and numRows columns
             currentImage = resizeToArea(currentImage, area/(images.size()));
 
+            int MAX_ROTATION = 45;
+            int MIN_ROTATION = -45;
             currentImage = randomRotate(currentImage, MIN_ROTATION, MAX_ROTATION);
             int row = i / numRows;
             int col = i % numRows;
@@ -167,6 +166,7 @@ public class CollageBuilder {
             Response res = client.newCall(request).execute();
 
             // Parse JSON response
+            assert res.body() != null;
             JsonObject myResponse = new JsonParser().parse(res.body().charStream()).getAsJsonObject();
             JsonArray items = myResponse.getAsJsonArray("items");
 

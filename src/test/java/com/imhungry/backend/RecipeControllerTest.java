@@ -44,8 +44,8 @@ public class RecipeControllerTest {
 
         assertEquals(recipes.length, 5);
         int prev = 0;
-        for (Recipe recipe: recipes) {
-            assert(recipe.getPrepTime() >= prev);
+        for (Recipe recipe : recipes) {
+            assert (recipe.getPrepTime() >= prev);
             prev = recipe.getPrepTime();
         }
 
