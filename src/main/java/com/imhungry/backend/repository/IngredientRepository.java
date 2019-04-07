@@ -12,5 +12,4 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
     Collection<Ingredient> findAllByUserId(long userId);
 
     void deleteById(long id);
-
 }
