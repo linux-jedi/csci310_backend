@@ -8,10 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
+import java.net.URL;
+
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -19,7 +19,6 @@ import static org.junit.Assert.assertTrue;
  */
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = "dev")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CollageControllerTest {
 
@@ -39,10 +38,9 @@ public class CollageControllerTest {
                 .addQueryParameter("searchTerm", "chinese")
                 .build();
 
-        ResponseEntity<byte[]> entity = restTemplate.getForEntity(url.toString(), byte[].class);
-        byte[] collageImage = entity.getBody();
+        ResponseEntity<URL[]> entity = restTemplate.getForEntity(url.toString(), URL[].class);
+        URL[] collageImages = entity.getBody();
 
-        assertTrue(collageImage.length > 500);
-        assertEquals(200, entity.getStatusCodeValue());
+        assertTrue(collageImages.length > 1);
     }
 }
