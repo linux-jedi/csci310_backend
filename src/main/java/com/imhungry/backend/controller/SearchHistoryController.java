@@ -35,7 +35,8 @@ public class SearchHistoryController {
 		int amountInt = Integer.parseInt(amount);
 		int radiusInt = Integer.parseInt(radius);
 
-		Optional<SearchQuery> searchQueryOption = searchHistoryRespository.findByUserIdAndSearchTermAndAmountAndRadius(userIdLong,
+		Optional<SearchQuery> searchQueryOption = searchHistoryRespository.findByUserIdAndSearchTermAndAmountAndRadius(
+				userIdLong,
 				searchTerm,
 				amountInt,
 				radiusInt);

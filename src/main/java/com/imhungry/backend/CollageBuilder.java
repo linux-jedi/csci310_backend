@@ -1,9 +1,6 @@
 package com.imhungry.backend;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -39,7 +36,7 @@ public class CollageBuilder {
                 .addQueryParameter("key", SEARCH_API_KEY)
                 .addQueryParameter("cx", ENGINE_ID)
                 .addQueryParameter("q", searchTerm)
-                .addQueryParameter("fields", "items/image/thumbnailLink")
+                .addQueryParameter("fields", "items/link")
                 .addQueryParameter("searchType", "image")
                 .addQueryParameter("num", "10")
                 .build();
@@ -67,10 +64,10 @@ public class CollageBuilder {
 
             // loop through the images
             for (JsonElement item : items){
-                JsonObject image = item.getAsJsonObject().getAsJsonObject("image");
+                JsonPrimitive image = item.getAsJsonObject().getAsJsonPrimitive("link");
 
                 // Get image thumbnail URL
-                URL link = new URL(image.get("thumbnailLink").getAsString());
+                URL link = new URL(image.getAsString());
                 imageUrls.add(link);
 
                 // finishes once images are downloaded
