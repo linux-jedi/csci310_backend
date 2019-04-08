@@ -81,7 +81,7 @@ public class BackendApplication {
 	@Bean
 	@Scope("singleton")
 	@Profile("prod")
-	public RestaurantSourcer restaurantSourcer() {
+	public RestaurantSourcer getRestaurantSourcer() {
 		return new RestaurantSourcer();
 	}
 
