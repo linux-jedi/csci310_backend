@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = "dev")
+@ActiveProfiles(profiles = "prod")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RecipeControllerTest {
 

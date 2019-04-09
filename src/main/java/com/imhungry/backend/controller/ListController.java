@@ -47,6 +47,26 @@ public class ListController {
         return selectList(userLists.getUserListsJsonWrapper(), listName);
     }
 
+    @PutMapping(value = "/{listName}")
+    public void updateList(@RequestParam("userId") String userId,
+                           @PathVariable String listName,
+                           @RequestBody HungryList updatedList) {
+
+        // Get list object from the database
+        UserLists userLists = getUserLists(userId);
+
+        switch(listName) {
+            case "FAVORITE":
+                userLists.getUserListsJsonWrapper().getHungryLists().set(0, updatedList);
+            case "EXPLORE":
+                userLists.getUserListsJsonWrapper().getHungryLists().set(1, updatedList);
+            case "BLOCK":
+                userLists.getUserListsJsonWrapper().getHungryLists().set(2, updatedList);
+        }
+
+        userListsRepository.saveAndFlush(userLists);
+    }
+
     @PostMapping(value = "/{listName}/restaurant")
     // TODO: add userId parameter
     public void addRestaurant(@PathVariable String listName,
@@ -85,7 +105,6 @@ public class ListController {
     }
 
     @DeleteMapping(value = "/{listName}/recipe")
-    // TODO: add userId parameter// TODO: add userId parameter
     public void removeRecipe(@PathVariable String listName,
                              @RequestParam("userId") String userId,
                              @RequestParam(value = "recipeId") String recipeId) {

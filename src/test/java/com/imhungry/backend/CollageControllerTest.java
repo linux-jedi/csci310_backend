@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
  */
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = "dev")
+@ActiveProfiles(profiles = "prod")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CollageControllerTest {
 

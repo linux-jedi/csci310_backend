@@ -6,6 +6,7 @@ import com.imhungry.backend.model.UserLists;
 import com.imhungry.backend.repository.UserListsRepository;
 import com.imhungry.backend.repository.UserRepository;
 import okhttp3.HttpUrl;
+import okhttp3.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -172,6 +175,53 @@ public class ListControllerTest {
 
 		assertEquals(favoritesList.getName(), HungryList.ListType.FAVORITE.toString());
 		assertEquals(favoritesList.getRestaurants().size(), 0);
+	}
+
+	@Test
+	public void testUpdateList() throws MalformedURLException {
+		// Setup test list
+		Restaurant r = new Restaurant(
+				"12345id",
+				"Panda Express",
+				"12345 McClintock Avenue",
+				"1-515-888-8888",
+				new URL("http://www.pandaexpress.com"),
+				5,
+				PriceLevel.MODERATE,
+				"9 minutes",
+				9 * 60
+		);
+
+		HungryList list = new HungryList(HungryList.ListType.FAVORITE.name());
+		list.addRestaurant(r);
+
+		// Update list request
+		HttpUrl putUrl = new HttpUrl.Builder()
+				.scheme("http")
+				.host("localhost")
+				.port(port)
+				.addPathSegment("list")
+				.addEncodedPathSegment(list.getName())
+				.addQueryParameter("userId", String.valueOf(cID))
+				.build();
+
+		HttpEntity<HungryList> putUpdate = new HttpEntity<>(list);
+		restTemplate.exchange(putUrl.toString(), HttpMethod.PUT, putUpdate, Void.class);
+
+		// Check that list was updated
+		HttpUrl url = new HttpUrl.Builder()
+				.scheme("http")
+				.host("localhost")
+				.port(port)
+				.addPathSegment("list")
+				.addPathSegment(HungryList.ListType.FAVORITE.toString())
+				.addQueryParameter("userId", String.valueOf(cID))
+				.build();
+
+		ResponseEntity<HungryList> responseEntity = restTemplate.getForEntity(url.toString(), HungryList.class);
+		HungryList favoritesList = responseEntity.getBody();
+
+		assertEquals(favoritesList.getRestaurants().size(), 1);
 	}
 
 	@Test

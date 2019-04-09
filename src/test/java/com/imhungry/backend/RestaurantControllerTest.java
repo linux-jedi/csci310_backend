@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -19,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
  */
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = "dev")
+@ActiveProfiles(profiles = "prod")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RestaurantControllerTest {
 
@@ -58,7 +60,7 @@ public class RestaurantControllerTest {
     }
 
     @Test
-    public void testGetRestaurantDetails() {
+    public void testGetRestaurantDetails() throws IOException {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host("localhost")
