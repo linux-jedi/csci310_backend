@@ -16,9 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyDouble;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
@@ -45,6 +42,9 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getFiveChineseRestaurants());
 		when(restaurantSourcer.searchRestaurants("burger", 5, 10000))
 				.thenReturn(MockupUtilityMethods.getFiveBurgerRestaurants());
+		when(restaurantSourcer.searchRestaurants("burger", 30, 10000))
+				.thenReturn(MockupUtilityMethods.getThirtyBurgerRestaurants());
+
 		return restaurantSourcer;
 	}
 
@@ -61,6 +61,8 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getFiveChineseRecipes());
 		when(recipeSourcer.getRecipes("burger", 5))
 				.thenReturn(MockupUtilityMethods.getFiveBurgerRecipes());
+		when(recipeSourcer.getRecipes("burger", 30))
+				.thenReturn(MockupUtilityMethods.getThirtyBurgerRecipes());
 		return recipeSourcer;
 	}
 
@@ -73,17 +75,13 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getImageURLsChineseFood());
 		when(collageBuilder.getUrls("burger" + " food", 10))
 				.thenReturn(MockupUtilityMethods.getImageURLsBurgerFood());
-		when(collageBuilder.buildCollage(any(), anyInt(), anyInt())).thenCallRealMethod();
-		when(collageBuilder.resizeToArea(any(), anyDouble())).thenCallRealMethod();
-		when(collageBuilder.randomRotate(any(), anyInt(), anyInt())).thenCallRealMethod();
-
 		return collageBuilder;
 	}
 
 	@Bean
 	@Scope("singleton")
 	@Profile("prod")
-	public RestaurantSourcer restaurantSourcer() {
+	public RestaurantSourcer getRestaurantSourcer() {
 		return new RestaurantSourcer();
 	}
 

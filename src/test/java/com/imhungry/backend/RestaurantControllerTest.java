@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by calebthomas on 3/7/19.
@@ -50,7 +49,6 @@ public class RestaurantControllerTest {
         ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
         Restaurant[] restaurants = entity.getBody();
 
-        assertNotNull(restaurants);
         assertEquals(restaurants.length, 5);
         int prev = 0;
         for (Restaurant restaurant: restaurants) {

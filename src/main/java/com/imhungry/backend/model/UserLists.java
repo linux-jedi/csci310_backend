@@ -19,3 +19,4 @@ public class UserLists extends AuditModel {
     @Column(columnDefinition = "json")
     private UserListsJsonWrapper userListsJsonWrapper;
 }
+

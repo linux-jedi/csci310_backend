@@ -55,6 +55,16 @@ public class MockupUtilityMethods {
 		return gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
 	}
 
+	public static List<Restaurant> getThirtyBurgerRestaurants() throws IOException {
+		String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_burger_30.json");
+		return gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
+	}
+
+	public static List<Recipe> getThirtyBurgerRecipes() throws IOException {
+		String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_burger_30.json");
+		return gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
+	}
+
 	public static List<URL> getImageURLsBurgerFood() throws IOException {
 		return getUrls("src/test/java/com/imhungry/backend/json/image_result_burger_5.json");
 	}

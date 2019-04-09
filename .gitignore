@@ -225,6 +225,3 @@ local.properties
 
 # Ignore API keys on commit
 setup.sh
-
-# Ignore procfile now that it's on the appropriate machines
-Procfile

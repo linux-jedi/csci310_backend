@@ -18,22 +18,16 @@ public class GroceryListController {
 
     @GetMapping
     public List<Ingredient> getGroceryList(@RequestParam(value = "userid") String userId) {
-        long userIdLong = -1;
-        try {
-            userIdLong = Long.parseLong(userId);
-        } catch (Exception e) {
-        }
+
+        Long userIdLong = Long.parseLong(userId);
+
         return (List<Ingredient>) ingredientRepository.findAllByUserId(userIdLong);
     }
 
     @PostMapping("/addItem")
     public void addIngredient(@RequestParam(value = "userid") String userId,
                               @RequestBody String ingredient) {
-        long userIdLong = -1;
-        try {
-            userIdLong = Long.parseLong(userId);
-        } catch (Exception e) {
-        }
+        long userIdLong = Long.parseLong(userId);
         addIngredient(ingredient, userIdLong);
     }
 
