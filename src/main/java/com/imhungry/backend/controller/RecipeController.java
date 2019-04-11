@@ -29,7 +29,7 @@ public class RecipeController {
 
         int maxRecipes = Integer.valueOf(amount);
 
-        List<Recipe> unsortedRecipes = recipeSourcer.getRecipes(keyword, maxRecipes);
+        List<Recipe> unsortedRecipes = recipeSourcer.searchRecipes(keyword, maxRecipes);
         return userListsJsonWrapper.filterSortRecipeList(unsortedRecipes);
     }
 

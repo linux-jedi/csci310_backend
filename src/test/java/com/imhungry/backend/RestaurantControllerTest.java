@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
-
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -20,7 +18,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = "prod")
+@ActiveProfiles(profiles = "dev")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RestaurantControllerTest {
 
@@ -58,7 +56,26 @@ public class RestaurantControllerTest {
     }
 
     @Test
-    public void testGetRestaurantDetails() throws IOException {
+    public void testTrueRestaurantSearch() {
+
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("restaurant")
+                .addQueryParameter("name", "burger")
+                .addQueryParameter("amount", "2")
+                .addQueryParameter("radius", "10000")
+                .build();
+
+        ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
+        Restaurant[] restaurants = entity.getBody();
+
+        assertEquals(restaurants.length, 2);
+    }
+
+    @Test
+    public void testGetRestaurantDetails() {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host("localhost")
@@ -72,4 +89,21 @@ public class RestaurantControllerTest {
 
         assertEquals(r.getId(), "ChIJW-yJPuPHwoARGh0NU_IeYpI");
     }
+
+    @Test
+    public void testTrueGetRestaurantDetails() {
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("restaurant")
+                .addPathSegment("ChIJdzrHbse4woARwbth0qmfStw")
+                .build();
+
+        ResponseEntity<Restaurant> entity = restTemplate.getForEntity(url.toString(), Restaurant.class);
+        Restaurant r = entity.getBody();
+
+        assertEquals(r.getId(), "ChIJdzrHbse4woARwbth0qmfStw");
+    }
+
 }

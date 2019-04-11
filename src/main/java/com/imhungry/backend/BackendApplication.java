@@ -36,14 +36,22 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getNorthernCafe());
 		when(restaurantSourcer.getRestaurantDetails("ChIJRaPCphDHwoARRKD4kcOtCA0"))
 				.thenReturn(MockupUtilityMethods.getHabitBurger());
+
+
 		when(restaurantSourcer.searchRestaurants("chinese", 5, 10000))
 				.thenReturn(MockupUtilityMethods.getFiveChineseRestaurants());
 		when(restaurantSourcer.searchRestaurants("chinese", 100, 10000))
 				.thenReturn(MockupUtilityMethods.getFiveChineseRestaurants());
+
 		when(restaurantSourcer.searchRestaurants("burger", 5, 10000))
 				.thenReturn(MockupUtilityMethods.getFiveBurgerRestaurants());
 		when(restaurantSourcer.searchRestaurants("burger", 30, 10000))
 				.thenReturn(MockupUtilityMethods.getThirtyBurgerRestaurants());
+
+		when(restaurantSourcer.searchRestaurants("burger", 2, 10000))
+				.thenCallRealMethod();
+		when(restaurantSourcer.getRestaurantDetails("ChIJdzrHbse4woARwbth0qmfStw"))
+				.thenCallRealMethod();
 
 		return restaurantSourcer;
 	}
@@ -57,12 +65,19 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getFriedRice());
 		when(recipeSourcer.getRecipe("219871"))
 				.thenReturn(MockupUtilityMethods.getAubgergineBurger());
-		when(recipeSourcer.getRecipes("chinese", 5))
+
+		when(recipeSourcer.searchRecipes("chinese", 5))
 				.thenReturn(MockupUtilityMethods.getFiveChineseRecipes());
-		when(recipeSourcer.getRecipes("burger", 5))
+
+		when(recipeSourcer.searchRecipes("burger", 5))
 				.thenReturn(MockupUtilityMethods.getFiveBurgerRecipes());
-		when(recipeSourcer.getRecipes("burger", 30))
+		when(recipeSourcer.searchRecipes("burger", 30))
 				.thenReturn(MockupUtilityMethods.getThirtyBurgerRecipes());
+
+		when(recipeSourcer.searchRecipes("burger", 2))
+				.thenCallRealMethod();
+		when(recipeSourcer.getRecipe("219957")).thenCallRealMethod();
+
 		return recipeSourcer;
 	}
 
@@ -75,6 +90,8 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getImageURLsChineseFood());
 		when(collageBuilder.getUrls("burger" + " food", 10))
 				.thenReturn(MockupUtilityMethods.getImageURLsBurgerFood());
+		when(collageBuilder.getUrls("burger-TEST" + " food", 10))
+				.thenCallRealMethod();
 		return collageBuilder;
 	}
 

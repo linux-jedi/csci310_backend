@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
  */
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = "prod")
+@ActiveProfiles(profiles = "dev")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CollageControllerTest {
 
@@ -37,7 +37,7 @@ public class CollageControllerTest {
                 .host("localhost")
                 .port(port)
                 .addPathSegment("collage")
-                .addQueryParameter("searchTerm", "chinese")
+                .addQueryParameter("searchTerm", "burger-TEST") // Runs a real query, not mocked
                 .build();
 
         ResponseEntity<URL[]> entity = restTemplate.getForEntity(url.toString(), URL[].class);
@@ -45,4 +45,6 @@ public class CollageControllerTest {
 
         assertTrue(collageImages.length > 1);
     }
+
+
 }

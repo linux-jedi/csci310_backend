@@ -58,7 +58,6 @@ public class CollageBuilder {
             Response res = client.newCall(request).execute();
 
             // Parse JSON response
-            assert res.body() != null;
             JsonObject myResponse = new JsonParser().parse(res.body().charStream()).getAsJsonObject();
             JsonArray items = myResponse.getAsJsonArray("items");
 

@@ -20,7 +20,7 @@ public class CollageController {
     private CollageBuilder collageBuilder;
 
     @GetMapping
-    public List<URL> getCollage(@RequestParam(value = "searchTerm") String searchTerm) throws IOException {
+    public List<URL> getCollage(@RequestParam(value = "searchTerm", defaultValue = "") String searchTerm) throws IOException {
         List<URL> imageUrls = collageBuilder.getUrls(searchTerm + " food", 10);
         return imageUrls;
     }

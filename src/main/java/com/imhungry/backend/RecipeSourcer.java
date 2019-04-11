@@ -25,7 +25,7 @@ public class RecipeSourcer {
     @Value("${recipe.api.key}")
     private String API_KEY;
 
-    public List<Recipe> getRecipes(String keyword, int maxRecipes) throws Exception {
+    public List<Recipe> searchRecipes(String keyword, int maxRecipes) throws Exception {
         List<Recipe> recipes = new ArrayList<>();
 
         // Build request

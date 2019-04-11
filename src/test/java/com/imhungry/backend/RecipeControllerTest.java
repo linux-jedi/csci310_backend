@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = "prod")
+@ActiveProfiles(profiles = "dev")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RecipeControllerTest {
 
@@ -65,6 +65,23 @@ public class RecipeControllerTest {
     }
 
     @Test
+    public void testTrueRecipeSearch() {
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("recipe")
+                .addQueryParameter("name", "burger")
+                .addQueryParameter("amount", "2")
+                .build();
+
+        ResponseEntity<Recipe[]> entity = restTemplate.getForEntity(url.toString(), Recipe[].class);
+        Recipe[] recipes = entity.getBody();
+
+        assertEquals(recipes.length, 2);
+    }
+
+    @Test
     public void testGetRecipeDetails() {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
@@ -78,5 +95,21 @@ public class RecipeControllerTest {
         Recipe r = entity.getBody();
 
         assertEquals(r.getId(), "573147");
+    }
+
+    @Test
+    public void testTrueRecipeDetails() {
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("recipe")
+                .addPathSegment("219957")
+                .build();
+
+        ResponseEntity<Recipe> entity = restTemplate.getForEntity(url.toString(), Recipe.class);
+        Recipe r = entity.getBody();
+
+        assertEquals(r.getId(), "219957");
     }
 }

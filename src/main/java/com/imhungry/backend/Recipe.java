@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
-public class Recipe implements Comparable {
+public class Recipe implements Comparable, ListItem {
 
     private final String id;
 
@@ -31,9 +31,6 @@ public class Recipe implements Comparable {
         Recipe r = (Recipe) o;
         Integer this_t = this.getPrepTime();
         Integer r_t = r.getPrepTime();
-
-        if (r_t == null) return 1;
-        if (this_t == null) return -1;
         return this_t - r_t;
     }
 }

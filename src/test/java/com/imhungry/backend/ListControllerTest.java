@@ -6,7 +6,6 @@ import com.imhungry.backend.model.UserLists;
 import com.imhungry.backend.repository.UserListsRepository;
 import com.imhungry.backend.repository.UserRepository;
 import okhttp3.HttpUrl;
-import okhttp3.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -179,6 +178,13 @@ public class ListControllerTest {
 
 	@Test
 	public void testUpdateList() throws MalformedURLException {
+		checkUpdateList(HungryList.ListType.FAVORITE.toString());
+		checkUpdateList(HungryList.ListType.BLOCK.toString());
+		checkUpdateList(HungryList.ListType.EXPLORE.toString());
+
+	}
+
+	private void checkUpdateList(String listName) throws MalformedURLException {
 		// Setup test list
 		Restaurant r = new Restaurant(
 				"12345id",
@@ -192,7 +198,7 @@ public class ListControllerTest {
 				9 * 60
 		);
 
-		HungryList list = new HungryList(HungryList.ListType.FAVORITE.name());
+		HungryList list = new HungryList(listName);
 		list.addRestaurant(r);
 
 		// Update list request
@@ -214,7 +220,7 @@ public class ListControllerTest {
 				.host("localhost")
 				.port(port)
 				.addPathSegment("list")
-				.addPathSegment(HungryList.ListType.FAVORITE.toString())
+				.addPathSegment(listName)
 				.addQueryParameter("userId", String.valueOf(cID))
 				.build();
 

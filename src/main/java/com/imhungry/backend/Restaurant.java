@@ -13,7 +13,7 @@ import java.net.URL;
 @Data
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Restaurant implements Comparable {
+public class Restaurant implements Comparable, ListItem {
 
     private final String id;
 
@@ -38,9 +38,7 @@ public class Restaurant implements Comparable {
         Restaurant r = (Restaurant) o;
         Integer this_t = this.getTime();
         Integer r_t = r.getTime();
-
-        if (r_t == null) return 1;
-        if (this_t == null) return -1;
         return this_t - r_t;
     }
+
 }

@@ -8,6 +8,7 @@ import lombok.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Created by calebthomas on 2/22/19.
@@ -28,34 +29,46 @@ public class HungryList {
     private final String name;
 
     @NonNull
-    private final List<Restaurant> restaurants;
+    private final List<ListItem> items;
 
-    @NonNull
-    private final List<Recipe> recipes;
-
-    public HungryList(String name) {
+    HungryList(String name) {
         this.name = name;
-        restaurants = new ArrayList<>();
-        recipes = new ArrayList<>();
+        items = new ArrayList<>();
+    }
+
+    List<Restaurant> getRestaurants() {
+        List<Restaurant> res = items.stream()
+                .filter(item -> item.getClass().equals(Restaurant.class))
+                .map(item -> (Restaurant) item)
+                .collect(Collectors.toList());
+        return res;
+    }
+
+    List<Recipe> getRecipes() {
+        List<Recipe> res = items.stream()
+                .filter(item -> item.getClass().equals(Recipe.class))
+                .map(item -> (Recipe) item)
+                .collect(Collectors.toList());
+        return res;
     }
 
     public void addRestaurant(Restaurant restaurant) {
-        restaurants.add(restaurant);
+        items.add(restaurant);
     }
 
     public void removeRestaurant(String restaurantId) {
-        Predicate<Restaurant> isMatch = restaurant -> restaurant.getId().equals(restaurantId);
+        Predicate<ListItem> isMatch = restaurant -> restaurant.getId().equals(restaurantId);
 
-        restaurants.removeIf(isMatch);
+        items.removeIf(isMatch);
     }
 
     public void addRecipe(Recipe recipe) {
-        recipes.add(recipe);
+        items.add(recipe);
     }
 
     public void removeRecipe(String recipeId) {
-        Predicate<Recipe> isMatch = recipe -> recipe.getId().equals(recipeId);
+        Predicate<ListItem> isMatch = recipe -> recipe.getId().equals(recipeId);
 
-        recipes.removeIf(isMatch);
+        items.removeIf(isMatch);
     }
 }
