@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HungryList {
 
-    public static enum ListType {
+    public enum ListType {
         FAVORITE,
         EXPLORE,
         BLOCK

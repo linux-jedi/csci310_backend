@@ -18,6 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.when;
@@ -36,6 +37,31 @@ public class BackendApplication {
 	@Profile("dev")
 	public RestaurantSourcer getMockRestaurantSourcer() throws Exception {
 		RestaurantSourcer restaurantSourcer = Mockito.mock(RestaurantSourcer.class);
+		createRestaurantMocks(restaurantSourcer);
+
+		return restaurantSourcer;
+	}
+
+	@Bean
+	@Scope("singleton")
+	@Profile("dev")
+	public RecipeSourcer getMockRecipeSourcer() throws Exception {
+		RecipeSourcer recipeSourcer = Mockito.mock(RecipeSourcer.class);
+		createRecipeMocks(recipeSourcer);
+
+		return recipeSourcer;
+	}
+
+	@Bean
+	@Scope("singleton")
+	@Profile("dev")
+	public CollageBuilder getMockCollageBuilder() throws Exception {
+		CollageBuilder collageBuilder = Mockito.mock(CollageBuilder.class);
+		createCollageMocks(collageBuilder);
+		return collageBuilder;
+	}
+
+	private void createRestaurantMocks(RestaurantSourcer restaurantSourcer) throws Exception {
 		when(restaurantSourcer.getRestaurantDetails("ChIJW-yJPuPHwoARGh0NU_IeYpI"))
 				.thenReturn(MockupUtilityMethods.getNorthernCafe());
 		when(restaurantSourcer.getRestaurantDetails("ChIJRaPCphDHwoARRKD4kcOtCA0"))
@@ -56,15 +82,9 @@ public class BackendApplication {
 				.thenCallRealMethod();
 		when(restaurantSourcer.getRestaurantDetails("ChIJdzrHbse4woARwbth0qmfStw"))
 				.thenCallRealMethod();
-
-		return restaurantSourcer;
 	}
 
-	@Bean
-	@Scope("singleton")
-	@Profile("dev")
-	public RecipeSourcer getMockRecipeSourcer() throws Exception {
-		RecipeSourcer recipeSourcer = Mockito.mock(RecipeSourcer.class);
+	private void createRecipeMocks(RecipeSourcer recipeSourcer) throws Exception {
 		when(recipeSourcer.getRecipe("573147"))
 				.thenReturn(MockupUtilityMethods.getFriedRice());
 		when(recipeSourcer.getRecipe("219871"))
@@ -81,22 +101,15 @@ public class BackendApplication {
 		when(recipeSourcer.searchRecipes("burger", 2))
 				.thenCallRealMethod();
 		when(recipeSourcer.getRecipe("219957")).thenCallRealMethod();
-
-		return recipeSourcer;
 	}
 
-	@Bean
-	@Scope("singleton")
-	@Profile("dev")
-	public CollageBuilder getMockCollageBuilder() throws Exception {
-		CollageBuilder collageBuilder = Mockito.mock(CollageBuilder.class);
+	private void createCollageMocks(CollageBuilder collageBuilder) throws IOException {
 		when(collageBuilder.getUrls("chinese" + " food", 10))
 				.thenReturn(MockupUtilityMethods.getImageURLsChineseFood());
 		when(collageBuilder.getUrls("burger" + " food", 10))
 				.thenReturn(MockupUtilityMethods.getImageURLsBurgerFood());
 		when(collageBuilder.getUrls("burger-TEST" + " food", 10))
 				.thenCallRealMethod();
-		return collageBuilder;
 	}
 
 	@Bean
@@ -119,7 +132,6 @@ public class BackendApplication {
 	public RecipeSourcer getRecipeSourcer() {
 		return new RecipeSourcer();
 	}
-
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {

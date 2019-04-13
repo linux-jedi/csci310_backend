@@ -40,7 +40,7 @@ public class ListFiltrationTests {
 	Gson gson = new Gson();
 
 	@Test
-	public void testFavoritesSorting() throws Exception {
+	public void testFavoritesSorting() {
 
 		try {
 			String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_chinese_5.json");
@@ -74,7 +74,7 @@ public class ListFiltrationTests {
 	}
 
 	@Test
-	public void testBlockFiltering() throws Exception {
+	public void testBlockFiltering() {
 
 		try {
 			String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_chinese_5.json");
