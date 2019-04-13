@@ -1,8 +1,6 @@
 package com.imhungry.backend;
 
 import com.imhungry.backend.model.User;
-import com.imhungry.backend.repository.UserListsRepository;
-import com.imhungry.backend.repository.UserRepository;
 import okhttp3.HttpUrl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,13 +10,10 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by calebthomas on 3/7/19.
@@ -34,15 +29,6 @@ public class AuthControllerTest {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-	@Autowired
-	private UserListsRepository userListsRepository;
 
 	@Test
 	public void getRegistrationTest() {

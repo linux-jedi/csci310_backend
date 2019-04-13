@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by calebthomas on 3/7/19.
@@ -43,6 +44,7 @@ public class RecipeControllerTest {
         ResponseEntity<Recipe[]> entity = restTemplate.getForEntity(url.toString(), Recipe[].class);
         Recipe[] recipes = entity.getBody();
 
+        assertNotNull(recipes);
         assertEquals(recipes.length, 5);
         int prev = 0;
         for (Recipe recipe : recipes) {
@@ -62,6 +64,7 @@ public class RecipeControllerTest {
         entity = restTemplate.getForEntity(url.toString(), Recipe[].class);
         recipes = entity.getBody();
 
+        assertNotNull(recipes);
         assertEquals(recipes.length, 30);
     }
 
@@ -79,6 +82,7 @@ public class RecipeControllerTest {
         ResponseEntity<Recipe[]> entity = restTemplate.getForEntity(url.toString(), Recipe[].class);
         Recipe[] recipes = entity.getBody();
 
+        assertNotNull(recipes);
         assertEquals(recipes.length, 2);
     }
 
@@ -93,9 +97,10 @@ public class RecipeControllerTest {
                 .build();
 
         ResponseEntity<Recipe> entity = restTemplate.getForEntity(url.toString(), Recipe.class);
-        Recipe r = entity.getBody();
+        Recipe recipe = entity.getBody();
 
-        assertEquals(r.getId(), "573147");
+        assertNotNull(recipe);
+        assertEquals(recipe.getId(), "573147");
     }
 
     @Test
@@ -109,8 +114,9 @@ public class RecipeControllerTest {
                 .build();
 
         ResponseEntity<Recipe> entity = restTemplate.getForEntity(url.toString(), Recipe.class);
-        Recipe r = entity.getBody();
+        Recipe recipe = entity.getBody();
 
-        assertEquals(r.getId(), "219957");
+        assertNotNull(recipe);
+        assertEquals(recipe.getId(), "219957");
     }
 }

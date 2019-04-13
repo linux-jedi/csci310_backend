@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by calebthomas on 3/7/19.
@@ -83,7 +84,7 @@ public class ListControllerTest {
 				.host("localhost")
 				.port(port)
 				.addPathSegment("list")
-				.addQueryParameter("userId", "10000")
+				.addQueryParameter("userId", "-1")
 				.build();
 
 		ResponseEntity<String> responseEntity = restTemplate.getForEntity(url.toString(), String.class);
@@ -105,6 +106,7 @@ public class ListControllerTest {
 		ResponseEntity<HungryList[]> responseEntity = restTemplate.getForEntity(url.toString(), HungryList[].class);
 		HungryList[] lists = responseEntity.getBody();
 
+		assertNotNull(lists);
 		assertEquals(lists.length, 3);
 	}
 
@@ -122,6 +124,7 @@ public class ListControllerTest {
 		ResponseEntity<HungryList> responseEntity = restTemplate.getForEntity(url.toString(), HungryList.class);
 		HungryList favoritesList = responseEntity.getBody();
 
+		assertNotNull(favoritesList);
 		assertEquals(favoritesList.getName(), HungryList.ListType.EXPLORE.toString());
 		assertEquals(favoritesList.getRestaurants().size(), 0);
 	}
@@ -140,6 +143,7 @@ public class ListControllerTest {
 		ResponseEntity<HungryList> responseEntity = restTemplate.getForEntity(url.toString(), HungryList.class);
 		HungryList favoritesList = responseEntity.getBody();
 
+		assertNotNull(favoritesList);
 		assertEquals(favoritesList.getName(), HungryList.ListType.BLOCK.toString());
 		assertEquals(favoritesList.getRestaurants().size(), 0);
 	}
@@ -158,6 +162,7 @@ public class ListControllerTest {
 		ResponseEntity<HungryList> responseEntity = restTemplate.getForEntity(url.toString(), HungryList.class);
 		HungryList favoritesList = responseEntity.getBody();
 
+		assertNotNull(favoritesList);
 		assertEquals(favoritesList.getName(), HungryList.ListType.FAVORITE.toString());
 		assertEquals(favoritesList.getRestaurants().size(), 0);
 	}
@@ -176,6 +181,7 @@ public class ListControllerTest {
 		ResponseEntity<HungryList> responseEntity = restTemplate.getForEntity(url.toString(), HungryList.class);
 		HungryList favoritesList = responseEntity.getBody();
 
+		assertNotNull(favoritesList);
 		assertEquals(favoritesList.getName(), HungryList.ListType.FAVORITE.toString());
 		assertEquals(favoritesList.getRestaurants().size(), 0);
 	}
@@ -231,6 +237,7 @@ public class ListControllerTest {
 		ResponseEntity<HungryList> responseEntity = restTemplate.getForEntity(url.toString(), HungryList.class);
 		HungryList favoritesList = responseEntity.getBody();
 
+		assertNotNull(favoritesList);
 		assertEquals(favoritesList.getRestaurants().size(), 1);
 	}
 
@@ -316,6 +323,7 @@ public class ListControllerTest {
 		ResponseEntity<HungryList> responseEntity = restTemplate.getForEntity(url.toString(), HungryList.class);
 		HungryList favoritesList = responseEntity.getBody();
 
+		assertNotNull(favoritesList);
 		assertEquals(favoritesList.getItems().size(), 1);
 	}
 
