@@ -1,4 +1,4 @@
-package com.imhungry.backend;
+package com.imhungry.backend.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -31,12 +31,12 @@ public class HungryList {
     @NonNull
     private final List<ListItem> items;
 
-    HungryList(String name) {
+    public HungryList(String name) {
         this.name = name;
         items = new ArrayList<>();
     }
 
-    List<Restaurant> getRestaurants() {
+    public List<Restaurant> getRestaurants() {
         List<Restaurant> res = items.stream()
                 .filter(item -> item.getClass().equals(Restaurant.class))
                 .map(item -> (Restaurant) item)
@@ -44,7 +44,7 @@ public class HungryList {
         return res;
     }
 
-    List<Recipe> getRecipes() {
+    public List<Recipe> getRecipes() {
         List<Recipe> res = items.stream()
                 .filter(item -> item.getClass().equals(Recipe.class))
                 .map(item -> (Recipe) item)

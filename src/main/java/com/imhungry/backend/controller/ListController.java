@@ -1,9 +1,9 @@
 package com.imhungry.backend.controller;
 
-import com.imhungry.backend.HungryList;
-import com.imhungry.backend.Recipe;
-import com.imhungry.backend.Restaurant;
-import com.imhungry.backend.UserListsJsonWrapper;
+import com.imhungry.backend.data.HungryList;
+import com.imhungry.backend.data.Recipe;
+import com.imhungry.backend.data.Restaurant;
+import com.imhungry.backend.utils.UserListsJsonWrapper;
 import com.imhungry.backend.exception.UserListsNotFoundException;
 import com.imhungry.backend.model.UserLists;
 import com.imhungry.backend.repository.UserListsRepository;
@@ -58,11 +58,15 @@ public class ListController {
         switch(listName) {
             case "FAVORITE":
                 userLists.getUserListsJsonWrapper().getHungryLists().set(0, updatedList);
+                break;
             case "EXPLORE":
                 userLists.getUserListsJsonWrapper().getHungryLists().set(1, updatedList);
+                break;
             case "BLOCK":
                 userLists.getUserListsJsonWrapper().getHungryLists().set(2, updatedList);
+                break;
         }
+
 
         userListsRepository.saveAndFlush(userLists);
     }

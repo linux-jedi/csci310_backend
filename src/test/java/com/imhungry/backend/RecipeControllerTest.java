@@ -1,5 +1,6 @@
 package com.imhungry.backend;
 
+import com.imhungry.backend.data.Recipe;
 import okhttp3.HttpUrl;
 import org.junit.Test;
 import org.junit.runner.RunWith;

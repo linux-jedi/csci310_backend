@@ -1,4 +1,4 @@
-package com.imhungry.backend;
+package com.imhungry.backend.sourcer;
 
 import com.google.gson.*;
 import okhttp3.HttpUrl;

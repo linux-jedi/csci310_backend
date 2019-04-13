@@ -2,6 +2,9 @@ package com.imhungry.backend;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.imhungry.backend.data.Recipe;
+import com.imhungry.backend.data.Restaurant;
+import com.imhungry.backend.utils.UserListsJsonWrapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

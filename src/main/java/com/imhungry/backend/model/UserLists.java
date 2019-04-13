@@ -1,6 +1,6 @@
 package com.imhungry.backend.model;
 
-import com.imhungry.backend.UserListsJsonWrapper;
+import com.imhungry.backend.utils.UserListsJsonWrapper;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 

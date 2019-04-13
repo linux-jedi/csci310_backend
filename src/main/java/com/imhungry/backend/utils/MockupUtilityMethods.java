@@ -1,7 +1,9 @@
-package com.imhungry.backend;
+package com.imhungry.backend.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.imhungry.backend.data.Recipe;
+import com.imhungry.backend.data.Restaurant;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 

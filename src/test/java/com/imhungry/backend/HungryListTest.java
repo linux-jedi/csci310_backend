@@ -1,6 +1,9 @@
 package com.imhungry.backend;
 
 import com.google.maps.model.PriceLevel;
+import com.imhungry.backend.data.HungryList;
+import com.imhungry.backend.data.Recipe;
+import com.imhungry.backend.data.Restaurant;
 import org.junit.Test;
 import org.springframework.test.context.ActiveProfiles;
 

@@ -1,10 +1,14 @@
 package com.imhungry.backend;
 
 import com.google.maps.model.PriceLevel;
+import com.imhungry.backend.data.HungryList;
+import com.imhungry.backend.data.Recipe;
+import com.imhungry.backend.data.Restaurant;
 import com.imhungry.backend.model.User;
 import com.imhungry.backend.model.UserLists;
 import com.imhungry.backend.repository.UserListsRepository;
 import com.imhungry.backend.repository.UserRepository;
+import com.imhungry.backend.utils.UserListsJsonWrapper;
 import okhttp3.HttpUrl;
 import org.junit.Before;
 import org.junit.Test;

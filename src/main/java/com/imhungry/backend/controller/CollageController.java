@@ -1,6 +1,6 @@
 package com.imhungry.backend.controller;
 
-import com.imhungry.backend.CollageBuilder;
+import com.imhungry.backend.sourcer.CollageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

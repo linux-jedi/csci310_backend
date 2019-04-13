@@ -1,10 +1,11 @@
-package com.imhungry.backend;
+package com.imhungry.backend.sourcer;
 
 import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.NearbySearchRequest;
 import com.google.maps.PlaceDetailsRequest;
 import com.google.maps.model.*;
+import com.imhungry.backend.data.Restaurant;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;

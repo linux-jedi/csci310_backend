@@ -1,6 +1,6 @@
 package com.imhungry.backend.controller;
 
-import com.imhungry.backend.UserListsJsonWrapper;
+import com.imhungry.backend.utils.UserListsJsonWrapper;
 import com.imhungry.backend.exception.UserAlreadyExistsException;
 import com.imhungry.backend.exception.UserNotFoundException;
 import com.imhungry.backend.model.User;

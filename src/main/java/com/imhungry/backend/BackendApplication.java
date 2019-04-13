@@ -1,5 +1,9 @@
 package com.imhungry.backend;
 
+import com.imhungry.backend.sourcer.CollageBuilder;
+import com.imhungry.backend.sourcer.RecipeSourcer;
+import com.imhungry.backend.sourcer.RestaurantSourcer;
+import com.imhungry.backend.utils.MockupUtilityMethods;
 import org.mockito.Mockito;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

@@ -1,4 +1,4 @@
-package com.imhungry.backend;
+package com.imhungry.backend.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

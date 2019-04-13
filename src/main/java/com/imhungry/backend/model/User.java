@@ -1,9 +1,7 @@
 package com.imhungry.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.imhungry.backend.UserListsJsonWrapper;
 import lombok.Data;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 

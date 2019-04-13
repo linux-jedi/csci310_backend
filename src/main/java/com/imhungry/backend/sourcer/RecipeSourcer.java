@@ -1,6 +1,7 @@
-package com.imhungry.backend;
+package com.imhungry.backend.sourcer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.imhungry.backend.data.Recipe;
 import com.imhungry.backend.spoonacular.BasicRecipe;
 import com.imhungry.backend.spoonacular.DetailedRecipe;
 import com.imhungry.backend.spoonacular.Ingredient;

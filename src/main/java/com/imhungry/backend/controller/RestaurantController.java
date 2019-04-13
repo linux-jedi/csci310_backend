@@ -4,9 +4,9 @@ package com.imhungry.backend.controller;
  * Created by calebthomas on 2/22/19.
  */
 
-import com.imhungry.backend.UserListsJsonWrapper;
-import com.imhungry.backend.Restaurant;
-import com.imhungry.backend.RestaurantSourcer;
+import com.imhungry.backend.utils.UserListsJsonWrapper;
+import com.imhungry.backend.data.Restaurant;
+import com.imhungry.backend.sourcer.RestaurantSourcer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

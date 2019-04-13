@@ -1,4 +1,4 @@
-package com.imhungry.backend;
+package com.imhungry.backend.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.maps.model.PriceLevel;

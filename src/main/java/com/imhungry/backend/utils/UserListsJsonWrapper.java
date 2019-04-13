@@ -1,5 +1,8 @@
-package com.imhungry.backend;
+package com.imhungry.backend.utils;
 
+import com.imhungry.backend.data.HungryList;
+import com.imhungry.backend.data.Recipe;
+import com.imhungry.backend.data.Restaurant;
 import lombok.Getter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
