@@ -1,5 +1,6 @@
 package com.imhungry.backend.controller;
 
+import com.imhungry.backend.exception.EmailAlreadyExistsException;
 import com.imhungry.backend.utils.UserListsJsonWrapper;
 import com.imhungry.backend.exception.UserAlreadyExistsException;
 import com.imhungry.backend.exception.UserNotFoundException;
@@ -36,7 +37,7 @@ public class AuthController {
                       @RequestParam("password") String password) {
 
         // Hash password
-        String hashedPassword = passwordEncoder.encode(password);
+        passwordEncoder.encode(password);
 
         // get user from database
         validateUserExists(username);
@@ -60,11 +61,14 @@ public class AuthController {
             throw new UserAlreadyExistsException(username);
         }
 
-        // TODO: Check if email already exists
+        if (userEmailExists(email)) {
+            throw new EmailAlreadyExistsException(email);
+        }
 
         // Hash password
         String hashedPassword = passwordEncoder.encode(password);
 
+        // Create new user and user list
         User user = new User();
         user.setUsername(username);
         user.setPassword(hashedPassword);
@@ -79,23 +83,16 @@ public class AuthController {
         return user;
     }
 
-    /**
-     * Used to check if username exists in database without
-     * throwing an exception
-     *
-     * @param username String representation of username
-     * @return True if username already exists in db
-     */
     private boolean userExists(String username) {
         return userRepository.findByUsername(username)
                 .isPresent();
     }
 
-    /**
-     * Throws exception if username already exists
-     *
-     * @param username Username to check
-     */
+    private boolean userEmailExists(String email) {
+        return userRepository.findByEmail(email)
+                .isPresent();
+    }
+
     private void validateUserExists(String username) {
         if(!userExists(username)) {
             throw new UserNotFoundException(username);

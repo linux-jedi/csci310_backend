@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.Long.*;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/grocery")
@@ -19,22 +21,21 @@ public class GroceryListController {
     @GetMapping
     public List<Ingredient> getGroceryList(@RequestParam(value = "userid") String userId) {
 
-        Long userIdLong = Long.parseLong(userId);
-
+        long userIdLong = parseLong(userId);
         return (List<Ingredient>) ingredientRepository.findAllByUserId(userIdLong);
     }
 
     @PostMapping("/addItem")
     public void addIngredient(@RequestParam(value = "userid") String userId,
                               @RequestBody String ingredient) {
-        long userIdLong = Long.parseLong(userId);
+        long userIdLong = parseLong(userId);
         addIngredient(ingredient, userIdLong);
     }
 
     @PostMapping("/addItems")
     public void addIngredient(@RequestParam(value = "userid") String userId,
                               @RequestBody List<String> ingredients) {
-        Long userIdLong = Long.parseLong(userId);
+        Long userIdLong = parseLong(userId);
         for (String ingredient: ingredients) {
             addIngredient(ingredient, userIdLong);
         }
@@ -43,7 +44,7 @@ public class GroceryListController {
     @DeleteMapping("/deleteItem")
     public void deleteItem(@RequestParam(value = "userid") String userId,
                            @RequestParam(value = "ingredientid") String ingredientId) {
-        deleteIngredient(userId, Long.parseLong( ingredientId));
+        deleteIngredient(userId, parseLong( ingredientId));
     }
 
     private void addIngredient(@RequestBody String ingredient, Long userIdLong) {
@@ -54,7 +55,7 @@ public class GroceryListController {
     }
 
     private void deleteIngredient(String userId, Long ingredientId) {
-        Long userIdLong = Long.parseLong(userId);
+        Long userIdLong = parseLong(userId);
         if (ingredientBelongsToUser(ingredientId, userIdLong))
          ingredientRepository.deleteById(ingredientId);
     }

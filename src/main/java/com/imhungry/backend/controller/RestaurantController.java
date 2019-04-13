@@ -4,13 +4,12 @@ package com.imhungry.backend.controller;
  * Created by calebthomas on 2/22/19.
  */
 
-import com.imhungry.backend.utils.UserListsJsonWrapper;
 import com.imhungry.backend.data.Restaurant;
 import com.imhungry.backend.sourcer.RestaurantSourcer;
+import com.imhungry.backend.utils.UserListsJsonWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -27,8 +26,7 @@ public class RestaurantController {
     @GetMapping
     public List<Restaurant> restaurantSearch(@RequestParam(value="name", defaultValue="chinese") String keyword,
                                              @RequestParam(value="amount", defaultValue="5") String amount,
-											 @RequestParam(value="radius", defaultValue="10000") String radius,
-                                             HttpSession session) throws Exception {
+											 @RequestParam(value="radius", defaultValue="10000") String radius) throws Exception {
 
         // Limit number of results requested
         int maxRestaurants = Integer.valueOf(amount);

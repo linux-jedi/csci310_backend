@@ -37,19 +37,17 @@ public class HungryList {
     }
 
     public List<Restaurant> getRestaurants() {
-        List<Restaurant> res = items.stream()
+        return items.stream()
                 .filter(item -> item.getClass().equals(Restaurant.class))
                 .map(item -> (Restaurant) item)
                 .collect(Collectors.toList());
-        return res;
     }
 
     public List<Recipe> getRecipes() {
-        List<Recipe> res = items.stream()
+        return items.stream()
                 .filter(item -> item.getClass().equals(Recipe.class))
                 .map(item -> (Recipe) item)
                 .collect(Collectors.toList());
-        return res;
     }
 
     public void addItem(ListItem item) {
@@ -57,15 +55,8 @@ public class HungryList {
             items.add(item);
     }
 
-    public void removeRestaurant(String restaurantId) {
-        Predicate<ListItem> isMatch = restaurant -> restaurant.getId().equals(restaurantId);
-
-        items.removeIf(isMatch);
-    }
-
-    public void removeRecipe(String recipeId) {
-        Predicate<ListItem> isMatch = recipe -> recipe.getId().equals(recipeId);
-
+    public void removeItem(String itemId) {
+        Predicate<ListItem> isMatch = item -> item.getId().equals(itemId);
         items.removeIf(isMatch);
     }
 }

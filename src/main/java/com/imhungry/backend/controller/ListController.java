@@ -22,9 +22,6 @@ import java.util.List;
 public class ListController {
 
     @Autowired
-    private UserListsJsonWrapper userListsJsonWrapper;
-
-    @Autowired
     private UserListsRepository userListsRepository;
 
     @GetMapping
@@ -67,7 +64,6 @@ public class ListController {
                 break;
         }
 
-
         userListsRepository.saveAndFlush(userLists);
     }
 
@@ -103,7 +99,7 @@ public class ListController {
         UserLists userLists = getUserLists(userId);
 
         // Remove restaurant
-        selectList(userLists.getUserListsJsonWrapper(), listName).removeRestaurant(restaurantId);
+        selectList(userLists.getUserListsJsonWrapper(), listName).removeItem(restaurantId);
         userListsRepository.flush();
     }
 
@@ -115,7 +111,7 @@ public class ListController {
         UserLists userLists = getUserLists(userId);
 
         // Remove recipe
-        selectList(userLists.getUserListsJsonWrapper(), listName).removeRecipe(recipeId);
+        selectList(userLists.getUserListsJsonWrapper(), listName).removeItem(recipeId);
         userListsRepository.flush();
     }
 
@@ -145,13 +141,6 @@ public class ListController {
         return userListsRepository.findByUserId(userIdLong).get();
     }
 
-    /**
-     * Used to check if list exists in database without
-     * throwing an exception
-     *
-     * @param userId String representation of username
-     * @return True if list associated with userId already exists in db
-     */
     private boolean listExists(Long userId) {
         return userListsRepository.findByUserId(userId)
                 .isPresent();

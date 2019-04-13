@@ -20,16 +20,16 @@ public class SearchHistoryController {
 	public List<SearchQuery> getSearchHistory(
 			@RequestParam(value = "userid") String userId) {
 
+		// Get a user's search history
 		long userIdLong = Long.parseLong(userId);
 		return (List<SearchQuery>) searchHistoryRespository.findAllByUserIdOrderByUpdatedAtDesc(userIdLong);
 	}
 
 	@PostMapping
-	public void postNewSearch(
-			@RequestParam(value = "userid") String userId,
-			@RequestParam(value = "searchterm") String searchTerm,
-			@RequestParam(value = "amount") String amount,
-			@RequestParam(value = "radius") String radius) {
+	public void postNewSearch(@RequestParam(value = "userid") String userId,
+							  @RequestParam(value = "searchterm") String searchTerm,
+							  @RequestParam(value = "amount") String amount,
+							  @RequestParam(value = "radius") String radius) {
 
 		long userIdLong = Long.parseLong(userId);
 		int amountInt = Integer.parseInt(amount);
@@ -41,11 +41,14 @@ public class SearchHistoryController {
 				amountInt,
 				radiusInt);
 
+		// Check if a search query already exists.
+		// If it does, delete it (most recently used functionality for history)
 		if (searchQueryOption.isPresent()) {
 			Long id = searchQueryOption.get().getId();
 			searchHistoryRespository.deleteById(id);
 		}
 
+		// Create and add a new query in the db
 		SearchQuery searchQuery = new SearchQuery();
 		searchQuery.setAmount(amountInt);
 		searchQuery.setRadius(radiusInt);
@@ -53,7 +56,5 @@ public class SearchHistoryController {
 		searchQuery.setSearchTerm(searchTerm);
 
 		searchHistoryRespository.saveAndFlush(searchQuery);
-
-
 	}
 }

@@ -29,12 +29,13 @@ public class RecipeController {
 
         int maxRecipes = Integer.valueOf(amount);
 
+        // Acquire filtered recipe search
         List<Recipe> unsortedRecipes = recipeSourcer.searchRecipes(keyword, maxRecipes);
         return userListsJsonWrapper.filterSortRecipeList(unsortedRecipes);
     }
 
     @GetMapping(value = "/{recipeId}")
-    Recipe getRecipe(@PathVariable String recipeId) throws Exception {
+    Recipe getRecipeDetails(@PathVariable String recipeId) throws Exception {
         return recipeSourcer.getRecipe(recipeId);
     }
 }

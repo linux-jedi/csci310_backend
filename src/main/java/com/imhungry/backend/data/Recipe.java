@@ -29,8 +29,6 @@ public class Recipe implements Comparable, ListItem {
     @Override
     public int compareTo(Object o) {
         Recipe r = (Recipe) o;
-        Integer this_t = this.getPrepTime();
-        Integer r_t = r.getPrepTime();
-        return this_t - r_t;
+        return this.getPrepTime() - r.getPrepTime();
     }
 }

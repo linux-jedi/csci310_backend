@@ -7,10 +7,7 @@ import com.imhungry.backend.data.Restaurant;
 import com.imhungry.backend.utils.UserListsJsonWrapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -31,80 +28,54 @@ import static org.junit.Assert.assertFalse;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ListFiltrationTests {
 
-	@LocalServerPort
-	private int port;
-
-	@Autowired
-	private TestRestTemplate restTemplate;
-
-	Gson gson = new Gson();
+	private Gson gson = new Gson();
 
 	@Test
-	public void testFavoritesSorting() {
+	public void testFavoritesSorting() throws IOException {
 
-		try {
 			String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_chinese_5.json");
-			List<Restaurant> rests = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
-			Restaurant third_restaurant = rests.get(2);
+			List<Restaurant> restaurantJson = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
+			Restaurant thirdRestaurant = restaurantJson.get(2);
 
 			UserListsJsonWrapper userListsJsonWrapper = new UserListsJsonWrapper();
-			userListsJsonWrapper.getHungryLists().get(0).addItem(third_restaurant);
-			List<Restaurant> restaurants = userListsJsonWrapper.filterSortRestaurantList(rests);
+			userListsJsonWrapper.getHungryLists().get(0).addItem(thirdRestaurant);
+			List<Restaurant> restaurants = userListsJsonWrapper.filterSortRestaurantList(restaurantJson);
 
-			assertEquals(third_restaurant.getId(), restaurants.get(0).getId());
+			assertEquals(thirdRestaurant.getId(), restaurants.get(0).getId());
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_chinese_5.json");
+			List<Recipe> recipeJson = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
+			Recipe thirdRecipe = recipeJson.get(2);
 
-		try {
-			String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_chinese_5.json");
-			List<Recipe> recs = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
-			Recipe third_recipe = recs.get(2);
+			userListsJsonWrapper = new UserListsJsonWrapper();
+			userListsJsonWrapper.getHungryLists().get(0).addItem(thirdRecipe);
+			List<Recipe> recipes = userListsJsonWrapper.filterSortRecipeList(recipeJson);
 
-			UserListsJsonWrapper userListsJsonWrapper = new UserListsJsonWrapper();
-			userListsJsonWrapper.getHungryLists().get(0).addItem(third_recipe);
-			List<Recipe> recipes = userListsJsonWrapper.filterSortRecipeList(recs);
-
-			assertEquals(third_recipe.getId(), recipes.get(0).getId());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			assertEquals(thirdRecipe.getId(), recipes.get(0).getId());
 	}
 
 	@Test
-	public void testBlockFiltering() {
+	public void testBlockFiltering() throws IOException {
 
-		try {
 			String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_chinese_5.json");
-			List<Recipe> recs = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
-			Recipe third_recipe = recs.get(2);
+			List<Recipe> recipeJson = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
+			Recipe thirdRecipe = recipeJson.get(2);
 
 			UserListsJsonWrapper userListsJsonWrapper = new UserListsJsonWrapper();
-			userListsJsonWrapper.getHungryLists().get(2).addItem(third_recipe);
-			List<Recipe> recipes = userListsJsonWrapper.filterSortRecipeList(recs);
+			userListsJsonWrapper.getHungryLists().get(2).addItem(thirdRecipe);
+			List<Recipe> recipes = userListsJsonWrapper.filterSortRecipeList(recipeJson);
 
-			assertFalse(recipes.stream().anyMatch(e -> (third_recipe.getId().equals(e.getId()))));
+			assertFalse(recipes.stream().anyMatch(e -> (thirdRecipe.getId().equals(e.getId()))));
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_chinese_5.json");
+			List<Restaurant> restaurantJson = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
+			Restaurant thirdRestaurant = restaurantJson.get(2);
 
-		try {
-			String jsonString = readFile("src/test/java/com/imhungry/backend/json/restaurant_result_chinese_5.json");
-			List<Restaurant> recs = gson.fromJson(jsonString, new TypeToken<List<Restaurant>>() {}.getType());
-			Restaurant third_restaurant = recs.get(2);
+			userListsJsonWrapper = new UserListsJsonWrapper();
+			userListsJsonWrapper.getHungryLists().get(2).addItem(thirdRestaurant);
+			List<Restaurant> restaurants = userListsJsonWrapper.filterSortRestaurantList(restaurantJson);
 
-			UserListsJsonWrapper userListsJsonWrapper = new UserListsJsonWrapper();
-			userListsJsonWrapper.getHungryLists().get(2).addItem(third_restaurant);
-			List<Restaurant> restaurants = userListsJsonWrapper.filterSortRestaurantList(recs);
-
-			assertFalse(restaurants.stream().anyMatch(e -> (third_restaurant.getId().equals(e.getId()))));
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			assertFalse(restaurants.stream().anyMatch(e -> (thirdRestaurant.getId().equals(e.getId()))));
 	}
 
 
