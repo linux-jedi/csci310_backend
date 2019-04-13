@@ -32,7 +32,7 @@ public class HungryListTest {
                 9 * 360
         );
 
-        list.addRestaurant(r);
+        list.addItem(r);
         assertFalse(list.getRestaurants().isEmpty());
 
         list.removeRestaurant(r.getId());
@@ -53,7 +53,7 @@ public class HungryListTest {
                 "INSTRUCTIONS"
         );
 
-        list.addRecipe(r);
+        list.addItem(r);
         assertFalse(list.getRecipes().isEmpty());
 
         list.removeRecipe(r.getId());

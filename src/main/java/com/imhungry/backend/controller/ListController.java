@@ -68,7 +68,6 @@ public class ListController {
     }
 
     @PostMapping(value = "/{listName}/restaurant")
-    // TODO: add userId parameter
     public void addRestaurant(@PathVariable String listName,
                               @RequestParam("userId") String userId,
                               @RequestBody Restaurant newRestaurant) {
@@ -76,7 +75,7 @@ public class ListController {
         UserLists userLists = getUserLists(userId);
 
         // Add a restaurant
-        selectList(userLists.getUserListsJsonWrapper(), listName).addRestaurant(newRestaurant);
+        selectList(userLists.getUserListsJsonWrapper(), listName).addItem(newRestaurant);
         userListsRepository.flush();
     }
 
@@ -88,7 +87,7 @@ public class ListController {
         UserLists userLists = getUserLists(userId);
 
         // Add a restaurant
-        selectList(userLists.getUserListsJsonWrapper(), listName).addRecipe(newRecipe);
+        selectList(userLists.getUserListsJsonWrapper(), listName).addItem(newRecipe);
         userListsRepository.flush();
     }
 

@@ -199,7 +199,7 @@ public class ListControllerTest {
 		);
 
 		HungryList list = new HungryList(listName);
-		list.addRestaurant(r);
+		list.addItem(r);
 
 		// Update list request
 		HttpUrl putUrl = new HttpUrl.Builder()
@@ -259,6 +259,60 @@ public class ListControllerTest {
 
 		assertThat(response).isNotNull();
 		assertEquals(response.getStatusCodeValue(), 200);
+	}
+
+	@Test
+	public void testAddDuplicate() throws MalformedURLException {
+		// Post restaurant
+		Restaurant r = new Restaurant(
+				"12345id",
+				"Panda Express",
+				"12345 McClintock Avenue",
+				"1-515-888-8888",
+				new URL("http://www.pandaexpress.com"),
+				5,
+				PriceLevel.MODERATE,
+				"9 minutes",
+				9 * 60
+		);
+
+		HttpUrl postUrl = new HttpUrl.Builder()
+				.scheme("http")
+				.host("localhost")
+				.port(port)
+				.addPathSegment("list")
+				.addPathSegment(HungryList.ListType.FAVORITE.toString())
+				.addPathSegment("restaurant")
+				.addQueryParameter("userId", String.valueOf(cID))
+				.build();
+
+		HttpUrl postUrl2 = new HttpUrl.Builder()
+				.scheme("http")
+				.host("localhost")
+				.port(port)
+				.addPathSegment("list")
+				.addPathSegment(HungryList.ListType.FAVORITE.toString())
+				.addPathSegment("restaurant")
+				.addQueryParameter("userId", String.valueOf(cID))
+				.build();
+
+		restTemplate.postForEntity(postUrl.toString(), r, String.class);
+		restTemplate.postForEntity(postUrl2.toString(), r, String.class);
+
+
+		HttpUrl url = new HttpUrl.Builder()
+				.scheme("http")
+				.host("localhost")
+				.port(port)
+				.addPathSegment("list")
+				.addPathSegment(HungryList.ListType.FAVORITE.toString())
+				.addQueryParameter("userId", String.valueOf(cID))
+				.build();
+
+		ResponseEntity<HungryList> responseEntity = restTemplate.getForEntity(url.toString(), HungryList.class);
+		HungryList favoritesList = responseEntity.getBody();
+
+		assertEquals(favoritesList.getItems().size(), 1);
 	}
 
 	@Test

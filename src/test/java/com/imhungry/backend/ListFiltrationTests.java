@@ -45,7 +45,7 @@ public class ListFiltrationTests {
 			Restaurant third_restaurant = rests.get(2);
 
 			UserListsJsonWrapper userListsJsonWrapper = new UserListsJsonWrapper();
-			userListsJsonWrapper.getHungryLists().get(0).addRestaurant(third_restaurant);
+			userListsJsonWrapper.getHungryLists().get(0).addItem(third_restaurant);
 			List<Restaurant> restaurants = userListsJsonWrapper.filterSortRestaurantList(rests);
 
 			assertEquals(third_restaurant.getId(), restaurants.get(0).getId());
@@ -60,7 +60,7 @@ public class ListFiltrationTests {
 			Recipe third_recipe = recs.get(2);
 
 			UserListsJsonWrapper userListsJsonWrapper = new UserListsJsonWrapper();
-			userListsJsonWrapper.getHungryLists().get(0).addRecipe(third_recipe);
+			userListsJsonWrapper.getHungryLists().get(0).addItem(third_recipe);
 			List<Recipe> recipes = userListsJsonWrapper.filterSortRecipeList(recs);
 
 			assertEquals(third_recipe.getId(), recipes.get(0).getId());
@@ -79,7 +79,7 @@ public class ListFiltrationTests {
 			Recipe third_recipe = recs.get(2);
 
 			UserListsJsonWrapper userListsJsonWrapper = new UserListsJsonWrapper();
-			userListsJsonWrapper.getHungryLists().get(2).addRecipe(third_recipe);
+			userListsJsonWrapper.getHungryLists().get(2).addItem(third_recipe);
 			List<Recipe> recipes = userListsJsonWrapper.filterSortRecipeList(recs);
 
 			assertFalse(recipes.stream().anyMatch(e -> (third_recipe.getId().equals(e.getId()))));
@@ -94,7 +94,7 @@ public class ListFiltrationTests {
 			Restaurant third_restaurant = recs.get(2);
 
 			UserListsJsonWrapper userListsJsonWrapper = new UserListsJsonWrapper();
-			userListsJsonWrapper.getHungryLists().get(2).addRestaurant(third_restaurant);
+			userListsJsonWrapper.getHungryLists().get(2).addItem(third_restaurant);
 			List<Restaurant> restaurants = userListsJsonWrapper.filterSortRestaurantList(recs);
 
 			assertFalse(restaurants.stream().anyMatch(e -> (third_restaurant.getId().equals(e.getId()))));

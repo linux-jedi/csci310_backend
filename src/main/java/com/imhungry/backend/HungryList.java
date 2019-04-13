@@ -52,18 +52,15 @@ public class HungryList {
         return res;
     }
 
-    public void addRestaurant(Restaurant restaurant) {
-        items.add(restaurant);
+    public void addItem(ListItem item) {
+        if (!items.contains(item))
+            items.add(item);
     }
 
     public void removeRestaurant(String restaurantId) {
         Predicate<ListItem> isMatch = restaurant -> restaurant.getId().equals(restaurantId);
 
         items.removeIf(isMatch);
-    }
-
-    public void addRecipe(Recipe recipe) {
-        items.add(recipe);
     }
 
     public void removeRecipe(String recipeId) {
