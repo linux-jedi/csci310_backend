@@ -34,6 +34,11 @@ public class GroceryListTest {
 	private TestRestTemplate restTemplate;
 
 	private String registerNewUser(String name) {
+		return register(name, port, restTemplate);
+
+	}
+
+	static String register(String name, int port, TestRestTemplate restTemplate) {
 		HttpUrl url = new HttpUrl.Builder()
 				.scheme("http")
 				.host("localhost")
@@ -50,7 +55,6 @@ public class GroceryListTest {
 		assertNotNull(user.getId());
 
 		return String.valueOf(user.getId());
-
 	}
 
 	@Test

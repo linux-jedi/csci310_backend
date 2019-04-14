@@ -7,9 +7,6 @@ import lombok.Data;
 
 import java.net.URL;
 
-/**
- * Created by calebthomas on 2/22/19.
- */
 @Data
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)

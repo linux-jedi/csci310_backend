@@ -15,9 +15,6 @@ import java.net.URL;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by calebthomas on 3/7/19.
- */
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")

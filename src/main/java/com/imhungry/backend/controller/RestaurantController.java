@@ -1,9 +1,5 @@
 package com.imhungry.backend.controller;
 
-/**
- * Created by calebthomas on 2/22/19.
- */
-
 import com.imhungry.backend.data.Restaurant;
 import com.imhungry.backend.sourcer.RestaurantSourcer;
 import com.imhungry.backend.utils.UserListsJsonWrapper;

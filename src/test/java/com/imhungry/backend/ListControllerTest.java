@@ -33,9 +33,6 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-/**
- * Created by calebthomas on 3/7/19.
- */
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")

@@ -5,9 +5,6 @@ import lombok.Data;
 
 import java.util.List;
 
-/**
- * Created by calebthomas on 2/22/19.
- */
 @Data
 @AllArgsConstructor
 public class Recipe implements Comparable, ListItem {

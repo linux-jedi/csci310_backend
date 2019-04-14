@@ -15,9 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by calebthomas on 3/7/19.
- */
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")

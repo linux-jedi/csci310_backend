@@ -10,9 +10,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-/**
- * Created by calebthomas on 2/22/19.
- */
 
 @Data
 @AllArgsConstructor

@@ -1,7 +1,6 @@
 package com.imhungry.backend;
 
 import com.imhungry.backend.model.SearchQuery;
-import com.imhungry.backend.model.User;
 import okhttp3.HttpUrl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.imhungry.backend.GroceryListTest.register;
 import static org.hibernate.internal.util.collections.ArrayHelper.reverse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -32,24 +32,8 @@ public class SearchHistoryTest {
 	private TestRestTemplate restTemplate;
 
 	//TODO: Refactor
-	@SuppressWarnings("Duplicates")
 	private String registerNewUser(String name) {
-		HttpUrl url = new HttpUrl.Builder()
-				.scheme("http")
-				.host("localhost")
-				.port(port)
-				.addPathSegment("register")
-				.addQueryParameter("username", name)
-				.addQueryParameter("email", name)
-				.addQueryParameter("password", "test")
-				.build();
-
-		ResponseEntity<User> responseEntity = restTemplate.postForEntity(url.toString(), new HttpEntity<>(""), User.class);
-		User user = responseEntity.getBody();
-		assertNotNull(user);
-		assertNotNull(user.getId());
-
-		return String.valueOf(user.getId());
+		return register(name, port, restTemplate);
 	}
 
 	@Test

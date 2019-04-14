@@ -12,9 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Created by calebthomas on 3/7/19.
- */
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")
