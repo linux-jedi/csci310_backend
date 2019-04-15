@@ -7,6 +7,7 @@ import com.imhungry.backend.sourcer.RestaurantSourcer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,13 @@ public class RestaurantController {
         long userIdLong = Long.parseLong(userid);
         int rad = Integer.parseInt(radius);
 
-        List<Restaurant> unsortedRestaurants = restaurantSourcer.searchRestaurants(keyword, maxRestaurants, rad);
+        List<Restaurant> unsortedRestaurants;
+
+        try{
+            unsortedRestaurants = restaurantSourcer.searchRestaurants(keyword, maxRestaurants, rad);
+        } catch (NullPointerException nullPointerException) {
+            return new ArrayList<>();
+        }
         Optional<UserLists> ul = userListsRepository.findByUserId(userIdLong);
         return ul.get().getUserListsJsonWrapper().filterSortRestaurantList(unsortedRestaurants);
     }
