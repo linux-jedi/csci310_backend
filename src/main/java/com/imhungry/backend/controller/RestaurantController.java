@@ -37,15 +37,17 @@ public class RestaurantController {
         long userIdLong = Long.parseLong(userid);
         int rad = Integer.parseInt(radius);
 
-        List<Restaurant> unsortedRestaurants;
+        List<Restaurant> unsortedRestaurants = new ArrayList<>();
 
-        try{
-            unsortedRestaurants = restaurantSourcer.searchRestaurants(keyword, maxRestaurants, rad);
-        } catch (NullPointerException nullPointerException) {
-            return new ArrayList<>();
+        unsortedRestaurants = restaurantSourcer.searchRestaurants(keyword, maxRestaurants, rad);
+        if (unsortedRestaurants != null) {
+            Optional<UserLists> ul = userListsRepository.findByUserId(userIdLong);
+            if (ul.isPresent())
+                unsortedRestaurants = ul.get().getUserListsJsonWrapper().filterSortRestaurantList(unsortedRestaurants);
         }
-        Optional<UserLists> ul = userListsRepository.findByUserId(userIdLong);
-        return ul.get().getUserListsJsonWrapper().filterSortRestaurantList(unsortedRestaurants);
+
+        return unsortedRestaurants;
+
     }
 
     @GetMapping(value = "/{placeId}")
