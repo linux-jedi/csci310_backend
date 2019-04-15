@@ -31,7 +31,6 @@ public class SearchHistoryTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
-	//TODO: Refactor
 	private String registerNewUser(String name) {
 		return register(name, port, restTemplate);
 	}

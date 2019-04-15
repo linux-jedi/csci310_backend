@@ -41,6 +41,7 @@ public class AuthControllerTest {
 
 		ResponseEntity<User> responseEntity = restTemplate.postForEntity(url.toString(), new HttpEntity<>(""), User.class);
 		User user = responseEntity.getBody();
+		assertNotNull(user);
 		assertEquals(user.getEmail(), "test");
 		assertEquals(user.getUsername(), "test");
 		assertNotNull(user.getId());
@@ -73,6 +74,8 @@ public class AuthControllerTest {
 		ResponseEntity<User> loginResponseEntity = restTemplate.postForEntity(url.toString(), new HttpEntity<>(""), User.class);
 		User login_user = loginResponseEntity.getBody();
 
+		assertNotNull(login_user);
+		assertNotNull(register_user);
 		assertEquals(login_user.getEmail(), register_user.getEmail());
 		assertEquals(login_user.getUsername(), register_user.getUsername());
 		assertEquals(login_user.getId(), register_user.getId());
@@ -106,6 +109,7 @@ public class AuthControllerTest {
 		ResponseEntity<User> loginResponseEntityBadPassword = restTemplate.postForEntity(url.toString(), new HttpEntity<>(""), User.class);
 		User badPasswordUser = loginResponseEntityBadPassword.getBody();
 
+		assertNotNull(badPasswordUser);
 		assertNull(badPasswordUser.getId());
 
 		url = new HttpUrl.Builder()
@@ -120,11 +124,40 @@ public class AuthControllerTest {
 		ResponseEntity<User> loginResponseEntityBadUser = restTemplate.postForEntity(url.toString(), new HttpEntity<>(""), User.class);
 		User badUsernameUser = loginResponseEntityBadUser.getBody();
 
+		assertNotNull(badUsernameUser);
 		assertNull(badUsernameUser.getId());
-
-
 
 	}
 
+
+	@Test
+	public void emailAlreadyUsedTest() {
+		HttpUrl url = new HttpUrl.Builder()
+				.scheme("http")
+				.host("localhost")
+				.port(port)
+				.addPathSegment("register")
+				.addQueryParameter("username", "emailAlreadyUsedTest")
+				.addQueryParameter("email", "emailAlreadyUsedTest")
+				.addQueryParameter("password", "emailAlreadyUsedTest")
+				.build();
+
+		restTemplate.postForEntity(url.toString(), new HttpEntity<>(""), User.class);
+
+		url = new HttpUrl.Builder()
+				.scheme("http")
+				.host("localhost")
+				.port(port)
+				.addPathSegment("register")
+				.addQueryParameter("username", "abc")
+				.addQueryParameter("email", "emailAlreadyUsedTest")
+				.addQueryParameter("password", "emailAlreadyUsedTest")
+				.build();
+
+		ResponseEntity<User> responseEntity = restTemplate.postForEntity(url.toString(), new HttpEntity<>(""), User.class);
+
+		assertEquals(409, responseEntity.getStatusCodeValue());
+
+	}
 
 }

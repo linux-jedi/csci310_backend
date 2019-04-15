@@ -58,6 +58,8 @@ public class ListController {
             case "BLOCK":
                 userLists.getUserListsJsonWrapper().getHungryLists().set(2, updatedList);
                 break;
+            default:
+                return;
         }
 
         userListsRepository.saveAndFlush(userLists);
@@ -120,8 +122,9 @@ public class ListController {
                 return listWrapper.getHungryLists().get(1);
             case "BLOCK":
                 return listWrapper.getHungryLists().get(2);
+            default:
+                return null;
         }
-        return listWrapper.getHungryLists().get(0);
     }
 
     private UserLists getUserLists(String userId) {
