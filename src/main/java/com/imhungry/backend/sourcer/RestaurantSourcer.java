@@ -32,7 +32,7 @@ public class RestaurantSourcer {
 
         req.location(tommy)
                 .keyword(keyword)
-                .radius(50000)
+                .radius(radius)
                 .type(PlaceType.RESTAURANT);
         PlacesSearchResponse response = req.awaitIgnoreError();
 
