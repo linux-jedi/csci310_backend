@@ -37,16 +37,15 @@ public class RestaurantController {
         long userIdLong = Long.parseLong(userid);
         int rad = Integer.parseInt(radius);
 
-        List<Restaurant> unsortedRestaurants = new ArrayList<>();
+        List<Restaurant> unsortedRestaurants = restaurantSourcer.searchRestaurants(keyword, maxRestaurants, rad);
 
-        unsortedRestaurants = restaurantSourcer.searchRestaurants(keyword, maxRestaurants, rad);
         if (unsortedRestaurants != null) {
             Optional<UserLists> ul = userListsRepository.findByUserId(userIdLong);
             if (ul.isPresent())
                 unsortedRestaurants = ul.get().getUserListsJsonWrapper().filterSortRestaurantList(unsortedRestaurants);
         }
 
-        return unsortedRestaurants;
+        return new ArrayList<>();
 
     }
 
