@@ -1,12 +1,14 @@
 package com.imhungry.backend.controller;
 
 import com.imhungry.backend.data.Recipe;
+import com.imhungry.backend.model.UserLists;
+import com.imhungry.backend.repository.UserListsRepository;
 import com.imhungry.backend.sourcer.RecipeSourcer;
-import com.imhungry.backend.utils.UserListsJsonWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -18,17 +20,22 @@ public class RecipeController {
     private RecipeSourcer recipeSourcer;
 
     @Autowired
-    private UserListsJsonWrapper userListsJsonWrapper;
+    private UserListsRepository userListsRepository;
 
     @GetMapping
     List<Recipe> recipeSearch(@RequestParam(value = "name", defaultValue = "chinese") String keyword,
-                              @RequestParam(value = "amount", defaultValue = "5") String amount) throws Exception {
+                              @RequestParam(value = "amount", defaultValue = "5") String amount,
+                              @RequestParam(value = "userid") String userid) throws Exception {
 
         int maxRecipes = Integer.valueOf(amount);
+        long userIdLong = Long.parseLong(userid);
 
         // Acquire filtered recipe search
         List<Recipe> unsortedRecipes = recipeSourcer.searchRecipes(keyword, maxRecipes);
-        return userListsJsonWrapper.filterSortRecipeList(unsortedRecipes);
+
+        Optional<UserLists> ul = userListsRepository.findByUserId(userIdLong);
+        return ul.get().getUserListsJsonWrapper().filterSortRecipeList(unsortedRecipes);
+
     }
 
     @GetMapping(value = "/{recipeId}")

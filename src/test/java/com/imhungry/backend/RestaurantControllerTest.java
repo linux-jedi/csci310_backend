@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.imhungry.backend.GroceryListTest.register;
 import static org.junit.Assert.assertEquals;
 
 
@@ -32,7 +33,7 @@ public class RestaurantControllerTest {
 
     @Test
     public void testRestaurantSearch() {
-
+        String uid = register("testRestaurantSearch", port, restTemplate);
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host("localhost")
@@ -41,6 +42,7 @@ public class RestaurantControllerTest {
                 .addQueryParameter("name", "burger")
                 .addQueryParameter("amount", "5")
                 .addQueryParameter("radius", "10000")
+                .addQueryParameter("userid", uid)
                 .build();
 
         ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
@@ -56,6 +58,7 @@ public class RestaurantControllerTest {
 
     @Test
     public void testTrueRestaurantSearch() {
+        String uid = register("testTrueRestaurantSearch", port, restTemplate);
 
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
@@ -65,6 +68,7 @@ public class RestaurantControllerTest {
                 .addQueryParameter("name", "burger")
                 .addQueryParameter("amount", "2")
                 .addQueryParameter("radius", "10000")
+                .addQueryParameter("userid", uid)
                 .build();
 
         ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);

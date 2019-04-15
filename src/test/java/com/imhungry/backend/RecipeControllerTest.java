@@ -12,8 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.imhungry.backend.GroceryListTest.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "dev")
@@ -28,6 +30,8 @@ public class RecipeControllerTest {
 
     @Test
     public void testRecipeSearch() {
+        String uid = register("testRecipeSearch", port, restTemplate);
+
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host("localhost")
@@ -35,6 +39,7 @@ public class RecipeControllerTest {
                 .addPathSegment("recipe")
                 .addQueryParameter("name", "burger")
                 .addQueryParameter("amount", "5")
+                .addQueryParameter("userid", uid)
                 .build();
 
         ResponseEntity<Recipe[]> entity = restTemplate.getForEntity(url.toString(), Recipe[].class);
@@ -55,6 +60,7 @@ public class RecipeControllerTest {
                 .addPathSegment("recipe")
                 .addQueryParameter("name", "burger")
                 .addQueryParameter("amount", "30")
+                .addQueryParameter("userid", uid)
                 .build();
 
         entity = restTemplate.getForEntity(url.toString(), Recipe[].class);
@@ -66,6 +72,7 @@ public class RecipeControllerTest {
 
     @Test
     public void testTrueRecipeSearch() {
+        String uid = register("testTrueRecipeSearch", port, restTemplate);
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host("localhost")
@@ -73,6 +80,7 @@ public class RecipeControllerTest {
                 .addPathSegment("recipe")
                 .addQueryParameter("name", "burger")
                 .addQueryParameter("amount", "2")
+                .addQueryParameter("userid", uid)
                 .build();
 
         ResponseEntity<Recipe[]> entity = restTemplate.getForEntity(url.toString(), Recipe[].class);

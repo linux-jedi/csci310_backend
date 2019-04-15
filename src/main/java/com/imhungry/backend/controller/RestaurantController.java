@@ -1,12 +1,14 @@
 package com.imhungry.backend.controller;
 
 import com.imhungry.backend.data.Restaurant;
+import com.imhungry.backend.model.UserLists;
+import com.imhungry.backend.repository.UserListsRepository;
 import com.imhungry.backend.sourcer.RestaurantSourcer;
-import com.imhungry.backend.utils.UserListsJsonWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -17,12 +19,13 @@ public class RestaurantController {
     private RestaurantSourcer restaurantSourcer;
 
     @Autowired
-    private UserListsJsonWrapper userListsJsonWrapper;
+    private UserListsRepository userListsRepository;
 
     @GetMapping
     public List<Restaurant> restaurantSearch(@RequestParam(value="name", defaultValue="chinese") String keyword,
                                              @RequestParam(value="amount", defaultValue="5") String amount,
-											 @RequestParam(value="radius", defaultValue="10000") String radius) throws Exception {
+											 @RequestParam(value="radius", defaultValue="10000") String radius,
+                                             @RequestParam(value = "userid") String userid) throws Exception {
 
         // Limit number of results requested
         int maxRestaurants = Integer.valueOf(amount);
@@ -30,10 +33,12 @@ public class RestaurantController {
             maxRestaurants = 100;
         }
 
+        long userIdLong = Long.parseLong(userid);
         int rad = Integer.parseInt(radius);
 
         List<Restaurant> unsortedRestaurants = restaurantSourcer.searchRestaurants(keyword, maxRestaurants, rad);
-        return userListsJsonWrapper.filterSortRestaurantList(unsortedRestaurants);
+        Optional<UserLists> ul = userListsRepository.findByUserId(userIdLong);
+        return ul.get().getUserListsJsonWrapper().filterSortRestaurantList(unsortedRestaurants);
     }
 
     @GetMapping(value = "/{placeId}")
