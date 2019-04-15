@@ -34,7 +34,9 @@ public class RecipeController {
         List<Recipe> unsortedRecipes = recipeSourcer.searchRecipes(keyword, maxRecipes);
 
         Optional<UserLists> ul = userListsRepository.findByUserId(userIdLong);
-        return ul.get().getUserListsJsonWrapper().filterSortRecipeList(unsortedRecipes);
+        if (ul.isPresent())
+            return ul.get().getUserListsJsonWrapper().filterSortRecipeList(unsortedRecipes);
+        return unsortedRecipes;
 
     }
 
