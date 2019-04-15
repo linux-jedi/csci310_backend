@@ -20,6 +20,10 @@ public class RestaurantSourcer {
     private String API_KEY;
 
     public List<Restaurant> searchRestaurants(String keyword, int maxRestaurants, int radius) throws Exception {
+        if (radius >= 50000 || radius <= 0) {
+            radius = 50000;
+        }
+
         List<Restaurant> restaurants = new ArrayList<>();
 
         // Get all restaurants from google API
