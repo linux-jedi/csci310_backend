@@ -1,7 +1,6 @@
 package com.imhungry.backend;
 
 import com.imhungry.backend.data.Restaurant;
-import com.imhungry.backend.sourcer.RestaurantSourcer;
 import okhttp3.HttpUrl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +13,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.imhungry.backend.GroceryListTest.register;
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 
 @RunWith(SpringRunner.class)
@@ -28,8 +29,71 @@ public class RestaurantControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
-    private RestaurantSourcer restaurantSourcer;
+    @Test
+    public void testRestaurantPagination() {
+
+        // Test shows that data can be separated and is enough for a sliding window on the frontend
+        String uid = register("testRestaurantPagination", port, restTemplate);
+
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("restaurant")
+                .addQueryParameter("name", "burger")
+                .addQueryParameter("amount", "30")
+                .addQueryParameter("userid", uid)
+                .build();
+
+        ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
+        Restaurant[] restaurants = entity.getBody();
+
+        assertNotNull(restaurants);
+        assertTrue(restaurants.length/5 >= 6);
+
+    }
+
+    @Test
+    public void testRadiusDifference() {
+
+        // Test shows that data can be separated and is enough for a sliding window on the frontend
+        String uid = register("testRadiusDifference", port, restTemplate);
+
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("restaurant")
+                .addQueryParameter("name", "burger")
+                .addQueryParameter("amount", "5")
+                .addQueryParameter("userid", uid)
+                .addQueryParameter("radius", "0.1")
+                .build();
+
+        ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
+        Restaurant[] restaurants = entity.getBody();
+
+        assertNotNull(restaurants);
+        assertEquals(0, restaurants.length);
+
+        url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("restaurant")
+                .addQueryParameter("name", "burger")
+                .addQueryParameter("amount", "5")
+                .addQueryParameter("userid", uid)
+                .addQueryParameter("radius", "1")
+                .build();
+
+        entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
+        restaurants = entity.getBody();
+
+        assertNotNull(restaurants);
+        assertEquals(5, restaurants.length);
+
+    }
 
     @Test
     public void testRestaurantSearch() {
@@ -41,40 +105,19 @@ public class RestaurantControllerTest {
                 .addPathSegment("restaurant")
                 .addQueryParameter("name", "burger")
                 .addQueryParameter("amount", "5")
-                .addQueryParameter("radius", "10000")
                 .addQueryParameter("userid", uid)
                 .build();
 
         ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
         Restaurant[] restaurants = entity.getBody();
 
+        assertNotNull(restaurants);
         assertEquals(restaurants.length, 5);
         int prev = 0;
         for (Restaurant restaurant: restaurants) {
             assert (restaurant.getTime() >= prev);
             prev = restaurant.getTime();
         }
-    }
-
-    @Test
-    public void testTrueRestaurantSearch() {
-        String uid = register("testTrueRestaurantSearch", port, restTemplate);
-
-        HttpUrl url = new HttpUrl.Builder()
-                .scheme("http")
-                .host("localhost")
-                .port(port)
-                .addPathSegment("restaurant")
-                .addQueryParameter("name", "burger")
-                .addQueryParameter("amount", "2")
-                .addQueryParameter("radius", "10000")
-                .addQueryParameter("userid", uid)
-                .build();
-
-        ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
-        Restaurant[] restaurants = entity.getBody();
-
-        assertEquals(restaurants.length, 2);
     }
 
     @Test
@@ -90,6 +133,7 @@ public class RestaurantControllerTest {
         ResponseEntity<Restaurant> entity = restTemplate.getForEntity(url.toString(), Restaurant.class);
         Restaurant r = entity.getBody();
 
+        assertNotNull(r);
         assertEquals(r.getId(), "ChIJW-yJPuPHwoARGh0NU_IeYpI");
     }
 
@@ -105,7 +149,7 @@ public class RestaurantControllerTest {
 
         ResponseEntity<Restaurant> entity = restTemplate.getForEntity(url.toString(), Restaurant.class);
         Restaurant r = entity.getBody();
-
+        assertNotNull(r);
         assertEquals(r.getId(), "ChIJdzrHbse4woARwbth0qmfStw");
     }
 

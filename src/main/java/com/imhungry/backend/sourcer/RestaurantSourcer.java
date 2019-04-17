@@ -4,10 +4,12 @@ import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.NearbySearchRequest;
 import com.google.maps.PlaceDetailsRequest;
+import com.google.maps.errors.ApiException;
 import com.google.maps.model.*;
 import com.imhungry.backend.data.Restaurant;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class RestaurantSourcer {
     @Value("${gplaces.api.key}")
     private String API_KEY;
 
-    public List<Restaurant> searchRestaurants(String keyword, int maxRestaurants, int radius) throws Exception {
+    public List<Restaurant> searchRestaurants(String keyword, int maxRestaurants, int radius) throws InterruptedException, ApiException, IOException {
         if (radius >= 50000 || radius <= 0) {
             radius = 50000;
         }
@@ -80,7 +82,11 @@ public class RestaurantSourcer {
 
                 req = new NearbySearchRequest(geoApiContext);
                 req.pageToken(response.nextPageToken);
-                placesSearchResults = req.awaitIgnoreError().results;
+                try {
+                    placesSearchResults = req.awaitIgnoreError().results;
+                } catch (NullPointerException nullPointerException) {
+                    return new ArrayList<>();
+                }
                 resultsIndex = 0;
             }
         }

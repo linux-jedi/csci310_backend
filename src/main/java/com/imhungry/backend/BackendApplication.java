@@ -1,5 +1,6 @@
 package com.imhungry.backend;
 
+import com.imhungry.backend.controller.RestaurantController;
 import com.imhungry.backend.sourcer.CollageBuilder;
 import com.imhungry.backend.sourcer.RecipeSourcer;
 import com.imhungry.backend.sourcer.RestaurantSourcer;
@@ -67,17 +68,24 @@ public class BackendApplication {
 		when(restaurantSourcer.getRestaurantDetails("ChIJRaPCphDHwoARRKD4kcOtCA0"))
 				.thenReturn(MockupUtilityMethods.getHabitBurger());
 
-		when(restaurantSourcer.searchRestaurants("chinese", 5, 10000))
+		when(restaurantSourcer.searchRestaurants("chinese", 5, RestaurantController.milesToMeters(3)))
 				.thenReturn(MockupUtilityMethods.getFiveChineseRestaurants());
-		when(restaurantSourcer.searchRestaurants("chinese", 100, 10000))
+		when(restaurantSourcer.searchRestaurants("chinese", 100, RestaurantController.milesToMeters(3)))
 				.thenReturn(MockupUtilityMethods.getFiveChineseRestaurants());
 
-		when(restaurantSourcer.searchRestaurants("burger", 5, 10000))
+		when(restaurantSourcer.searchRestaurants("burger", 5, RestaurantController.milesToMeters(3)))
 				.thenReturn(MockupUtilityMethods.getFiveBurgerRestaurants());
-		when(restaurantSourcer.searchRestaurants("burger", 30, 10000))
+		when(restaurantSourcer.searchRestaurants("burger", 30, RestaurantController.milesToMeters(3)))
 				.thenReturn(MockupUtilityMethods.getThirtyBurgerRestaurants());
 
-		when(restaurantSourcer.searchRestaurants("burger", 2, 10000))
+		when(restaurantSourcer.searchRestaurants("burger", 2, RestaurantController.milesToMeters(1)))
+				.thenCallRealMethod();
+
+		when(restaurantSourcer.searchRestaurants("burger", 5, RestaurantController.milesToMeters(0.1)))
+				.thenCallRealMethod();
+		when(restaurantSourcer.searchRestaurants("burger", 5, RestaurantController.milesToMeters(1)))
+				.thenCallRealMethod();
+		when(restaurantSourcer.searchRestaurants("burger", 2, RestaurantController.milesToMeters(4)))
 				.thenCallRealMethod();
 		when(restaurantSourcer.getRestaurantDetails("ChIJdzrHbse4woARwbth0qmfStw"))
 				.thenCallRealMethod();

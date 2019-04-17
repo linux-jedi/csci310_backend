@@ -1,12 +1,14 @@
 package com.imhungry.backend.controller;
 
 import com.imhungry.backend.data.Recipe;
+import com.imhungry.backend.exception.UserNotFoundException;
 import com.imhungry.backend.model.UserLists;
 import com.imhungry.backend.repository.UserListsRepository;
 import com.imhungry.backend.sourcer.RecipeSourcer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,16 +29,20 @@ public class RecipeController {
                               @RequestParam(value = "amount", defaultValue = "5") String amount,
                               @RequestParam(value = "userid") String userid) throws Exception {
 
-        int maxRecipes = Integer.valueOf(amount);
+        int maxRecipes = Integer.min(100,  Integer.valueOf(amount));
         long userIdLong = Long.parseLong(userid);
 
-        // Acquire filtered recipe search
-        List<Recipe> unsortedRecipes = recipeSourcer.searchRecipes(keyword, maxRecipes);
+        try {
+            List<Recipe> unsortedRecipes = recipeSourcer.searchRecipes(keyword, maxRecipes);
 
-        Optional<UserLists> ul = userListsRepository.findByUserId(userIdLong);
-        if (ul.isPresent())
-            return ul.get().getUserListsJsonWrapper().filterSortRecipeList(unsortedRecipes);
-        return unsortedRecipes;
+            Optional<UserLists> ul = userListsRepository.findByUserId(userIdLong);
+            if (ul.isPresent())
+                return ul.get().getUserListsJsonWrapper().filterSortRecipeList(unsortedRecipes);
+
+            return new ArrayList<>();
+        } catch (NullPointerException ignored) {
+            throw new UserNotFoundException("The user " + userid + " was not found");
+        }
 
     }
 

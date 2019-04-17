@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.imhungry.backend.GroceryListTest.*;
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -27,6 +28,30 @@ public class RecipeControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Test
+    public void testRecipePagination() {
+
+        // Test shows that data can be separated and is enough for a sliding window on the frontend
+        String uid = register("testRecipePagination", port, restTemplate);
+
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("recipe")
+                .addQueryParameter("name", "burger")
+                .addQueryParameter("amount", "30")
+                .addQueryParameter("userid", uid)
+                .build();
+
+        ResponseEntity<Recipe[]> entity = restTemplate.getForEntity(url.toString(), Recipe[].class);
+        Recipe[] recipes = entity.getBody();
+
+        assertNotNull(recipes);
+        assertTrue(recipes.length/5 >= 6);
+
+    }
 
     @Test
     public void testRecipeSearch() {
@@ -52,22 +77,22 @@ public class RecipeControllerTest {
             assert (recipe.getPrepTime() >= prev);
             prev = recipe.getPrepTime();
         }
-
-        url = new HttpUrl.Builder()
-                .scheme("http")
-                .host("localhost")
-                .port(port)
-                .addPathSegment("recipe")
-                .addQueryParameter("name", "burger")
-                .addQueryParameter("amount", "30")
-                .addQueryParameter("userid", uid)
-                .build();
-
-        entity = restTemplate.getForEntity(url.toString(), Recipe[].class);
-        recipes = entity.getBody();
-
-        assertNotNull(recipes);
-        assertEquals(recipes.length, 30);
+//
+//        url = new HttpUrl.Builder()
+//                .scheme("http")
+//                .host("localhost")
+//                .port(port)
+//                .addPathSegment("recipe")
+//                .addQueryParameter("name", "burger")
+//                .addQueryParameter("amount", "30")
+//                .addQueryParameter("userid", uid)
+//                .build();
+//
+//        entity = restTemplate.getForEntity(url.toString(), Recipe[].class);
+//        recipes = entity.getBody();
+//
+//        assertNotNull(recipes);
+//        assertEquals(recipes.length, 30);
     }
 
     @Test
