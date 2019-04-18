@@ -2,13 +2,14 @@ package com.imhungry.backend.controller;
 
 import com.imhungry.backend.model.Ingredient;
 import com.imhungry.backend.repository.IngredientRepository;
+import com.imhungry.backend.sourcer.IngredientParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-import static java.lang.Long.*;
+import static java.lang.Long.parseLong;
 
 @RestController
 @CrossOrigin
@@ -26,14 +27,14 @@ public class GroceryListController {
     }
 
     @PostMapping("/addItem")
-    public void addIngredient(@RequestParam(value = "userid") String userId,
+    public void postAddIngredient(@RequestParam(value = "userid") String userId,
                               @RequestBody String ingredient) {
         long userIdLong = parseLong(userId);
         addIngredient(ingredient, userIdLong);
     }
 
     @PostMapping("/addItems")
-    public void addIngredient(@RequestParam(value = "userid") String userId,
+    public void postAddIngredients(@RequestParam(value = "userid") String userId,
                               @RequestBody List<String> ingredients) {
         Long userIdLong = parseLong(userId);
         for (String ingredient: ingredients) {
@@ -47,10 +48,25 @@ public class GroceryListController {
         deleteIngredient(userId, parseLong( ingredientId));
     }
 
-    private void addIngredient(@RequestBody String ingredient, Long userIdLong) {
+    public void addIngredient(String ingredient, Long userIdLong) {
+        IngredientParser ingredientParser = new IngredientParser(ingredient);
+
+        Optional<Ingredient> returnedIngredient = ingredientRepository.
+                findFirstByUserIdAndIngredientValue(userIdLong,
+                        ingredientParser.getIngredientValue());
+
+        Ingredient ig = null;
+        if (returnedIngredient.isPresent()) {
+            ig = returnedIngredient.get();
+            ingredientRepository.delete(ig);
+        }
+
         Ingredient newIngredient = new Ingredient();
-        newIngredient.setIngredientValue(ingredient);
+        newIngredient.setIngredientValue(ingredientParser.getIngredientValue());
+        newIngredient.setQuantity(ingredientParser.getQuantity());
         newIngredient.setUserId(userIdLong);
+
+        IngredientParser.collateIngredients(newIngredient, ig);
         ingredientRepository.saveAndFlush(newIngredient);
     }
 

@@ -15,6 +15,8 @@ public class Ingredient extends AuditModel {
 
     private Long userId;
 
+    private Double quantity;
+
     private String ingredientValue;
 
 }
