@@ -6,12 +6,15 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+@CacheConfig(cacheNames={"imageUrls"})
 public class CollageBuilder {
 
     @Value("${engine.id}")
@@ -20,8 +23,7 @@ public class CollageBuilder {
     @Value("${search.api.key}")
     private String SEARCH_API_KEY;
 
-
-
+    @Cacheable
     public List<URL> getUrls(String searchTerm, int numImages) throws IOException {
         List<URL> imageUrls = new ArrayList<>();
 

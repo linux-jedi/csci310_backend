@@ -7,7 +7,10 @@ import com.google.maps.PlaceDetailsRequest;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.*;
 import com.imhungry.backend.data.Restaurant;
+import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,11 +19,13 @@ import java.util.List;
 import static java.util.Collections.sort;
 
 
+@CacheConfig(cacheNames = {"restaurants"})
 public class RestaurantSourcer {
 
     @Value("${gplaces.api.key}")
     private String API_KEY;
 
+    @Cacheable
     public List<Restaurant> searchRestaurants(String keyword, int maxRestaurants, int radius) throws InterruptedException, ApiException, IOException {
         if (radius >= 50000 || radius <= 0) {
             radius = 50000;
