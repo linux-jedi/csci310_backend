@@ -11,17 +11,21 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.sort;
 
+@CacheConfig(cacheNames = {"recipes"})
 public class RecipeSourcer {
 
     @Value("${recipe.api.key}")
     private String API_KEY;
 
+    @Cacheable
     public List<Recipe> searchRecipes(String keyword, int maxRecipes) throws Exception {
         List<Recipe> recipes = new ArrayList<>();
 
