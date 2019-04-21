@@ -61,7 +61,9 @@ public class SearchHistoryTest {
 		assertEquals(searchQuery.getSearchTerm(), "chinese");
 		assertEquals(searchQuery.getAmount(), 5);
 		assertEquals(searchQuery.getRadius(), 3);
-
+		System.out.println(searchQuery.getCollageList().getClass());
+		assertEquals(searchQuery.getCollageList()[0],
+				"https://assets3.thrillist.com/v1/image/1864928/size/tmg-article_default_mobile.jpg");
 	}
 
 	@Test

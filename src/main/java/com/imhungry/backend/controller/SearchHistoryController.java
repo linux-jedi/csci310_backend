@@ -2,9 +2,12 @@ package com.imhungry.backend.controller;
 
 import com.imhungry.backend.model.SearchQuery;
 import com.imhungry.backend.repository.SearchHistoryRepository;
+import com.imhungry.backend.sourcer.CollageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +18,9 @@ public class SearchHistoryController {
 
 	@Autowired
 	SearchHistoryRepository searchHistoryRespository;
+
+	@Autowired
+	CollageBuilder collageBuilder;
 
 	@GetMapping
 	public List<SearchQuery> getSearchHistory(
@@ -31,7 +37,7 @@ public class SearchHistoryController {
 	public void postNewSearch(@RequestParam(value = "userid") String userId,
 							  @RequestParam(value = "searchterm") String searchTerm,
 							  @RequestParam(value = "amount") String amount,
-							  @RequestParam(value = "radius") String radius) {
+							  @RequestParam(value = "radius") String radius) throws IOException {
 
 		long userIdLong = Long.parseLong(userId);
 		int amountInt = Integer.parseInt(amount);
@@ -50,12 +56,17 @@ public class SearchHistoryController {
 			searchHistoryRespository.deleteById(id);
 		}
 
+		String[] collageArray = collageBuilder.getUrls(searchTerm + " food", 10)
+				.stream()
+				.map(URL::toString).toArray(String[]::new);
+
 		// Create and add a new query in the db
 		SearchQuery searchQuery = new SearchQuery();
 		searchQuery.setAmount(amountInt);
 		searchQuery.setRadius(radiusInt);
 		searchQuery.setUserId(userIdLong);
 		searchQuery.setSearchTerm(searchTerm);
+		searchQuery.setCollageList(collageArray);
 
 		searchHistoryRespository.saveAndFlush(searchQuery);
 	}

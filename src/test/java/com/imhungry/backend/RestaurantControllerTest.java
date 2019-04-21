@@ -96,6 +96,21 @@ public class RestaurantControllerTest {
     }
 
     @Test
+    public void testBadUser() {
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("restaurant")
+                .addQueryParameter("userid", "-1")
+                .build();
+
+        ResponseEntity<String> entity = restTemplate.getForEntity(url.toString(), String.class);
+        assertEquals(404, entity.getStatusCodeValue());
+
+    }
+
+    @Test
     public void testRestaurantSearch() {
         String uid = register("testRestaurantSearch", port, restTemplate);
         HttpUrl url = new HttpUrl.Builder()

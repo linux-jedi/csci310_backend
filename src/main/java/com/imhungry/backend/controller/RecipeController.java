@@ -8,7 +8,6 @@ import com.imhungry.backend.sourcer.RecipeSourcer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,17 +31,13 @@ public class RecipeController {
         int maxRecipes = Integer.min(100,  Integer.valueOf(amount));
         long userIdLong = Long.parseLong(userid);
 
-        try {
-            List<Recipe> unsortedRecipes = recipeSourcer.searchRecipes(keyword, maxRecipes);
+        List<Recipe> unsortedRecipes = recipeSourcer.searchRecipes(keyword, maxRecipes);
 
-            Optional<UserLists> ul = userListsRepository.findByUserId(userIdLong);
-            if (ul.isPresent())
-                return ul.get().getUserListsJsonWrapper().filterSortRecipeList(unsortedRecipes);
-
-            return new ArrayList<>();
-        } catch (NullPointerException ignored) {
-            throw new UserNotFoundException("The user " + userid + " was not found");
-        }
+        Optional<UserLists> ul = userListsRepository.findByUserId(userIdLong);
+        if (ul.isPresent())
+            return ul.get().getUserListsJsonWrapper().filterSortRecipeList(unsortedRecipes);
+        else
+            throw new UserNotFoundException(userid);
 
     }
 
