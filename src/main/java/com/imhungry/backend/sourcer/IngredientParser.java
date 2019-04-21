@@ -2,16 +2,18 @@ package com.imhungry.backend.sourcer;
 
 import com.imhungry.backend.model.Ingredient;
 import lombok.Getter;
-import lombok.NonNull;
 
 public class IngredientParser {
 
 	@Getter
-	@NonNull
 	private String ingredientValue;
 
 	@Getter
 	private Double quantity;
+
+	public String getIngredientString() {
+		return String.valueOf(quantity) + " " + ingredientValue;
+	}
 
 	public IngredientParser(String unparsed) {
 		separate(unparsed);
@@ -26,15 +28,14 @@ public class IngredientParser {
 		if (splitString.length == 1 || splitString[0].length() == 0) {
 			quantity = null;
 			setIngredientValue(unparsed.substring(3));
-			return;
+		} else {
+			String number = splitString[0];
+			setIngredientValue(splitString[1]);
+
+			if (number.charAt(0) == '½') quantity = 0.5;
+			else if (number.charAt(0) == '¼') quantity = 0.25;
+			else quantity = Double.parseDouble(number);
 		}
-
-		String number = splitString[0];
-		setIngredientValue(splitString[1]);
-
-		if (number.charAt(0) == '½') quantity = 0.5;
-		else if (number.charAt(0) == '¼') quantity = 0.25;
-		else quantity = Double.parseDouble(number);
 	}
 
 	private void setIngredientValue(String ingredientValue) {

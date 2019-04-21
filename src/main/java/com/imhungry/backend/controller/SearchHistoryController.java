@@ -22,7 +22,9 @@ public class SearchHistoryController {
 
 		// Get a user's search history
 		long userIdLong = Long.parseLong(userId);
-		return (List<SearchQuery>) searchHistoryRespository.findAllByUserIdOrderByUpdatedAtDesc(userIdLong);
+		List<SearchQuery> retList = ((List<SearchQuery>) searchHistoryRespository.findAllByUserIdOrderByUpdatedAtDesc(userIdLong));
+		retList.remove(0);
+		return retList;
 	}
 
 	@PostMapping

@@ -98,4 +98,9 @@ public class MockupUtilityMethods {
 		List<Recipe> recipes = gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
 		return recipes.get(0);
 	}
+
+	public static List<Recipe> getThirtyOneBurgerRecipes() throws IOException {
+		String jsonString = readFile("src/test/java/com/imhungry/backend/json/recipe_result_burger_31.json");
+		return gson.fromJson(jsonString, new TypeToken<List<Recipe>>() {}.getType());
+	}
 }
