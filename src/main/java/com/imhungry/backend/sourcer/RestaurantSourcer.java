@@ -7,7 +7,6 @@ import com.google.maps.PlaceDetailsRequest;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.*;
 import com.imhungry.backend.data.Restaurant;
-import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -55,14 +54,14 @@ public class RestaurantSourcer {
             // Get distance from tommy trojan to the restaurant
             DistanceMatrixApiRequest distanceRequest = new DistanceMatrixApiRequest(geoApiContext);
             distanceRequest.origins(tommy).destinations(placesSearchResults[resultsIndex].vicinity);
-            DistanceMatrix distanceResponse = null;
+            DistanceMatrix distanceResponse;
             distanceResponse = distanceRequest.await();
 
 
             // Get detailed information about the location
             PlaceDetailsRequest placeDetailsRequest = new PlaceDetailsRequest(geoApiContext);
             placeDetailsRequest.placeId(placesSearchResults[resultsIndex].placeId);
-            PlaceDetails placeDetails = null;
+            PlaceDetails placeDetails;
 
             placeDetails = placeDetailsRequest.await();
 
@@ -89,10 +88,11 @@ public class RestaurantSourcer {
                 req.pageToken(response.nextPageToken);
                 try {
                     placesSearchResults = req.awaitIgnoreError().results;
+                    resultsIndex = 0;
+
                 } catch (NullPointerException nullPointerException) {
                     return new ArrayList<>();
                 }
-                resultsIndex = 0;
             }
         }
 

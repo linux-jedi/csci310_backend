@@ -1,5 +1,6 @@
 package com.imhungry.backend.controller;
 
+import com.imhungry.backend.exception.IngredientNotFoundException;
 import com.imhungry.backend.model.Ingredient;
 import com.imhungry.backend.repository.IngredientRepository;
 import com.imhungry.backend.sourcer.IngredientParser;
@@ -52,8 +53,9 @@ public class GroceryListController {
             ingredientRepository.delete(i);
             i.setChecked(true);
             ingredientRepository.saveAndFlush(i);
-        }
-    }
+		} else throw new IngredientNotFoundException(ingredientid);
+
+	}
 
     @PutMapping("/uncheck")
     public void markAsUnchecked(@RequestParam(value = "userid") String userId,
@@ -65,7 +67,7 @@ public class GroceryListController {
             ingredientRepository.delete(i);
             i.setChecked(false);
             ingredientRepository.saveAndFlush(i);
-        }
+        } else throw new IngredientNotFoundException(ingredientid);
     }
 
     @DeleteMapping("/deleteItem")
@@ -93,14 +95,15 @@ public class GroceryListController {
         newIngredient.setUserId(userIdLong);
         newIngredient.setChecked(false);
 
-        IngredientParser.collateIngredients(newIngredient, ig);
+        Ingredient i = IngredientParser.collateIngredients(newIngredient, ig);
         ingredientRepository.saveAndFlush(newIngredient);
     }
 
     private void deleteIngredient(String userId, Long ingredientId) {
         Long userIdLong = parseLong(userId);
         if (ingredientBelongsToUser(ingredientId, userIdLong))
-         ingredientRepository.deleteById(ingredientId);
+        	ingredientRepository.deleteById(ingredientId);
+        else throw new IngredientNotFoundException(ingredientId);
     }
 
     private boolean ingredientBelongsToUser(Long ingredientId, Long userId) {

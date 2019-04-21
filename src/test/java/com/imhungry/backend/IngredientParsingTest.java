@@ -72,4 +72,36 @@ public class IngredientParsingTest {
 		assertEquals("cup butter", ingredients[1].getIngredientValue());
 		assertEquals(new Double(1), ingredients[1].getQuantity());
 	}
+
+	@Test
+	public void weirdAmountIngredientsCollateTest() {
+		assertCheckedCorrectMerge(true, true, true);
+		assertCheckedCorrectMerge(true, false, true);
+		assertCheckedCorrectMerge(false, true, true);
+		assertCheckedCorrectMerge(false, false, false);
+	}
+
+	private void assertCheckedCorrectMerge(boolean aCheck, boolean bCheck, boolean expected) {
+		Ingredient a = new Ingredient();
+		buildIngredient(a);
+
+		a.setChecked(aCheck);
+
+		Ingredient b = new Ingredient();
+		buildIngredient(b);
+
+		b.setChecked(bCheck);
+
+		IngredientParser.collateIngredients(a, b);
+		assertEquals(expected, a.isChecked());
+	}
+
+	void buildIngredient(Ingredient a) {
+		a.setChecked(true);
+		a.setIngredientString("ingredient");
+		a.setQuantity(1d);
+		a.setUserId(1L);
+		a.setIngredientValue("ingredient");
+		a.setId(1L);
+	}
 }

@@ -8,4 +8,8 @@ public class IngredientNotFoundException extends RuntimeException {
     public IngredientNotFoundException(Long id) {
         super("Ingredient: " + id + " not found.");
     }
+    public IngredientNotFoundException(String id) {
+        super("Ingredient: " + id + " not found.");
+    }
+
 }

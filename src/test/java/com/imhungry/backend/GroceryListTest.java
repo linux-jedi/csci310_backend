@@ -87,8 +87,8 @@ public class GroceryListTest {
 	}
 
 	@Test
-	public void checkIngredientTest() {
-		String uid = registerNewUser("checkIngredient");
+	public void checkAndUncheckIngredientTest() {
+		String uid = registerNewUser("checkIngredientTest");
 		final String ADD = "0.5 cup ingredient";
 		List<String> adding = new ArrayList<>();
 		adding.add(ADD);
@@ -114,10 +114,9 @@ public class GroceryListTest {
 		assertFalse(i.isChecked());
 	}
 
-
 	@Test
 	public void deleteIngredientTest() {
-		String uid = registerNewUser("deleteIngredientTest");
+		String uid = registerNewUser("badDeleteIngredientTest");
 		final String ADD = "0.5 cup ingredient";
 		for (int i = 0; i < 5; i++) {
 			addNewIngredient(ADD + String.valueOf(i), uid);
@@ -140,6 +139,56 @@ public class GroceryListTest {
 		ingredients = getGroceryList(uid);
 		assertNotNull(ingredients);
 		assertEquals(4, ingredients.length);
+	}
+
+	@Test
+	public void badCheckIngredientTest() {
+		String uid = registerNewUser("checkIngredient");
+		final String ADD = "0.5 cup ingredient";
+		List<String> adding = new ArrayList<>();
+		adding.add(ADD);
+		addNewIngredients(adding, uid);
+
+		Ingredient[] ingredients = getGroceryList(uid);
+		Ingredient i = ingredients[0];
+
+		assertFalse(i.isChecked());
+
+		checkIngredient("-1", uid);
+		uncheckIngredient("-1", uid);
+	}
+
+	@Test
+	public void badDeleteIngredientTest() {
+		String uid = registerNewUser("deleteIngredientTest");
+		final String ADD = "0.5 cup ingredient";
+		for (int i = 0; i < 5; i++) {
+			addNewIngredient(ADD + String.valueOf(i), uid);
+		}
+
+		HttpUrl url = new HttpUrl.Builder()
+				.scheme("http")
+				.host("localhost")
+				.port(port)
+				.addPathSegment("grocery")
+				.addPathSegment("deleteItem")
+				.addQueryParameter("userid", uid)
+				.addQueryParameter("ingredientid", "-1")
+				.build();
+
+		restTemplate.delete(url.toString());
+
+		url = new HttpUrl.Builder()
+				.scheme("http")
+				.host("localhost")
+				.port(port)
+				.addPathSegment("grocery")
+				.addPathSegment("deleteItem")
+				.addQueryParameter("userid", "-1")
+				.addQueryParameter("ingredientid", "-1")
+				.build();
+
+		restTemplate.delete(url.toString());
 	}
 
 	private void addNewIngredients(List<String> adding, String uid) {
@@ -176,7 +225,7 @@ public class GroceryListTest {
 		restTemplate.postForEntity(url.toString(), entity, String.class);
 	}
 
-	Ingredient[] getGroceryList(String uid) {
+	private Ingredient[] getGroceryList(String uid) {
 		return getGroceryList(uid, port, restTemplate);
 	}
 
