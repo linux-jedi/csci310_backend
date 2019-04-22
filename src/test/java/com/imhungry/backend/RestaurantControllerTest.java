@@ -59,6 +59,7 @@ public class RestaurantControllerTest {
         // Test shows that data can be separated and is enough for a sliding window on the frontend
         String uid = register("testRadiusDifference", port, restTemplate);
 
+        // Small Radius
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host("localhost")
@@ -74,8 +75,10 @@ public class RestaurantControllerTest {
         Restaurant[] restaurants = entity.getBody();
 
         assertNotNull(restaurants);
-        assertEquals(0, restaurants.length);
+        assertEquals(1, restaurants.length);
 
+
+        // Medium Radius
         url = new HttpUrl.Builder()
                 .scheme("http")
                 .host("localhost")
@@ -91,7 +94,25 @@ public class RestaurantControllerTest {
         restaurants = entity.getBody();
 
         assertNotNull(restaurants);
-        assertEquals(5, restaurants.length);
+        assertEquals(2, restaurants.length);
+
+        // large radius test
+        url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("restaurant")
+                .addQueryParameter("name", "burger")
+                .addQueryParameter("amount", "20")
+                .addQueryParameter("userid", uid)
+                .addQueryParameter("radius", "2")
+                .build();
+
+        entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
+        restaurants = entity.getBody();
+
+        assertNotNull(restaurants);
+        assertEquals(10, restaurants.length);
 
     }
 

@@ -43,7 +43,7 @@ public class RestaurantSourcer {
 
         req.location(tommy)
                 .keyword(keyword)
-                .radius(radius)
+                .rankby(RankBy.DISTANCE)
                 .type(PlaceType.RESTAURANT);
         PlacesSearchResponse response = req.awaitIgnoreError();
 
@@ -66,17 +66,19 @@ public class RestaurantSourcer {
 
             placeDetails = placeDetailsRequest.await();
 
-            restaurants.add(new Restaurant(
-                    placesSearchResults[resultsIndex].placeId,
-                    placesSearchResults[resultsIndex].name,
-                    placesSearchResults[resultsIndex].vicinity,
-                    placeDetails.formattedPhoneNumber,
-                    placeDetails.website,
-                    placesSearchResults[resultsIndex].rating,
-                    placeDetails.priceLevel,
-                    distanceResponse.rows[0].elements[0].duration.humanReadable,
-                    (int) distanceResponse.rows[0].elements[0].duration.inSeconds
-            ));
+            if(distanceResponse.rows[0].elements[0].distance.inMeters <= radius) {
+                restaurants.add(new Restaurant(
+                        placesSearchResults[resultsIndex].placeId,
+                        placesSearchResults[resultsIndex].name,
+                        placesSearchResults[resultsIndex].vicinity,
+                        placeDetails.formattedPhoneNumber,
+                        placeDetails.website,
+                        placesSearchResults[resultsIndex].rating,
+                        placeDetails.priceLevel,
+                        distanceResponse.rows[0].elements[0].duration.humanReadable,
+                        (int) distanceResponse.rows[0].elements[0].duration.inSeconds
+                ));
+            }
 
             // iterate
             i++;
