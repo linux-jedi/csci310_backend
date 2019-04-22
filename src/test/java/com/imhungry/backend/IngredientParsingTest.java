@@ -30,9 +30,6 @@ public class IngredientParsingTest {
 	@Autowired
 	private GroceryListController groceryListController;
 
-	private String registerNewUser(String name) {
-		return register(name, port, restTemplate);
-	}
 	@Test
 	public void parseDifferentIngredients() {
 		IngredientParser ingredientParser = new IngredientParser("1 cup flour");
@@ -64,13 +61,30 @@ public class IngredientParsingTest {
 
 		groceryListController.addIngredient("1 cup flour", Long.parseLong(uid));
 		groceryListController.addIngredient("1.2 cup flour", Long.parseLong(uid));
+		groceryListController.addIngredient("1.5 cup flour", Long.parseLong(uid));
 		groceryListController.addIngredient("1 cup butter", Long.parseLong(uid));
 
 		Ingredient[] ingredients = groceryListTest.getGroceryList(uid, port, restTemplate);
 		assertEquals("cup flour", ingredients[0].getIngredientValue());
-		assertEquals(new Double(2.2), ingredients[0].getQuantity());
+		assertEquals(new Double(3.7), ingredients[0].getQuantity());
 		assertEquals("cup butter", ingredients[1].getIngredientValue());
 		assertEquals(new Double(1), ingredients[1].getQuantity());
+	}
+
+	@Test
+	public void secondCollateIngredientsTest() {
+		String uid = registerNewUser("secondCollateIngredientsTest");
+		GroceryListTest groceryListTest = new GroceryListTest();
+
+		groceryListController.addIngredient("1 tbsp soft brown sugar", Long.parseLong(uid));
+		groceryListController.addIngredient("1 tbsp soft brown sugar", Long.parseLong(uid));
+		groceryListController.addIngredient("1 tbsp soft brown sugar", Long.parseLong(uid));
+		groceryListController.addIngredient("1 tbsp soft brown sugar", Long.parseLong(uid));
+
+		Ingredient[] ingredients = groceryListTest.getGroceryList(uid, port, restTemplate);
+		assertEquals("tbsp soft brown sugar", ingredients[0].getIngredientValue());
+		assertEquals(new Double(4), ingredients[0].getQuantity());
+
 	}
 
 	@Test
@@ -104,4 +118,9 @@ public class IngredientParsingTest {
 		a.setIngredientValue("ingredient");
 		a.setId(1L);
 	}
+
+	private String registerNewUser(String name) {
+		return register(name, port, restTemplate);
+	}
+
 }

@@ -57,6 +57,29 @@ public class GroceryListTest {
 	}
 
 	@Test
+	public void checkPersistenceTest() {
+		String uid1 = registerNewUser("Grocery.checkPersistenceTest1");
+		String uid2 = registerNewUser("Grocery.checkPersistenceTest2");
+		final String ADD = "0.5 cup ingredient";
+		List<String> adding = new ArrayList<>();
+		adding.add(ADD + "1");
+		adding.add(ADD + "2");
+
+		addNewIngredients(adding, uid1);
+		adding.add(ADD + "3");
+
+		addNewIngredients(adding, uid2);
+
+		Ingredient[] ingredients = getGroceryList(uid1);
+		assertNotNull(ingredients);
+		assertEquals(ingredients.length, 2);
+
+		ingredients = getGroceryList(uid2);
+		assertNotNull(ingredients);
+		assertEquals(ingredients.length, 3);
+	}
+
+	@Test
 	public void getIngredientTest() {
 		String uid = registerNewUser("getIngredientTest");
 		final String ADD = "0.5 cup ingredient";
@@ -85,6 +108,21 @@ public class GroceryListTest {
 		assertNotNull(ingredients);
 		assertEquals(ingredients.length, 1);
 	}
+
+	@Test
+	public void addNewSameIngredient() {
+		String uid = registerNewUser("addNewSameIngredient");
+		final String ADD = "0.5 cup ingredient";
+		for (int i = 0; i < 5; i++) {
+			addNewIngredient(ADD, uid);
+		}
+
+		Ingredient[] ingredients = getGroceryList(uid);
+		assertNotNull(ingredients);
+		assertEquals(1, ingredients.length);
+		assertEquals(new Double(2.5), ingredients[0].getQuantity());
+	}
+
 
 	@Test
 	public void checkAndUncheckIngredientTest() {

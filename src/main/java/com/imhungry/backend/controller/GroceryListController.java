@@ -96,7 +96,7 @@ public class GroceryListController {
         newIngredient.setChecked(false);
 
         Ingredient i = IngredientParser.collateIngredients(newIngredient, ig);
-        ingredientRepository.saveAndFlush(newIngredient);
+        ingredientRepository.saveAndFlush(i);
     }
 
     private void deleteIngredient(String userId, Long ingredientId) {
