@@ -103,16 +103,16 @@ public class RestaurantControllerTest {
                 .port(port)
                 .addPathSegment("restaurant")
                 .addQueryParameter("name", "burger")
-                .addQueryParameter("amount", "20")
+                .addQueryParameter("amount", "12")
                 .addQueryParameter("userid", uid)
-                .addQueryParameter("radius", "2")
+                .addQueryParameter("radius", "1.5")
                 .build();
 
         entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
         restaurants = entity.getBody();
 
         assertNotNull(restaurants);
-        assertEquals(10, restaurants.length);
+        assertEquals(8, restaurants.length);
 
     }
 

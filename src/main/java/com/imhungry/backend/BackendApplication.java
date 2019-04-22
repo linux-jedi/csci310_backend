@@ -91,7 +91,7 @@ public class BackendApplication {
 				.thenCallRealMethod();
 		when(restaurantSourcer.searchRestaurants("burger", 2, RestaurantController.milesToMeters(4)))
 				.thenCallRealMethod();
-		when(restaurantSourcer.searchRestaurants("burger", 20, RestaurantController.milesToMeters(2)))
+		when(restaurantSourcer.searchRestaurants("burger", 12, RestaurantController.milesToMeters(1.5)))
 				.thenCallRealMethod();
 		when(restaurantSourcer.getRestaurantDetails("ChIJdzrHbse4woARwbth0qmfStw"))
 				.thenCallRealMethod();
