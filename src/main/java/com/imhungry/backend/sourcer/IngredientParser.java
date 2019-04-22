@@ -34,10 +34,15 @@ public class IngredientParser {
 			String number = splitString[0];
 			setIngredientValue(splitString[1]);
 
-			if (number.charAt(0) == '½') quantity = 0.5;
-			else if (number.charAt(0) == '¼') quantity = 0.25;
-			else quantity = Double.parseDouble(number);
+			quantity = parseNum(number);
+
+
 		}
+	}
+
+	private Double parseNum(String number) {
+		String newNumber = number.replaceAll("(½)", ".5").replaceAll("(¼)", ".25");
+		return Double.parseDouble(newNumber);
 	}
 
 	private void setIngredientValue(String ingredientValue) {
