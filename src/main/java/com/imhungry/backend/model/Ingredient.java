@@ -23,4 +23,7 @@ public class Ingredient extends AuditModel {
 
     private boolean checked;
 
+    public void refreshIngredientString() {
+        ingredientString = String.valueOf(quantity) + " " + ingredientValue;
+    }
 }

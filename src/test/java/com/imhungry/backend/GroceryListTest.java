@@ -57,6 +57,25 @@ public class GroceryListTest {
 	}
 
 	@Test
+	public void collateIngredientTest() {
+		String uid1 = registerNewUser("Grocery.collateIngredientTest");
+		final String ADD = "0.5 cup ingredient";
+		List<String> adding = new ArrayList<>();
+		adding.add(ADD);
+		adding.add(ADD);
+		adding.add(ADD);
+
+		addNewIngredients(adding, uid1);
+
+
+		Ingredient[] ingredients = getGroceryList(uid1);
+		assertNotNull(ingredients);
+		assertEquals(ingredients.length, 1);
+		assertEquals("1.5 cup ingredient", ingredients[0].getIngredientString());
+
+	}
+
+	@Test
 	public void checkPersistenceTest() {
 		String uid1 = registerNewUser("Grocery.checkPersistenceTest1");
 		String uid2 = registerNewUser("Grocery.checkPersistenceTest2");

@@ -58,6 +58,8 @@ public class IngredientParser {
 		collateInto.setQuantity(quantity1 + quantity2);
 		collateInto.setChecked(collateFrom.isChecked() || collateInto.isChecked());
 
+		collateInto.refreshIngredientString();
+
 		return collateInto;
 	}
 }
