@@ -1,5 +1,6 @@
 package com.imhungry.backend.controller;
 
+import com.imhungry.backend.exception.IngredientNotFoundException;
 import com.imhungry.backend.model.Ingredient;
 import com.imhungry.backend.repository.IngredientRepository;
 import com.imhungry.backend.sourcer.IngredientParser;
@@ -28,18 +29,45 @@ public class GroceryListController {
 
     @PostMapping("/addItem")
     public void postAddIngredient(@RequestParam(value = "userid") String userId,
-                              @RequestBody String ingredient) {
+                                  @RequestBody String ingredient) {
         long userIdLong = parseLong(userId);
         addIngredient(ingredient, userIdLong);
     }
 
     @PostMapping("/addItems")
     public void postAddIngredients(@RequestParam(value = "userid") String userId,
-                              @RequestBody List<String> ingredients) {
+                                   @RequestBody List<String> ingredients) {
         Long userIdLong = parseLong(userId);
         for (String ingredient: ingredients) {
             addIngredient(ingredient, userIdLong);
         }
+    }
+
+    @PutMapping("/check")
+    public void markAsChecked(@RequestParam(value = "userid") String userId,
+                              @RequestParam(value = "ingredientid") String ingredientid) {
+        Optional<Ingredient> returnedIngredient = ingredientRepository.
+                findFirstById(parseLong(ingredientid));
+        if (returnedIngredient.isPresent()) {
+            Ingredient i = returnedIngredient.get();
+            ingredientRepository.delete(i);
+            i.setChecked(true);
+            ingredientRepository.saveAndFlush(i);
+		} else throw new IngredientNotFoundException(ingredientid);
+
+	}
+
+    @PutMapping("/uncheck")
+    public void markAsUnchecked(@RequestParam(value = "userid") String userId,
+                              @RequestParam(value = "ingredientid") String ingredientid) {
+        Optional<Ingredient> returnedIngredient = ingredientRepository.
+                findFirstById(parseLong(ingredientid));
+        if (returnedIngredient.isPresent()) {
+            Ingredient i = returnedIngredient.get();
+            ingredientRepository.delete(i);
+            i.setChecked(false);
+            ingredientRepository.saveAndFlush(i);
+        } else throw new IngredientNotFoundException(ingredientid);
     }
 
     @DeleteMapping("/deleteItem")
@@ -52,8 +80,7 @@ public class GroceryListController {
         IngredientParser ingredientParser = new IngredientParser(ingredient);
 
         Optional<Ingredient> returnedIngredient = ingredientRepository.
-                findFirstByUserIdAndIngredientValue(userIdLong,
-                        ingredientParser.getIngredientValue());
+                findFirstByUserIdAndIngredientValue(userIdLong, ingredientParser.getIngredientValue());
 
         Ingredient ig = null;
         if (returnedIngredient.isPresent()) {
@@ -62,18 +89,21 @@ public class GroceryListController {
         }
 
         Ingredient newIngredient = new Ingredient();
+        newIngredient.setIngredientString(ingredientParser.getIngredientString());
         newIngredient.setIngredientValue(ingredientParser.getIngredientValue());
         newIngredient.setQuantity(ingredientParser.getQuantity());
         newIngredient.setUserId(userIdLong);
+        newIngredient.setChecked(false);
 
-        IngredientParser.collateIngredients(newIngredient, ig);
-        ingredientRepository.saveAndFlush(newIngredient);
+        Ingredient i = IngredientParser.collateIngredients(newIngredient, ig);
+        ingredientRepository.saveAndFlush(i);
     }
 
     private void deleteIngredient(String userId, Long ingredientId) {
         Long userIdLong = parseLong(userId);
         if (ingredientBelongsToUser(ingredientId, userIdLong))
-         ingredientRepository.deleteById(ingredientId);
+        	ingredientRepository.deleteById(ingredientId);
+        else throw new IngredientNotFoundException(ingredientId);
     }
 
     private boolean ingredientBelongsToUser(Long ingredientId, Long userId) {

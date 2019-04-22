@@ -25,4 +25,7 @@ public class SearchQuery extends AuditModel {
 	private int amount;
 
 	private int radius;
+
+	private String[] collageList;
+
 }

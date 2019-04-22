@@ -80,6 +80,23 @@ public class RecipeControllerTest {
     }
 
     @Test
+    public void testBadUser() {
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .addPathSegment("recipe")
+                .addQueryParameter("name", "burger")
+                .addQueryParameter("amount", "5")
+                .addQueryParameter("userid", "-1")
+                .build();
+
+        ResponseEntity<String> entity = restTemplate.getForEntity(url.toString(), String.class);
+        assertEquals(404, entity.getStatusCodeValue());
+
+    }
+
+    @Test
     public void testTrueRecipeSearch() {
         String uid = register("testTrueRecipeSearch", port, restTemplate);
         HttpUrl url = new HttpUrl.Builder()

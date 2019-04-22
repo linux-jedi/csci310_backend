@@ -19,4 +19,8 @@ public class Ingredient extends AuditModel {
 
     private String ingredientValue;
 
+    private String ingredientString;
+
+    private boolean checked;
+
 }

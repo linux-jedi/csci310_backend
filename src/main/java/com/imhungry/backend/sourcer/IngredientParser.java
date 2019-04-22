@@ -2,16 +2,20 @@ package com.imhungry.backend.sourcer;
 
 import com.imhungry.backend.model.Ingredient;
 import lombok.Getter;
-import lombok.NonNull;
+
+import java.util.Optional;
 
 public class IngredientParser {
 
 	@Getter
-	@NonNull
 	private String ingredientValue;
 
 	@Getter
 	private Double quantity;
+
+	public String getIngredientString() {
+		return String.valueOf(quantity) + " " + ingredientValue;
+	}
 
 	public IngredientParser(String unparsed) {
 		separate(unparsed);
@@ -23,18 +27,17 @@ public class IngredientParser {
 		unparsed = unparsed.replaceAll(numberPatternString, "$1-/-");
 		String[] splitString = unparsed.split("-/-");
 
-		if (splitString.length == 1 || splitString[0].length() == 0) {
+		if (splitString.length == 1 || splitString[0].equals("")) {
 			quantity = null;
 			setIngredientValue(unparsed.substring(3));
-			return;
+		} else {
+			String number = splitString[0];
+			setIngredientValue(splitString[1]);
+
+			if (number.charAt(0) == '½') quantity = 0.5;
+			else if (number.charAt(0) == '¼') quantity = 0.25;
+			else quantity = Double.parseDouble(number);
 		}
-
-		String number = splitString[0];
-		setIngredientValue(splitString[1]);
-
-		if (number.charAt(0) == '½') quantity = 0.5;
-		else if (number.charAt(0) == '¼') quantity = 0.25;
-		else quantity = Double.parseDouble(number);
 	}
 
 	private void setIngredientValue(String ingredientValue) {
@@ -43,14 +46,12 @@ public class IngredientParser {
 
 	public static Ingredient collateIngredients(Ingredient collateInto, Ingredient collateFrom) {
 		if (collateFrom == null) return collateInto;
-		if (!collateInto.getIngredientValue().equals(collateFrom.getIngredientValue())) return null;
 
-		Double quantity1 = collateInto.getQuantity();
-		Double quantity2 = collateFrom.getQuantity();
+		Double quantity1 = Optional.ofNullable(collateInto.getQuantity()).orElse((double) 0);
+		Double quantity2 = Optional.ofNullable(collateFrom.getQuantity()).orElse((double) 0);
 
-		if (quantity1 != null && quantity2 != null) {
-			collateInto.setQuantity(quantity1 + quantity2);
-		}
+		collateInto.setQuantity(quantity1 + quantity2);
+		collateInto.setChecked(collateFrom.isChecked() || collateInto.isChecked());
 
 		return collateInto;
 	}

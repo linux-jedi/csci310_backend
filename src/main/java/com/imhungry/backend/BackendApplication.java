@@ -79,6 +79,8 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getFiveBurgerRestaurants());
 		when(restaurantSourcer.searchRestaurants("burger", 30, RestaurantController.milesToMeters(3)))
 				.thenReturn(MockupUtilityMethods.getThirtyBurgerRestaurants());
+		when(restaurantSourcer.searchRestaurants("burger", 31, RestaurantController.milesToMeters(3)))
+				.thenReturn(MockupUtilityMethods.getThirtyBurgerRestaurants());
 
 		when(restaurantSourcer.searchRestaurants("burger", 2, RestaurantController.milesToMeters(1)))
 				.thenCallRealMethod();
@@ -107,6 +109,8 @@ public class BackendApplication {
 				.thenReturn(MockupUtilityMethods.getFiveBurgerRecipes());
 		when(recipeSourcer.searchRecipes("burger", 30))
 				.thenReturn(MockupUtilityMethods.getThirtyBurgerRecipes());
+		when(recipeSourcer.searchRecipes("burger", 31))
+				.thenReturn(MockupUtilityMethods.getThirtyOneBurgerRecipes());
 
 		when(recipeSourcer.searchRecipes("burger", 2))
 				.thenCallRealMethod();
