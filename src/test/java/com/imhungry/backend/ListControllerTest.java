@@ -106,43 +106,43 @@ public class ListControllerTest {
 		}
 	}
 
-//	@Test
-//	public void testBadPut() throws MalformedURLException {
-//		String uid1 = register();
-//		Restaurant r = generateNewRestaurant();
-//
-//		HungryList list = new HungryList(HungryList.ListType.FAVORITE.toString());
-//			list.addItem(r);
-//
-//			// Update list request
-//			HttpUrl putUrl = new HttpUrl.Builder()
-//					.scheme("http")
-//					.host("localhost")
-//					.port(port)
-//					.addPathSegment("list")
-//					.addEncodedPathSegment("RANDOM")
-//					.addQueryParameter("userId", uid1)
-//					.build();
-//
-//			HttpEntity<HungryList> putUpdate = new HttpEntity<>(list);
-//			restTemplate.exchange(putUrl.toString(), HttpMethod.PUT, putUpdate, Void.class);
-//
-//			// Check that list was updated
-//			HttpUrl url = new HttpUrl.Builder()
-//					.scheme("http")
-//					.host("localhost")
-//					.port(port)
-//					.addPathSegment("list")
-//					.addPathSegment("RANDOM")
-//					.addQueryParameter("userId", uid1)
-//					.build();
-//
-//			ResponseEntity<HungryList> responseEntity = restTemplate.getForEntity(url.toString(), HungryList.class);
-//			HungryList favoritesList = responseEntity.getBody();
-//
-//			assertNull(favoritesList);
-//
-//	}
+	@Test
+	public void testBadPut() throws MalformedURLException {
+		String uid1 = register();
+		Restaurant r = generateNewRestaurant();
+
+		HungryList list = new HungryList(HungryList.ListType.FAVORITE.toString());
+			list.addItem(r);
+
+			// Update list request
+			HttpUrl putUrl = new HttpUrl.Builder()
+					.scheme("http")
+					.host("localhost")
+					.port(port)
+					.addPathSegment("list")
+					.addEncodedPathSegment("RANDOM")
+					.addQueryParameter("userId", uid1)
+					.build();
+
+			HttpEntity<HungryList> putUpdate = new HttpEntity<>(list);
+			restTemplate.exchange(putUrl.toString(), HttpMethod.PUT, putUpdate, Void.class);
+
+			// Check that list was updated
+			HttpUrl url = new HttpUrl.Builder()
+					.scheme("http")
+					.host("localhost")
+					.port(port)
+					.addPathSegment("list")
+					.addPathSegment("RANDOM")
+					.addQueryParameter("userId", uid1)
+					.build();
+
+			ResponseEntity<HungryList> responseEntity = restTemplate.getForEntity(url.toString(), HungryList.class);
+			HungryList shouldNotExist = responseEntity.getBody();
+
+			assertNull(shouldNotExist);
+
+	}
 
 	@Test
 	public void testAddRestaurant() throws MalformedURLException {

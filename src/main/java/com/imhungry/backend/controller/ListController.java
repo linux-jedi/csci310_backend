@@ -3,14 +3,12 @@ package com.imhungry.backend.controller;
 import com.imhungry.backend.data.HungryList;
 import com.imhungry.backend.data.Recipe;
 import com.imhungry.backend.data.Restaurant;
-import com.imhungry.backend.utils.UserListsJsonWrapper;
 import com.imhungry.backend.exception.UserListsNotFoundException;
 import com.imhungry.backend.model.UserLists;
 import com.imhungry.backend.repository.UserListsRepository;
+import com.imhungry.backend.utils.UserListsJsonWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -19,15 +17,6 @@ public class ListController {
 
     @Autowired
     private UserListsRepository userListsRepository;
-
-    @GetMapping
-    public List<HungryList> getLists(@RequestParam("userId") String userId) {
-        // Get List object from database
-        UserLists userLists = getUserLists(userId);
-
-        // return lists
-        return userLists.getUserListsJsonWrapper().getHungryLists();
-    }
 
     @GetMapping(value = "/{listName}")
     public HungryList getList(@RequestParam("userId") String userId,
