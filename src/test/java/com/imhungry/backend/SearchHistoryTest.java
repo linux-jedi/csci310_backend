@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.imhungry.backend.GroceryListTest.register;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -30,14 +29,14 @@ public class SearchHistoryTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
-	private String registerNewUser(String name) {
-		return register(name, port, restTemplate);
+	private String register() {
+		return TestUtilityMethods.register(port, restTemplate);
 	}
 
 	@Test
 	public void checkPersistenceTest() {
-		String uid1 = registerNewUser("SearchHistoryTest.checkPersistence1");
-		String uid2 = registerNewUser("SearchHistoryTest.checkPersistence2");
+		String uid1 = register();
+		String uid2 = register();
 
 		addNewQueryToHistory("chinese", 1, 3, uid1);
 		addNewQueryToHistory("chinese", 2, 3, uid1);
@@ -52,7 +51,7 @@ public class SearchHistoryTest {
 
 	@Test
 	public void checkLastNotIncluded() {
-		String uid = registerNewUser("checkLastNotIncluded");
+		String uid = register();
 		addNewQueryToHistory("chinese", 5, 3, uid);
 
 		SearchQuery[] searchHistory = getSearchHistory(uid);
@@ -64,7 +63,7 @@ public class SearchHistoryTest {
 
 	@Test
 	public void addAndGetHistoryTest() {
-		String uid = registerNewUser("addAndGetHistoryTest");
+		String uid = register();
 		addNewQueryToHistory("chinese", 5, 3, uid);
 		addNewQueryToHistory("dummy", 0, 0, uid);
 
@@ -84,7 +83,7 @@ public class SearchHistoryTest {
 
 	@Test
 	public void searchHistoryUniquenessTest() {
-		String uid = registerNewUser("searchHistoryUniquenessTest");
+		String uid = register();
 		addNewQueryToHistory("chinese", 5, 3, uid);
 		addNewQueryToHistory("burger", 5, 3, uid);
 		addNewQueryToHistory("chinese", 50, 3, uid);
@@ -101,7 +100,7 @@ public class SearchHistoryTest {
 	public void searchHistoryOrderTest() {
 		String[] searches = {"burger", "chinese", "rice", "pizza", "dummy"};
 		String[] expected = {"pizza", "rice", "chinese", "burger"};
-		String uid = registerNewUser("searchHistoryOrderTest");
+		String uid = register();
 		for (String search : searches) addNewQueryToHistory(search, 5, 10000, uid);
 
 		SearchQuery[] searchHistory = getSearchHistory(uid);
@@ -118,7 +117,7 @@ public class SearchHistoryTest {
 	public void searchHistoryOrderWithRepeatsTest() {
 		String[] searches = {"burger", "chinese", "rice", "chinese", "pizza", "dummy"};
 		String[] expected = {"pizza", "chinese", "rice", "burger"};
-		String uid = registerNewUser("searchHistoryOrderWithRepeatsTest");
+		String uid = register();
 		for (String search : searches) addNewQueryToHistory(search, 5, 10000, uid);
 
 		SearchQuery[] searchHistory = getSearchHistory(uid);
@@ -133,7 +132,7 @@ public class SearchHistoryTest {
 	@Test
 	public void collageSearchHistoryTest() {
 		String[] searches = {"burger", "dummy"};
-		String uid = registerNewUser("collageSearchHistoryTest");
+		String uid = register();
 		for (String search : searches) addNewQueryToHistory(search, 5, 10000, uid);
 
 		SearchQuery[] searchHistory = getSearchHistory(uid);

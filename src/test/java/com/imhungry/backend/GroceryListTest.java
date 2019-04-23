@@ -1,7 +1,6 @@
 package com.imhungry.backend;
 
 import com.imhungry.backend.model.Ingredient;
-import com.imhungry.backend.model.User;
 import okhttp3.HttpUrl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,33 +31,13 @@ public class GroceryListTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
-	private String registerNewUser(String name) {
-		return register(name, port, restTemplate);
-
-	}
-
-	static String register(String name, int port, TestRestTemplate restTemplate) {
-		HttpUrl url = new HttpUrl.Builder()
-				.scheme("http")
-				.host("localhost")
-				.port(port)
-				.addPathSegment("register")
-				.addQueryParameter("username", name)
-				.addQueryParameter("email", name)
-				.addQueryParameter("password", "test")
-				.build();
-
-		ResponseEntity<User> responseEntity = restTemplate.postForEntity(url.toString(), new HttpEntity<>(""), User.class);
-		User user = responseEntity.getBody();
-		assertNotNull(user);
-		assertNotNull(user.getId());
-
-		return String.valueOf(user.getId());
+	private String register() {
+		return TestUtilityMethods.register(port, restTemplate);
 	}
 
 	@Test
 	public void collateIngredientTest() {
-		String uid1 = registerNewUser("Grocery.collateIngredientTest");
+		String uid1 = register();
 		final String ADD = "0.5 cup ingredient";
 		List<String> adding = new ArrayList<>();
 		adding.add(ADD);
@@ -77,8 +56,8 @@ public class GroceryListTest {
 
 	@Test
 	public void checkPersistenceTest() {
-		String uid1 = registerNewUser("Grocery.checkPersistenceTest1");
-		String uid2 = registerNewUser("Grocery.checkPersistenceTest2");
+		String uid1 = register();
+		String uid2 = register();
 		final String ADD = "0.5 cup ingredient";
 		List<String> adding = new ArrayList<>();
 		adding.add(ADD + "1");
@@ -100,7 +79,7 @@ public class GroceryListTest {
 
 	@Test
 	public void getIngredientTest() {
-		String uid = registerNewUser("getIngredientTest");
+		String uid = register();
 		final String ADD = "0.5 cup ingredient";
 		addNewIngredient(ADD, uid);
 
@@ -115,7 +94,7 @@ public class GroceryListTest {
 
 	@Test
 	public void addIngredientsTest() {
-		String uid = registerNewUser("addIngredientTest");
+		String uid = register();
 		final String ADD = "0.5 cup ingredient";
 		List<String> adding = new ArrayList<>();
 		adding.add(ADD);
@@ -130,7 +109,7 @@ public class GroceryListTest {
 
 	@Test
 	public void addNewSameIngredient() {
-		String uid = registerNewUser("addNewSameIngredient");
+		String uid = register();
 		final String ADD = "0.5 cup ingredient";
 		for (int i = 0; i < 5; i++) {
 			addNewIngredient(ADD, uid);
@@ -145,7 +124,7 @@ public class GroceryListTest {
 
 	@Test
 	public void checkAndUncheckIngredientTest() {
-		String uid = registerNewUser("checkIngredientTest");
+		String uid = register();
 		final String ADD = "0.5 cup ingredient";
 		List<String> adding = new ArrayList<>();
 		adding.add(ADD);
@@ -173,7 +152,7 @@ public class GroceryListTest {
 
 	@Test
 	public void deleteIngredientTest() {
-		String uid = registerNewUser("badDeleteIngredientTest");
+		String uid = register();
 		final String ADD = "0.5 cup ingredient";
 		for (int i = 0; i < 5; i++) {
 			addNewIngredient(ADD + String.valueOf(i), uid);
@@ -200,7 +179,7 @@ public class GroceryListTest {
 
 	@Test
 	public void badCheckIngredientTest() {
-		String uid = registerNewUser("checkIngredient");
+		String uid = register();
 		final String ADD = "0.5 cup ingredient";
 		List<String> adding = new ArrayList<>();
 		adding.add(ADD);
@@ -217,7 +196,7 @@ public class GroceryListTest {
 
 	@Test
 	public void badDeleteIngredientTest() {
-		String uid = registerNewUser("deleteIngredientTest");
+		String uid = register();
 		final String ADD = "0.5 cup ingredient";
 		for (int i = 0; i < 5; i++) {
 			addNewIngredient(ADD + String.valueOf(i), uid);

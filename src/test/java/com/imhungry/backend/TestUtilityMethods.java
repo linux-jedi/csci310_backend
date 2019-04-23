@@ -1,6 +1,16 @@
 package com.imhungry.backend;
 
-public class TestReferenceByFeature {
+import com.imhungry.backend.model.User;
+import okhttp3.HttpUrl;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
+
+import static org.junit.Assert.assertNotNull;
+
+public class TestUtilityMethods {
+
+	private static int registrationNumber = 0;
 
 	public static void neverRun_onlyForReference() throws Exception {
 		RecipeControllerTest recipeControllerTest = new RecipeControllerTest();
@@ -56,5 +66,26 @@ public class TestReferenceByFeature {
 			// Check that lists persist
 			listControllerTest.persistenceTest();
 
+	}
+
+	static String register(int port, TestRestTemplate restTemplate) {
+		registrationNumber++;
+		String name = "JUNIT_TEST" + registrationNumber;
+		HttpUrl url = new HttpUrl.Builder()
+				.scheme("http")
+				.host("localhost")
+				.port(port)
+				.addPathSegment("register")
+				.addQueryParameter("username", name)
+				.addQueryParameter("email", name)
+				.addQueryParameter("password", "test")
+				.build();
+
+		ResponseEntity<User> responseEntity = restTemplate.postForEntity(url.toString(), new HttpEntity<>(""), User.class);
+		User user = responseEntity.getBody();
+		assertNotNull(user);
+		assertNotNull(user.getId());
+
+		return String.valueOf(user.getId());
 	}
 }

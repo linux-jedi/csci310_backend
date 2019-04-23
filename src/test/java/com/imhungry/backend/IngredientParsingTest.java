@@ -12,7 +12,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.imhungry.backend.GroceryListTest.register;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -56,7 +55,7 @@ public class IngredientParsingTest {
 
 	@Test
 	public void collateIngredientsTest() {
-		String uid = registerNewUser("collateIngredientsTest");
+		String uid = register();
 		GroceryListTest groceryListTest = new GroceryListTest();
 
 		groceryListController.addIngredient("1 cup flour", Long.parseLong(uid));
@@ -73,7 +72,7 @@ public class IngredientParsingTest {
 
 	@Test
 	public void secondCollateIngredientsTest() {
-		String uid = registerNewUser("secondCollateIngredientsTest");
+		String uid = register();
 		GroceryListTest groceryListTest = new GroceryListTest();
 
 		groceryListController.addIngredient("1 tbsp soft brown sugar", Long.parseLong(uid));
@@ -119,8 +118,8 @@ public class IngredientParsingTest {
 		a.setId(1L);
 	}
 
-	private String registerNewUser(String name) {
-		return register(name, port, restTemplate);
+	private String register() {
+		return TestUtilityMethods.register(port, restTemplate);
 	}
 
 }

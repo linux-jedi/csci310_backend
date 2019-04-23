@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.imhungry.backend.GroceryListTest.*;
+import static com.imhungry.backend.TestUtilityMethods.register;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -33,7 +33,7 @@ public class RecipeControllerTest {
     public void testRecipePagination() {
 
         // Test shows that data can be separated and is enough for a sliding window on the frontend
-        String uid = register("testRecipePagination", port, restTemplate);
+        String uid = register(port, restTemplate);
 
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
@@ -55,7 +55,7 @@ public class RecipeControllerTest {
 
     @Test
     public void testRecipeSearch() {
-        String uid = register("testRecipeSearch", port, restTemplate);
+        String uid = register(port, restTemplate);
 
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
@@ -98,7 +98,7 @@ public class RecipeControllerTest {
 
     @Test
     public void testTrueRecipeSearch() {
-        String uid = register("testTrueRecipeSearch", port, restTemplate);
+        String uid = register(port, restTemplate);
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host("localhost")
