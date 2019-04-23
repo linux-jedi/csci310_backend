@@ -66,6 +66,8 @@ public class TestUtilityMethods {
 			// Check that lists persist
 			listControllerTest.persistenceTest();
 
+			// TODO: Show reordering persists
+
 	}
 
 	static String register(int port, TestRestTemplate restTemplate) {
