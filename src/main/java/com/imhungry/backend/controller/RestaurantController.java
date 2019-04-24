@@ -8,6 +8,7 @@ import com.imhungry.backend.sourcer.RestaurantSourcer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +17,17 @@ import java.util.Optional;
 @RequestMapping("/restaurant")
 public class RestaurantController {
 
-    @Autowired
-    private RestaurantSourcer restaurantSourcer;
+    @NotNull
+    private final RestaurantSourcer restaurantSourcer;
+
+    @NotNull
+    private final UserListsRepository userListsRepository;
 
     @Autowired
-    private UserListsRepository userListsRepository;
+    public RestaurantController(RestaurantSourcer restaurantSourcer, UserListsRepository userListsRepository) {
+        this.restaurantSourcer = restaurantSourcer;
+        this.userListsRepository = userListsRepository;
+    }
 
     @GetMapping
     public List<Restaurant> restaurantSearch(@RequestParam(value="name", defaultValue="chinese") String keyword,

@@ -6,6 +6,7 @@ import com.imhungry.backend.sourcer.CollageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -16,11 +17,17 @@ import java.util.Optional;
 @RequestMapping("/search-history")
 public class SearchHistoryController {
 
-	@Autowired
-	SearchHistoryRepository searchHistoryRespository;
+	@NotNull
+	final SearchHistoryRepository searchHistoryRespository;
+
+	@NotNull
+	final CollageBuilder collageBuilder;
 
 	@Autowired
-	CollageBuilder collageBuilder;
+	public SearchHistoryController(SearchHistoryRepository searchHistoryRespository, CollageBuilder collageBuilder) {
+		this.searchHistoryRespository = searchHistoryRespository;
+		this.collageBuilder = collageBuilder;
+	}
 
 	@GetMapping
 	public List<SearchQuery> getSearchHistory(

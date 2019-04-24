@@ -32,19 +32,19 @@ public class IngredientParsingTest {
 	@Test
 	public void parseDifferentIngredients() {
 		IngredientParser ingredientParser = new IngredientParser("1 cup flour");
-		assertEquals(new Double(1), ingredientParser.getQuantity());
+		assertEquals(Double.valueOf(1), ingredientParser.getQuantity());
 		assertEquals("cup flour", ingredientParser.getIngredientValue());
 
 		ingredientParser = new IngredientParser("½ cup flour");
-		assertEquals(new Double(0.5), ingredientParser.getQuantity());
+		assertEquals(Double.valueOf(0.5), ingredientParser.getQuantity());
 		assertEquals("cup flour", ingredientParser.getIngredientValue());
 
 		ingredientParser = new IngredientParser("¼ cup flour");
-		assertEquals(new Double(0.25), ingredientParser.getQuantity());
+		assertEquals(Double.valueOf(0.25), ingredientParser.getQuantity());
 		assertEquals("cup flour", ingredientParser.getIngredientValue());
 
 		ingredientParser = new IngredientParser("1.5 cup flour");
-		assertEquals(new Double(1.5), ingredientParser.getQuantity());
+		assertEquals(Double.valueOf(1.5), ingredientParser.getQuantity());
 		assertEquals("cup flour", ingredientParser.getIngredientValue());
 
 		ingredientParser = new IngredientParser("cup flour");
@@ -65,9 +65,9 @@ public class IngredientParsingTest {
 
 		Ingredient[] ingredients = groceryListTest.getGroceryList(uid, port, restTemplate);
 		assertEquals("cup flour", ingredients[0].getIngredientValue());
-		assertEquals(new Double(3.7), ingredients[0].getQuantity());
+		assertEquals(Double.valueOf(3.7), ingredients[0].getQuantity());
 		assertEquals("cup butter", ingredients[1].getIngredientValue());
-		assertEquals(new Double(1), ingredients[1].getQuantity());
+		assertEquals(Double.valueOf(1), ingredients[1].getQuantity());
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class IngredientParsingTest {
 
 		Ingredient[] ingredients = groceryListTest.getGroceryList(uid, port, restTemplate);
 		assertEquals("tbsp soft brown sugar", ingredients[0].getIngredientValue());
-		assertEquals(new Double(4), ingredients[0].getQuantity());
+		assertEquals(Double.valueOf(4), ingredients[0].getQuantity());
 
 	}
 

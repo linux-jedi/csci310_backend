@@ -7,6 +7,7 @@ import com.imhungry.backend.sourcer.IngredientParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +18,13 @@ import static java.lang.Long.parseLong;
 @RequestMapping("/grocery")
 public class GroceryListController {
 
+    @NotNull
+    final IngredientRepository ingredientRepository;
+
     @Autowired
-    IngredientRepository ingredientRepository;
+    public GroceryListController(IngredientRepository ingredientRepository) {
+        this.ingredientRepository = ingredientRepository;
+    }
 
     @GetMapping
     public List<Ingredient> getGroceryList(@RequestParam(value = "userid") String userId) {

@@ -86,7 +86,7 @@ public class GroceryListTest {
 		assertNotNull(ingredients);
 		assertEquals(1, ingredients.length);
 		assertEquals("cup ingredient", ingredients[0].getIngredientValue());
-		assertEquals(new Double(0.5), ingredients[0].getQuantity());
+		assertEquals(Double.valueOf(0.5), ingredients[0].getQuantity());
 		assertEquals(ADD, ingredients[0].getIngredientString());
 	}
 
@@ -116,7 +116,7 @@ public class GroceryListTest {
 		Ingredient[] ingredients = getGroceryList(uid);
 		assertNotNull(ingredients);
 		assertEquals(1, ingredients.length);
-		assertEquals(new Double(2.5), ingredients[0].getQuantity());
+		assertEquals(Double.valueOf(2.5), ingredients[0].getQuantity());
 	}
 
 

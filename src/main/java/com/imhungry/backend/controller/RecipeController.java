@@ -8,6 +8,7 @@ import com.imhungry.backend.sourcer.RecipeSourcer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,11 +18,17 @@ import java.util.Optional;
 
 public class RecipeController {
 
-    @Autowired
-    private RecipeSourcer recipeSourcer;
+    @NotNull
+    private final RecipeSourcer recipeSourcer;
+
+    @NotNull
+    private final UserListsRepository userListsRepository;
 
     @Autowired
-    private UserListsRepository userListsRepository;
+    public RecipeController(RecipeSourcer recipeSourcer, UserListsRepository userListsRepository) {
+        this.recipeSourcer = recipeSourcer;
+        this.userListsRepository = userListsRepository;
+    }
 
     @GetMapping
     List<Recipe> recipeSearch(@RequestParam(value = "name", defaultValue = "chinese") String keyword,

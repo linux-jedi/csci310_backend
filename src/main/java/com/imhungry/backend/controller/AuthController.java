@@ -15,19 +15,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
+
 @RestController
 @CrossOrigin
 public class AuthController {
 
-    @Autowired
-    private UserRepository userRepository;
+    @NotNull
+    private final UserRepository userRepository;
+
+    @NotNull
+    private final UserListsRepository userListsRepository;
+
+    @NotNull
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    UserListsRepository userListsRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    public AuthController(UserRepository userRepository, UserListsRepository userListsRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.userListsRepository = userListsRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostMapping("/login")
     public User login(@RequestParam("username") String username,
