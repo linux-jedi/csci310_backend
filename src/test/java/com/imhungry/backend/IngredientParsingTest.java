@@ -32,19 +32,19 @@ public class IngredientParsingTest {
 	@Test
 	public void parseDifferentIngredients() {
 		IngredientParser ingredientParser = new IngredientParser("1 cup flour");
-		assertEquals(ingredientParser.getQuantity(), new Double(1));
+		assertEquals(new Double(1), ingredientParser.getQuantity());
 		assertEquals("cup flour", ingredientParser.getIngredientValue());
 
 		ingredientParser = new IngredientParser("½ cup flour");
-		assertEquals(ingredientParser.getQuantity(), new Double(0.5));
+		assertEquals(new Double(0.5), ingredientParser.getQuantity());
 		assertEquals("cup flour", ingredientParser.getIngredientValue());
 
 		ingredientParser = new IngredientParser("¼ cup flour");
-		assertEquals(ingredientParser.getQuantity(), new Double(0.25));
+		assertEquals(new Double(0.25), ingredientParser.getQuantity());
 		assertEquals("cup flour", ingredientParser.getIngredientValue());
 
 		ingredientParser = new IngredientParser("1.5 cup flour");
-		assertEquals(ingredientParser.getQuantity(), new Double(1.5));
+		assertEquals(new Double(1.5), ingredientParser.getQuantity());
 		assertEquals("cup flour", ingredientParser.getIngredientValue());
 
 		ingredientParser = new IngredientParser("cup flour");

@@ -57,7 +57,7 @@ public class SearchHistoryTest {
 		SearchQuery[] searchHistory = getSearchHistory(uid);
 
 		assertNotNull(searchHistory);
-		assertEquals(searchHistory.length, 0);
+		assertEquals(0, searchHistory.length);
 
 	}
 
@@ -70,15 +70,15 @@ public class SearchHistoryTest {
 		SearchQuery[] searchHistory = getSearchHistory(uid);
 
 		assertNotNull(searchHistory);
-		assertEquals(searchHistory.length, 1);
+		assertEquals(1, searchHistory.length);
 
 		SearchQuery searchQuery = searchHistory[0];
-		assertEquals(searchQuery.getSearchTerm(), "chinese");
-		assertEquals(searchQuery.getAmount(), 5);
-		assertEquals(searchQuery.getRadius(), 3);
+		assertEquals("chinese", searchQuery.getSearchTerm());
+		assertEquals(5, searchQuery.getAmount());
+		assertEquals(3, searchQuery.getRadius());
 		System.out.println(searchQuery.getCollageList().getClass());
-		assertEquals(searchQuery.getCollageList()[0],
-				"https://assets3.thrillist.com/v1/image/1864928/size/tmg-article_default_mobile.jpg");
+		assertEquals("https://assets3.thrillist.com/v1/image/1864928/size/tmg-article_default_mobile.jpg",
+				searchQuery.getCollageList()[0]);
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class SearchHistoryTest {
 		SearchQuery[] searchHistory = getSearchHistory(uid);
 
 		assertNotNull(searchHistory);
-		assertEquals(searchHistory.length, 4);
+		assertEquals(4, searchHistory.length);
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class SearchHistoryTest {
 		SearchQuery[] searchHistory = getSearchHistory(uid);
 
 		assertNotNull(searchHistory);
-		assertEquals(searchHistory.length, 4);
+		assertEquals(4, searchHistory.length);
 
 		for (int i = 0; i < 4; i++) {
 			assertEquals(expected[i], searchHistory[i].getSearchTerm());
@@ -123,7 +123,7 @@ public class SearchHistoryTest {
 		SearchQuery[] searchHistory = getSearchHistory(uid);
 
 		assertNotNull(searchHistory);
-		assertEquals(searchHistory.length, 4);
+		assertEquals(4, searchHistory.length);
 		for (int i = 0; i < 4; i++) {
 			assertEquals(expected[i], searchHistory[i].getSearchTerm());
 		}
@@ -138,7 +138,7 @@ public class SearchHistoryTest {
 		SearchQuery[] searchHistory = getSearchHistory(uid);
 
 		assertNotNull(searchHistory);
-		assertEquals(searchHistory.length, 1);
+		assertEquals(1, searchHistory.length);
 		assertEquals(10, searchHistory[0].getCollageList().length);
 	}
 

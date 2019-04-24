@@ -50,7 +50,6 @@ public class RecipeControllerTest {
 
         assertNotNull(recipes);
         assertTrue(recipes.length/5 >= 6);
-
     }
 
     @Test
@@ -71,7 +70,7 @@ public class RecipeControllerTest {
         Recipe[] recipes = entity.getBody();
 
         assertNotNull(recipes);
-        assertEquals(recipes.length, 5);
+        assertEquals(5, recipes.length);
         int prev = 0;
         for (Recipe recipe : recipes) {
             assert (recipe.getPrepTime() >= prev);
@@ -93,7 +92,6 @@ public class RecipeControllerTest {
 
         ResponseEntity<String> entity = restTemplate.getForEntity(url.toString(), String.class);
         assertEquals(404, entity.getStatusCodeValue());
-
     }
 
     @Test
@@ -113,7 +111,7 @@ public class RecipeControllerTest {
         Recipe[] recipes = entity.getBody();
 
         assertNotNull(recipes);
-        assertEquals(recipes.length, 2);
+        assertEquals(2, recipes.length);
     }
 
     @Test
@@ -130,7 +128,7 @@ public class RecipeControllerTest {
         Recipe recipe = entity.getBody();
 
         assertNotNull(recipe);
-        assertEquals(recipe.getId(), "573147");
+        assertEquals("573147", recipe.getId());
     }
 
     @Test
@@ -147,6 +145,6 @@ public class RecipeControllerTest {
         Recipe recipe = entity.getBody();
 
         assertNotNull(recipe);
-        assertEquals(recipe.getId(), "219957");
+        assertEquals("219957", recipe.getId());
     }
 }

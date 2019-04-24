@@ -42,8 +42,8 @@ public class AuthControllerTest {
 		ResponseEntity<User> responseEntity = restTemplate.postForEntity(url.toString(), new HttpEntity<>(""), User.class);
 		User user = responseEntity.getBody();
 		assertNotNull(user);
-		assertEquals(user.getEmail(), "test");
-		assertEquals(user.getUsername(), "test");
+		assertEquals("test", user.getEmail());
+		assertEquals("test", user.getUsername());
 		assertNotNull(user.getId());
 	}
 
@@ -76,10 +76,9 @@ public class AuthControllerTest {
 
 		assertNotNull(login_user);
 		assertNotNull(register_user);
-		assertEquals(login_user.getEmail(), register_user.getEmail());
-		assertEquals(login_user.getUsername(), register_user.getUsername());
-		assertEquals(login_user.getId(), register_user.getId());
-
+		assertEquals(register_user.getEmail(), login_user.getEmail());
+		assertEquals(register_user.getUsername(), login_user.getUsername());
+		assertEquals(register_user.getId(), login_user.getId());
 	}
 
 	@Test

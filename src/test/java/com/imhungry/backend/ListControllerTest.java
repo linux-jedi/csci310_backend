@@ -141,7 +141,6 @@ public class ListControllerTest {
 			HungryList shouldNotExist = responseEntity.getBody();
 
 			assertNull(shouldNotExist);
-
 	}
 
 	@Test
@@ -152,7 +151,7 @@ public class ListControllerTest {
 		ResponseEntity<String> response = addRestaurantToFavorites(uid1);
 
 		assertThat(response).isNotNull();
-		assertEquals(response.getStatusCodeValue(), 200);
+		assertEquals(200, response.getStatusCodeValue());
 	}
 
 	@Test
@@ -167,7 +166,7 @@ public class ListControllerTest {
 		HungryList favoritesList = getList(uid1, HungryList.ListType.FAVORITE.toString());
 
 		assertNotNull(favoritesList);
-		assertEquals(favoritesList.getItems().size(), 1);
+		assertEquals(1, favoritesList.getItems().size());
 	}
 
 	@Test
@@ -176,7 +175,7 @@ public class ListControllerTest {
 		ResponseEntity<String> response = addRecipeToFavorites(uid1);
 
 		assertThat(response).isNotNull();
-		assertEquals(response.getStatusCodeValue(), 200);
+		assertEquals(200, response.getStatusCodeValue());
 	}
 
 	@Test
@@ -203,7 +202,7 @@ public class ListControllerTest {
 		restTemplate.delete(deleteURL.toString());
 
 		assertThat(response).isNotNull();
-		assertEquals(response.getStatusCodeValue(), 200);
+		assertEquals(200, response.getStatusCodeValue());
 	}
 
 	@Test
@@ -226,7 +225,7 @@ public class ListControllerTest {
 		restTemplate.delete(deleteURL.toString());
 
 		assertThat(response).isNotNull();
-		assertEquals(response.getStatusCodeValue(), 200);
+		assertEquals(200, response.getStatusCodeValue());
 	}
 
 	private ResponseEntity<String> addRecipeToFavorites(String uid1) {

@@ -46,12 +46,10 @@ public class GroceryListTest {
 
 		addNewIngredients(adding, uid1);
 
-
 		Ingredient[] ingredients = getGroceryList(uid1);
 		assertNotNull(ingredients);
-		assertEquals(ingredients.length, 1);
+		assertEquals(1, ingredients.length);
 		assertEquals("1.5 cup ingredient", ingredients[0].getIngredientString());
-
 	}
 
 	@Test
@@ -70,11 +68,11 @@ public class GroceryListTest {
 
 		Ingredient[] ingredients = getGroceryList(uid1);
 		assertNotNull(ingredients);
-		assertEquals(ingredients.length, 2);
+		assertEquals(2, ingredients.length);
 
 		ingredients = getGroceryList(uid2);
 		assertNotNull(ingredients);
-		assertEquals(ingredients.length, 3);
+		assertEquals(3, ingredients.length);
 	}
 
 	@Test
@@ -86,10 +84,10 @@ public class GroceryListTest {
 		Ingredient[] ingredients = getGroceryList(uid);
 
 		assertNotNull(ingredients);
-		assertEquals(ingredients.length, 1);
-		assertEquals(ingredients[0].getIngredientValue(), "cup ingredient");
-		assertEquals(ingredients[0].getQuantity(), new Double(0.5));
-		assertEquals(ingredients[0].getIngredientString(), ADD);
+		assertEquals(1, ingredients.length);
+		assertEquals("cup ingredient", ingredients[0].getIngredientValue());
+		assertEquals(new Double(0.5), ingredients[0].getQuantity());
+		assertEquals(ADD, ingredients[0].getIngredientString());
 	}
 
 	@Test
@@ -104,7 +102,7 @@ public class GroceryListTest {
 
 		Ingredient[] ingredients = getGroceryList(uid);
 		assertNotNull(ingredients);
-		assertEquals(ingredients.length, 1);
+		assertEquals(1, ingredients.length);
 	}
 
 	@Test
