@@ -67,7 +67,7 @@ public class RestaurantControllerTest {
                 .addQueryParameter("name", "burger")
                 .addQueryParameter("amount", "5")
                 .addQueryParameter("userid", uid)
-                .addQueryParameter("radius", "0.1")
+                .addQueryParameter("radius", "1")
                 .build();
 
         ResponseEntity<Restaurant[]> entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
@@ -86,14 +86,14 @@ public class RestaurantControllerTest {
                 .addQueryParameter("name", "burger")
                 .addQueryParameter("amount", "5")
                 .addQueryParameter("userid", uid)
-                .addQueryParameter("radius", "1")
+                .addQueryParameter("radius", "2")
                 .build();
 
         entity = restTemplate.getForEntity(url.toString(), Restaurant[].class);
         restaurants = entity.getBody();
 
         assertNotNull(restaurants);
-        assertEquals(2, restaurants.length);
+        assertEquals(4, restaurants.length);
 
         // large radius test
         url = new HttpUrl.Builder()
@@ -111,7 +111,7 @@ public class RestaurantControllerTest {
         restaurants = entity.getBody();
 
         assertNotNull(restaurants);
-        assertEquals(8, restaurants.length);
+        assertEquals(7, restaurants.length);
 
     }
 
