@@ -5,7 +5,6 @@ import com.google.gson.reflect.TypeToken;
 import com.imhungry.backend.data.Recipe;
 import com.imhungry.backend.data.Restaurant;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,7 +13,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-@Profile("test")
 @Configuration
 public class MockupUtilityMethods {
 

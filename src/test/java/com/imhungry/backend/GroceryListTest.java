@@ -53,23 +53,28 @@ public class GroceryListTest {
 	}
 
 	@Test
-	public void checkPersistenceTest() {
+	public void checkPersistence() {
 		String uid1 = register();
 		String uid2 = register();
+
 		final String ADD = "0.5 cup ingredient";
 		List<String> adding = new ArrayList<>();
 		adding.add(ADD + "1");
 		adding.add(ADD + "2");
 
+		// Add items to user 1's ingredients
 		addNewIngredients(adding, uid1);
 		adding.add(ADD + "3");
 
+		// Add items to user 2's ingredients
 		addNewIngredients(adding, uid2);
 
+		// Show correctness of user 1's ingredients
 		Ingredient[] ingredients = getGroceryList(uid1);
 		assertNotNull(ingredients);
 		assertEquals(2, ingredients.length);
 
+		// Show correctness of user 2's ingredients
 		ingredients = getGroceryList(uid2);
 		assertNotNull(ingredients);
 		assertEquals(3, ingredients.length);
@@ -120,29 +125,38 @@ public class GroceryListTest {
 	}
 
 
+	// Show ingredients can be checked and unchecked
 	@Test
 	public void checkAndUncheckIngredientTest() {
 		String uid = register();
+
+		// Add an item
 		final String ADD = "0.5 cup ingredient";
 		List<String> adding = new ArrayList<>();
 		adding.add(ADD);
 		addNewIngredients(adding, uid);
 
+		// Get the grocery list
 		Ingredient[] ingredients = getGroceryList(uid);
 		Ingredient i = ingredients[0];
 		String id = String.valueOf(i.getId());
 
+		// Should be unchecked by default
 		assertFalse(i.isChecked());
 
+		// Mark it as checked
 		checkIngredient(id, uid);
 
+		// Get the grocery list and ensure item is now checked
 		ingredients = getGroceryList(uid);
 		i = ingredients[0];
 		id = String.valueOf(i.getId());
 		assertTrue(i.isChecked());
 
+		// Mark it as unchecked
 		uncheckIngredient(id, uid);
 
+		// Get the grocery list and ensure item is now unchecked
 		ingredients = getGroceryList(uid);
 		i = ingredients[0];
 		assertFalse(i.isChecked());

@@ -3,7 +3,6 @@ package com.imhungry.backend.data;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +21,8 @@ public class HungryList {
         BLOCK
     }
 
-    @NonNull
     private final String name;
 
-    @NonNull
     private final List<ListItem> items;
 
     public HungryList(String name) {

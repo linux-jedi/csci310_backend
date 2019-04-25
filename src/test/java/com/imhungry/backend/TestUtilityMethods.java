@@ -20,7 +20,9 @@ public class TestUtilityMethods {
 		IngredientParsingTest ingredientParsingTest = new IngredientParsingTest();
 		ListControllerTest listControllerTest = new ListControllerTest();
 
-		// TODO: Comment
+		// TODO: Change "expected" term to "actual" term in necessary tests
+		// TODO: Rename all tests to start with 'test'
+
 		// Pagination
 
 			// Test that enough results can be generated for pagination
@@ -30,7 +32,8 @@ public class TestUtilityMethods {
 			restaurantControllerTest.testRestaurantPagination();
 
 		// Radius
-			// TODO: Create radius tests
+
+			// Test three different radius sizes to ensure they have different results (and sizes)
 			restaurantControllerTest.testRadiusDifference();
 
 		// Prior searches
@@ -53,7 +56,7 @@ public class TestUtilityMethods {
 			ingredientParsingTest.parseDifferentIngredients();
 
 			// Test collating of checked items
-			ingredientParsingTest.weirdAmountIngredientsCollateTest();
+			ingredientParsingTest.collateCheckedUncheckedItemsTest();
 
 		// Persistence (persistence is checked by doing something to user1, then to user2
 		// and then ensuring that user1's data hasn't changed, and then user2's data
@@ -62,12 +65,13 @@ public class TestUtilityMethods {
 			searchHistoryTest.checkPersistenceTest();
 
 			// Check that grocery list persists
-			groceryListTest.checkPersistenceTest();
+			groceryListTest.checkPersistence();
 
 			// Check that lists persist
-			listControllerTest.persistenceTest();
+			listControllerTest.checkPersistence();
 
-			// TODO: Show reordering persists
+			// Check that updating lists persists
+			listControllerTest.testUpdatePersistence();
 
 	}
 

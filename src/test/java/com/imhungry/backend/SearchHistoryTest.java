@@ -38,26 +38,41 @@ public class SearchHistoryTest {
 		String uid1 = register();
 		String uid2 = register();
 
+		// Add items to user 1
 		addNewQueryToHistory("chinese", 1, 3, uid1);
 		addNewQueryToHistory("chinese", 2, 3, uid1);
 		addNewQueryToHistory("dummy", 3, 3, uid1);
 
+		// Add items to user 2
 		addNewQueryToHistory("burger", 1, 3, uid2);
 		addNewQueryToHistory("dummy", 2, 3, uid2);
 
+		// Check that user 1's values are correct
 		assertEquals(2, getSearchHistory(uid1).length);
+
+		// Check that user 2's values are correct
 		assertEquals(1, getSearchHistory(uid2).length);
 	}
 
+	// Ensure that the most recently searched item is not included in the search history
 	@Test
 	public void checkLastNotIncluded() {
 		String uid = register();
+
+		// Search for two things
 		addNewQueryToHistory("chinese", 5, 3, uid);
+		addNewQueryToHistory("dummy", 5, 3, uid);
 
 		SearchQuery[] searchHistory = getSearchHistory(uid);
 
 		assertNotNull(searchHistory);
-		assertEquals(0, searchHistory.length);
+
+		// Show that the search history contains only one item
+		assertEquals(searchHistory.length, 1);
+
+		// Show that that item is not the one most recently searched
+		assertEquals(searchHistory[0].getSearchTerm(), "chinese");
+
 
 	}
 
@@ -129,6 +144,7 @@ public class SearchHistoryTest {
 		}
 	}
 
+	// Test that you can obtain collage urls within search histories
 	@Test
 	public void collageSearchHistoryTest() {
 		String[] searches = {"burger", "dummy"};

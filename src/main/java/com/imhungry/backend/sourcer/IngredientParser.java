@@ -14,7 +14,11 @@ public class IngredientParser {
 	private Double quantity;
 
 	public String getIngredientString() {
-		return String.valueOf(quantity) + " " + ingredientValue;
+		if (quantity != null) {
+			return quantity + " " + ingredientValue;
+		}
+
+		return ingredientValue;
 	}
 
 	public IngredientParser(String unparsed) {

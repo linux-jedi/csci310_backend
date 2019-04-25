@@ -29,10 +29,10 @@ public class RecipeControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    // Show that data can be separated and is enough for a sliding window on the frontend
     @Test
     public void testRecipePagination() {
 
-        // Test shows that data can be separated and is enough for a sliding window on the frontend
         String uid = register(port, restTemplate);
 
         HttpUrl url = new HttpUrl.Builder()

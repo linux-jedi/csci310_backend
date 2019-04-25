@@ -29,6 +29,7 @@ public class IngredientParsingTest {
 	@Autowired
 	private GroceryListController groceryListController;
 
+	// Ensure different formats of ingredients can be parsed
 	@Test
 	public void parseDifferentIngredients() {
 		IngredientParser ingredientParser = new IngredientParser("1 cup flour");
@@ -37,6 +38,10 @@ public class IngredientParsingTest {
 
 		ingredientParser = new IngredientParser("½ cup flour");
 		assertEquals(Double.valueOf(0.5), ingredientParser.getQuantity());
+		assertEquals("cup flour", ingredientParser.getIngredientValue());
+
+		ingredientParser = new IngredientParser("2½ cup flour");
+		assertEquals(ingredientParser.getQuantity(), new Double(2.5));
 		assertEquals("cup flour", ingredientParser.getIngredientValue());
 
 		ingredientParser = new IngredientParser("¼ cup flour");
@@ -53,6 +58,7 @@ public class IngredientParsingTest {
 
 	}
 
+	// Test that items can be merged/collated correctly
 	@Test
 	public void collateIngredientsTest() {
 		String uid = register();
@@ -86,14 +92,16 @@ public class IngredientParsingTest {
 
 	}
 
+	// Ensure that items with different checked "states" are merged correctly
 	@Test
-	public void weirdAmountIngredientsCollateTest() {
+	public void collateCheckedUncheckedItemsTest() {
 		assertCheckedCorrectMerge(true, true, true);
 		assertCheckedCorrectMerge(true, false, true);
 		assertCheckedCorrectMerge(false, true, true);
 		assertCheckedCorrectMerge(false, false, false);
 	}
 
+	// Merge two items with given check values, and expect them to have a certain checked value when merged
 	private void assertCheckedCorrectMerge(boolean aCheck, boolean bCheck, boolean expected) {
 		Ingredient a = new Ingredient();
 		buildIngredient(a);

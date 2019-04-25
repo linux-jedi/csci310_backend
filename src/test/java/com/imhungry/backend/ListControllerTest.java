@@ -33,8 +33,6 @@ import static org.junit.Assert.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ListControllerTest {
 
-	//TODO: Rename all tests to start with 'test'
-
 	@LocalServerPort
 	private int port;
 
@@ -48,20 +46,24 @@ public class ListControllerTest {
 	}
 
 	@Test
-	public void persistenceTest() throws MalformedURLException {
+	public void checkPersistence() throws MalformedURLException {
 		String uid1 = register();
 		String uid2 = register();
 
+		// Add 3 new restaurants to user 1's favorites list
 		addRestaurantToFavorites(uid1);
 		addRestaurantToFavorites(uid1);
 		addRestaurantToFavorites(uid1);
 
+		// Add 2 new restaurants to user 1's favorites list
 		addRestaurantToFavorites(uid2);
 		addRestaurantToFavorites(uid2);
 
+		// Get their lists respectively
 		HungryList hungryList1 = getList(uid1, HungryList.ListType.FAVORITE.toString());
 		HungryList hungryList2 = getList(uid2, HungryList.ListType.FAVORITE.toString());
 
+		// Ensure correct lengths
 		assertEquals(3, hungryList1.getRestaurants().size());
 		assertEquals(2, hungryList2.getRestaurants().size());
 	}
@@ -104,6 +106,56 @@ public class ListControllerTest {
 		for (HungryList.ListType v: HungryList.ListType.values()) {
 			checkUpdateList(v.toString(), uid1);
 		}
+	}
+
+	@Test
+	public void testUpdatePersistence() throws MalformedURLException {
+		String uid1 = register();
+		String uid2 = register();
+
+		// Create the initial list
+		// 1 -> Rec, Res, Rec
+		addRecipeToFavorites(uid1);
+		addRestaurantToFavorites(uid1);
+		addRecipeToFavorites(uid1);
+
+		// Update it
+		// 1 update -> Res, Rec, Rec
+		HungryList favoritesList = new HungryList(HungryList.ListType.FAVORITE.toString());
+		favoritesList.addItem(generateNewRestaurant());
+		favoritesList.addItem(generateNewRecipe());
+		favoritesList.addItem(generateNewRecipe());
+
+		updateList(uid1, favoritesList);
+
+		// Create the initial list
+		// 2 -> Res, Res, Rec
+		addRestaurantToFavorites(uid2);
+		addRestaurantToFavorites(uid2);
+		addRecipeToFavorites(uid2);
+
+		// Update it
+		// 2 update -> Res, Rec, Res
+		favoritesList = new HungryList(HungryList.ListType.FAVORITE.toString());
+		favoritesList.addItem(generateNewRestaurant());
+		favoritesList.addItem(generateNewRecipe());
+		favoritesList.addItem(generateNewRestaurant());
+
+		updateList(uid2, favoritesList);
+
+		// Get the most up-to-date lists
+		HungryList favList1 = getList(uid1, HungryList.ListType.FAVORITE.toString());
+		HungryList favList2 = getList(uid2, HungryList.ListType.FAVORITE.toString());
+
+		// Ensure that the correct values are in the correct locations
+		assertEquals(favList1.getItems().get(0).getClass(), Restaurant.class);
+		assertEquals(favList1.getItems().get(1).getClass(), Recipe.class);
+		assertEquals(favList1.getItems().get(2).getClass(), Recipe.class);
+
+		assertEquals(favList2.getItems().get(0).getClass(), Restaurant.class);
+		assertEquals(favList2.getItems().get(1).getClass(), Recipe.class);
+		assertEquals(favList2.getItems().get(2).getClass(), Restaurant.class);
+
 	}
 
 	@Test
@@ -269,7 +321,16 @@ public class ListControllerTest {
 
 		HungryList list = new HungryList(listName);
 		list.addItem(r);
+		updateList(uid1, list);
 
+		// Check that list was updated
+		HungryList favoritesList = getList(uid1, HungryList.ListType.FAVORITE.toString());
+
+		assertNotNull(favoritesList);
+		assertEquals(favoritesList.getRestaurants().size(), 1);
+	}
+
+	private void updateList(String uid1, HungryList list) {
 		// Update list request
 		HttpUrl putUrl = new HttpUrl.Builder()
 				.scheme("http")
@@ -282,22 +343,6 @@ public class ListControllerTest {
 
 		HttpEntity<HungryList> putUpdate = new HttpEntity<>(list);
 		restTemplate.exchange(putUrl.toString(), HttpMethod.PUT, putUpdate, Void.class);
-
-		// Check that list was updated
-		HttpUrl url = new HttpUrl.Builder()
-				.scheme("http")
-				.host("localhost")
-				.port(port)
-				.addPathSegment("list")
-				.addPathSegment(listName)
-				.addQueryParameter("userId", uid1)
-				.build();
-
-		ResponseEntity<HungryList> responseEntity = restTemplate.getForEntity(url.toString(), HungryList.class);
-		HungryList favoritesList = responseEntity.getBody();
-
-		assertNotNull(favoritesList);
-		assertEquals(favoritesList.getRestaurants().size(), 1);
 	}
 
 	private HungryList getList(String uid, String list) {

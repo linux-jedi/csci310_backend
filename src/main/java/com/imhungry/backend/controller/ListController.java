@@ -10,14 +10,11 @@ import com.imhungry.backend.utils.UserListsJsonWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
-
 @RestController
 @CrossOrigin
 @RequestMapping("/list")
 public class ListController {
 
-    @NotNull
     private final UserListsRepository userListsRepository;
 
     @Autowired
